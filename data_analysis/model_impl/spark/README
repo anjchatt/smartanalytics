@@ -1,0 +1,45 @@
+This is a set of binaries and utilities to run DBSCAN on spark.
+
+Installation and usage instructions:
+
+Spark installation
+1) (All cluster nodes) Spark should be executed by biadmin user
+su - biadmin
+2) (All cluster nodes) Download and unpack prebuild version without hadoop binaries
+wget http://mirror.olnevhost.net/pub/apache/spark/spark-1.5.0/spark-1.5.0-bin-without-hadoop.tgz
+tar xzf spark-1.5.0-bin-without-hadoop.tgz
+mv spark-1.5.0-bin-without-hadoop spark
+rm spark-1.5.0-bin-without-hadoop.tgz
+3) (All cluster nodes) create settings file
+cd spark
+echo "export SPARK_DIST_CLASSPATH=$(hadoop classpath)" > conf/spark-env.sh
+4) (Only master node) Start master process
+We'll use non-standard web UI port so it won't interfere with other apps
+After starting check logs for errors
+sbin/start-master.sh --webui-port 18080
+
+we assume that mater process is started on vmk0007.analytics.ibmcloud.com, so spark URL would be: spark://vmk0007.analytics.ibmcloud.com:7077
+4) (All nodes) Start slave process
+We'll start slave processes with non-standart Web so it won't interfere with other apps.
+We'll also limit amount of memory available for Spark.
+sbin/start-slave.sh -m 10G --webui-port 18081 spark://vmk0007.analytics.ibmcloud.com:7077
+
+5) Submitting jobs:
+cd spark
+bin/spark-submit --master spark://vmk0007.analytics.ibmcloud.com:7077 .......
+
+-------
+DBSCAN on Spark
+1) Upload the data to HDFS (if it's not there already):
+hadoop fs -mkdir /dbscan
+hadoop fs -put n_trn1000000.csv /dbscan
+
+2) Get the dbscan package from dbscan project subfolder (spark_dbscan.jar), place it to spark/ folder and upload to HDFS
+hadoop fs -put dbscan-assembly.jar /dbscan
+
+3) Get the clustering script form "scala" subfolder, amend it if needed
+
+4) Run the script:
+nohup bin/spark-shell --packages com.databricks:spark-csv_2.10:1.2.0 --jars ./spark_dbscan.jar -i dbscan.scala
+
+

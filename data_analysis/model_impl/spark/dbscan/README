@@ -1,0 +1,14 @@
+This is a rebuild of https://github.com/alitouka/spark_dbscan to support recent Spark versions.
+Few minor changes are made.
+Ready-made binary is included: spark_dbscan.jar
+
+To build:
+1. install SBT http://www.scala-sbt.org/
+2. build project:
+cd src
+sbt assembly
+3. copy resulting artifact:
+cp target/scala-2.10/spark_dbscan-assembly-0.0.4.jar ../spark_dbscan.jar
+
+To use in spark-shell, append command with "--jars ./spark_dbscan.jar {path to spark_dbscan.jar}", e.g.:
+bin/spark-shell --jars ./spark_dbscan.jar

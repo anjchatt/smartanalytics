@@ -1,0 +1,38 @@
+1. To build distribution please run
+Linux:
+gradlew distZip
+
+Windows:
+gradlew.bat distZip
+
+The distribution will be available at build/distributions/webservice.zip
+NOTE: you can run it locally without building distribution with
+gradlew run (or gradlew.bat run)
+
+2. Deploy and run
+- Unzip the file
+- change to 'webservice directory'
+- run:
+bin/webservice server config.yml
+OR
+bin\webservice.bat server config.yml
+
+3. Config file
+Default config file is included, amend it with ports and locations data file.
+
+4. Config SMS gateway and target number in the config file
+Please note that notification number is commented out by default, so no notifications will be sent
+Register account at plivo.com and get besic info as in
+https://www.plivo.com/docs/getting-started/sms-app/
+
+5. Locations data file is a CSV, with comma (",") separator, single quoting and 4 columns:
+Latitude (double)
+Longitude (double)
+Location name (String)
+Address (String)
+
+6. The service provides REST URL:
+http://<host>:<port>/find-offer?userId=<user id>&lat=<latitude>&longitude=<longitude>
+userId is optional, lat/lon are mandatory
+example URL:
+http://localhost:9080/find-offer?lat=-74.01588&lon=40.757644

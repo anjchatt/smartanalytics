@@ -1,0 +1,22 @@
+from,to,date,type,timeslot
+"s01","s12",20150101,"Principal",
+"s02","s13",20150515,"Senior Principal",
+"s03","s14",20150101,"Principal",
+"s04","s07",20150209,"Managing Director",
+"s05","s07",20150101,"Managing Director-
+Private Equity",
+"s06","s07",20150515,"Senior Managing Director-
+Private Equity",
+"s02","s08",20150101,"Alumni",
+"s03","s08",20150101,"Alumni",
+"s04","s08",20150209,"Alumni",
+"s05","s08",20150101,"Alumni",
+"s04","s09",20150209,"chief operating officer - 2011",
+"s04","s10",20150209,"chief financial and 
+administrative officer - previous",
+"s04","s11",20151111,"Spouse",
+"s04","s17",20151111,"Son",
+"s04","s15",20151006,"Conference Attended",
+"s16","s15",20151006,"Conference Attended",
+"s16","s12",20151006,"Managing Director",
+"s17","s08",20160101,"Student",

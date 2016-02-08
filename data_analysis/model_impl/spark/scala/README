@@ -1,0 +1,11 @@
+This is a script to run DBSCAN algo for transactions and behaviour data.
+Please amend it if needed with:
+- Source data paths
+- Results data paths
+- Clustering algo settings: epsilon and number of nearest points
+
+To run the script:
+1) Get the DBSCAN binary (spark_dbscan.jar), place it to spark folder
+2) Copy the script to spark folder
+3) Run the script:
+nohup bin/spark-shell --packages com.databricks:spark-csv_2.10:1.2.0 --jars ./spark_dbscan.jar -i dbscan.scala &

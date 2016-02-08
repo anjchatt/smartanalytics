@@ -1,0 +1,17 @@
+from,to,weight,type
+s01,s02,12,job
+s01,s03,22,job
+s01,s04,21,job
+s01,s05,21,education
+s01,s06,12,education
+s01,s07,12,friend
+s07,s05,12,education
+s01,s08,12,friend
+s08,s05,12,education
+s01,s09,12,friend
+s09,s06,12,education
+s01,s10,12,friend
+s10,s03,12,job
+s01,s11,12,friend
+s11,s06,12,education
+s01,s12,12,friend
