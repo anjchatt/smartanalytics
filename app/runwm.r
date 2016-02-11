@@ -1,10 +1,8 @@
-#install.packages("shiny")
-#install.packages("ggplot2")
-script.dir <- dirname(sys.frame(1)$ofile)
+library(shiny)
 
-setwd(paste0(script.dir, '/wm'))
+path <- '/home/smartanalytics/projects/smartanalytics/app/wm'
 
-path <- getwd()
+print('starting WM app')
 
 runApp(appDir = path,
        port = 8083,
