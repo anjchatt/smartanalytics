@@ -103,36 +103,44 @@ problems_sc <- list(loyal1=c(0.16,0.094,0.458,0.29),
 				loyal3=c(0.23,0.1,0.07,0.61),
 				loyal4=c(0.24,0.36,0.13,0.27))
 
-output$loyalp1 <- renderPlot({p<-qplot(x=problems_l,
-								   y=problems_sc$loyal1,
-								   geom='bar',
-								   stat='identity',
-								   ylab=c(),xlab=c())
-							  p+theme(legend.position="none")},
+output$loyalp1 <- renderPlot({x <- problems_l
+							  y <- problems_sc$loyal1
+							  p <- ggplot(data = data.frame(x=x, y=y),
+										aes(x = x, y = y)) + 
+									geom_bar(stat = "identity", aes(fill = c('1','2','3','4'))) +
+									theme(legend.position="none") + 
+									labs(x='',y='')
+							  return(p)},
 							 height = 170)
 
-output$loyalp2 <- renderPlot({p<-qplot(x=problems_l,
-								   y=problems_sc$loyal2,
-								   geom='bar',
-								   stat='identity',
-								   ylab=c(),xlab=c())
-							  p+theme(legend.position="none")},
+output$loyalp2 <- renderPlot({x <- problems_l
+							  y <- problems_sc$loyal2
+							  p <- ggplot(data = data.frame(x=x, y=y),
+										aes(x = x, y = y)) + 
+									geom_bar(stat = "identity", aes(fill = c('1','2','3','4'))) +
+									theme(legend.position="none") + 
+									labs(x='',y='')
+							  return(p)},							  
 							 height = 170)
 							 
-output$loyalp3 <- renderPlot({p<-qplot(x=problems_l,
-								   y=problems_sc$loyal3,
-								   geom='bar',
-								   stat='identity',
-								   ylab=c(),xlab=c())
-							  p+theme(legend.position="none")},
+output$loyalp3 <- renderPlot({x <- problems_l
+							  y <- problems_sc$loyal3
+							  p <- ggplot(data = data.frame(x=x, y=y),
+										aes(x = x, y = y)) + 
+									geom_bar(stat = "identity", aes(fill = c('1','2','3','4'))) +
+									theme(legend.position="none") + 
+									labs(x='',y='')
+							  return(p)},
 							 height = 170)
 							 
-output$loyalp4 <- renderPlot({p<-qplot(x=problems_l,
-								   y=problems_sc$loyal4,
-								   geom='bar',
-								   stat='identity',
-								   ylab=c(),xlab=c())
-							  p+theme(legend.position="none")},
+output$loyalp4 <- renderPlot({x <- problems_l
+							  y <- problems_sc$loyal4
+							  p <- ggplot(data = data.frame(x=x, y=y),
+										aes(x = x, y = y)) + 
+									geom_bar(stat = "identity", aes(fill = c('1','2','3','4'))) +
+									theme(legend.position="none") + 
+									labs(x='',y='')
+							  return(p)},
 							 height = 170)
 
 output$loyalcom1 <- renderUI({

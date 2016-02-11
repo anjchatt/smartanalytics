@@ -7,6 +7,6 @@ setwd(paste0(script.dir, '/wm'))
 path <- getwd()
 
 runApp(appDir = path,
-       port = 777,
+       port = 8083,
        launch.browser=F,
        host = '0.0.0.0')

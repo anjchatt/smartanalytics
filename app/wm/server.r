@@ -348,14 +348,12 @@ shinyServer(function(input, output, session) {
     ##--------------------------------#
     
     output$assetPlot <- renderPlot({
-	  print('start plotting')
 	  p <- ggplot(data = data.frame(x=names(customer.assets)[c(1,4,2)],
 									y=as.numeric(customer.assets[,c(1,4,2)])),
 				aes(x = names(customer.assets)[c(1,4,2)], 
 					y = as.numeric(customer.assets[,c(1,4,2)]))) +
 		  geom_bar(stat = "identity", aes(fill = c('2','1','3')))
       p <- p+theme(legend.position="none")+labs(x='',y='')
-	  print('finished plotting')
 	  return(p)},
     height = 170)
     

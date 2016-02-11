@@ -8,6 +8,6 @@ setwd(paste0(script.dir, '/lm'))
 path <- getwd()
 
 runApp(appDir = path,
-       port = 777,
+       port = 8082,
        launch.browser=F,
        host = '0.0.0.0')
