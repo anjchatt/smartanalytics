@@ -29,4 +29,11 @@ class WebServiceConfiguration extends Configuration {
     @JsonProperty
     @NotEmpty
     String plivo_number
+    
+    @JsonProperty
+    String proxy_ip
+
+    @JsonProperty
+    int proxy_port
+    
 }

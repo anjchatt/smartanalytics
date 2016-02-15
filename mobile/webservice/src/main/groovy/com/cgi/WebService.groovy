@@ -35,7 +35,8 @@ class WebService extends Application<WebServiceConfiguration> {
             )
         }
         final def findOfferResource = new FindOffer(locations, configuration.lookup_radius, configuration.notification_number,
-                configuration.plivo_id, configuration.plivo_token, configuration.plivo_number)
+                configuration.plivo_id, configuration.plivo_token, configuration.plivo_number, configuration.proxy_ip,
+                configuration.proxy_port)
         environment.jersey().register(findOfferResource);
     }
 }

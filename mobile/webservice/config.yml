@@ -9,7 +9,9 @@ locations_csv: starbucks.csv
 #radius for lookup, in meters
 lookup_radius: 2000
 #where to send sms
-#notification_number: +1234567890
+notification_number: +12019780446
 plivo_id: MAM2JMZGM2NZU4MJLLYT
 plivo_token: MjQ2ZTI3M2FhNzJiODhjYWRkMmM3ZTA2ZGZjOWVh
 plivo_number: 16623402368
+proxy_ip: 10.66.109.5
+proxy_port: 3128

@@ -14,6 +14,8 @@ import javax.ws.rs.Produces
 import javax.ws.rs.QueryParam
 import javax.ws.rs.core.MediaType
 
+import org.apache.http.HttpHost
+
 import static com.cgi.GeoUtils.distance
 
 @Path("/find-offer")
@@ -25,16 +27,21 @@ class FindOffer {
     Double lookupRadius
     String notificationNumber
     String plivo_id, plivo_token, plivo_number
+    String proxy_ip
+    int proxy_port
 
     public FindOffer(@NotNull List<Location> locations, @NotNull Double lookupRadius,
                      @Nullable String notificationNumber,
-                     @NotNull String plivo_id, @NotNull String plivo_token, String plivo_number) {
+                     @NotNull String plivo_id, @NotNull String plivo_token, String plivo_number,
+                     @Nullable String proxy_ip, @Nullable int proxy_port) {
         this.locations = locations
         this.lookupRadius = lookupRadius
         this.notificationNumber = notificationNumber
         this.plivo_id = plivo_id
         this.plivo_token = plivo_token
         this.plivo_number = plivo_number
+        this.proxy_ip = proxy_ip
+        this.proxy_port = proxy_port
     }
 
     @GET
@@ -51,6 +58,10 @@ class FindOffer {
             if (closest) {
                 def text = "Get your free coffee at Starbucks near your: " + closest.address
                 RestAPI api = new RestAPI(plivo_id, plivo_token, "v1");
+                if(proxy_ip){
+                    HttpHost proxy = new HttpHost(proxy_ip, proxy_port);
+                    api.setProxy(proxy)
+                }
                 def params = ["src" : plivo_number,
                               "dst" : notificationNumber,
                               "text": text,
