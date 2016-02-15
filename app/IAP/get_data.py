@@ -5,6 +5,10 @@ import facebook
 import json
 import requests
 from pymongo import MongoClient
+import os
+
+os.environ["HTTP_PROXY"] = os.environ["http_proxy"]
+os.environ["HTTPS_PROXY"] = os.environ["http_proxy"]
 
 MAX_MESSAGE_NUMBER = 10
 AAPI_KEY = 'c53e15d0a29aa87dc4a287e96f28e1134b8f3c7d'

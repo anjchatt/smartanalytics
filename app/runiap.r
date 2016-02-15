@@ -1,6 +1,6 @@
 library(shiny)
 
-path <- '/home/smartanalytics/projects/1st_ph/IAP'
+path <- '/home/smartanalytics/projects/smartanalytics/app/IAP'
 
 print('starting IAP app')
 

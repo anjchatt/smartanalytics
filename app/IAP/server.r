@@ -86,6 +86,8 @@ conversation_history_mad <- data.frame(time=c('03/20/2015', '03/20/2015', '02/27
                                       cat=c('Problem Resolution', 'Code Red Complaint','Question','Question'),
                                       sent=c('Neutral','Very Angry','Neutral','Neutral'),
                                       stringsAsFactors=F)
+conversation_history <- apply(t(as.matrix(conversation_history)),2, as.list)
+conversation_history_mad <- apply(t(as.matrix(conversation_history_mad)),2, as.list)
 conversation_history_header = c('time', 'message', 'source', 'sent')
 
 # scatterplot

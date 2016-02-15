@@ -2,7 +2,7 @@
 # install.packages("geosphere")
 library(leaflet)
 
-load("LM_clusters2.bin")
+load("LM_clusters.bin")
 
 col.names.tr <- list("Geo: US","Geo: EU","Geo: Asia","Geo: Africa",
                      "Currency: USD","Currency: EU","Currency: Other",
