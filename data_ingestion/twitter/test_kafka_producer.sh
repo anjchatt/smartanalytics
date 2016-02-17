@@ -1,0 +1,1 @@
+python2.7 twitter_data.py --token-secret H7xC8EBkiibjbd7yFgLlK5xRH6qq6Byxr8wp07xhwbDCk --token 2360463842-4dvRToWEoFCFkIj9Dg9fDrREZytBRhpiVan1SVl --consumer-key ogAcB1y6qPLmntrY2KCXvgggF --consumer-secret 9YN11mY0VWltFiOfxp6EtTu5uY8dVxHMsvMZOC3AMcb850568B --track-keywords bank

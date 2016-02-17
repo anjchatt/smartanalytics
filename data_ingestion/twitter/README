@@ -1,0 +1,24 @@
+Twitter API integration does following things
+- gets data with streaming API
+- selects required data fields
+- sends resulting json strings via kafka
+
+Dependencies:
+1. Twitter API
+
+git clone https://github.com/sixohsix/twitter.git
+cd twitter
+python2.7 setup.py install
+cd ..
+rm -r twitter
+
+2. Kafka
+pip2.7 install kafka
+
+
+Test
+1. Execute starting script to stream data into kafka
+sh ./test_kafka_producer.sh > producer.log &
+
+2. Execute starting console consumer script
+sh ./test_kafka_consumer.sh
