@@ -6,3 +6,4 @@
 data/data_merging/data/*
 data/data_merging/*csv
 app/lm/LM_dataset.csv
+data_marts/customer_matching/*.jar

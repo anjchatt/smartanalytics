@@ -1,0 +1,12 @@
+1. Initialize db
+yum install postgresql postgresql-server postgresql-contrib python-psycopg2 postgresql-devel
+service postgresql initdb
+chkconfig postgresql on
+
+pip install psycopg2
+pip install sqlalchemy
+
+psql -U postgres -c "CREATE DATABASE customer"
+
+#wget http://search.maven.org/remotecontent?filepath=org/apache/spark/spark-sql_2.10/1.4.1/spark-sql_2.10-1.4.1.jar
+wget https://jdbc.postgresql.org/download/postgresql-9.4.1208.jre6.jar -O /usr/share/java/postgresql-9.4.1208.jre6.jar
