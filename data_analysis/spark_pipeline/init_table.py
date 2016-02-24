@@ -19,6 +19,20 @@ cur.execute("""
         user_name varchar(40), 
         user_screen_name varchar(30), 
         user_id_str varchar(30)
-        );""")
+        );
+        
+        CREATE TABLE word_ids
+        (
+        id_str BIGINT,
+        word_id INT,
+        cluster_id INT
+        );
+        CREATE INDEX word_id ON word_ids (word_id);
+        
+        CREATE TABLE cluster_ids
+        (
+        cluster_id INT
+        );
+        """)
 con.commit()
 con.close()
