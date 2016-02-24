@@ -25,7 +25,8 @@ cur.execute("""
         (
         id_str BIGINT,
         word_id INT,
-        cluster_id INT
+        cluster_id INT,
+        user_id_str varchar(30)
         );
         CREATE INDEX word_id ON word_ids (word_id);
         
