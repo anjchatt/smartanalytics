@@ -1,0 +1,163 @@
+<html>
+<!--link href="/static/css/bootstrap.min.css" ref="stylesheet" media="screen"-->
+<link rel="stylesheet" href="/static/css/bootstrap.min.css">
+<head>
+    <style>
+        .body{
+            background-color: #f5f8fa;
+        }
+        .tweet{
+            margin:0 20 0 20;
+            padding:10 10 10 10;
+            border: 1px solid transparent;
+            border-top: solid 0px;
+            border-color: #d3e0e9;
+            background-color: #ffffff;
+        }
+        .tweet-text{
+            font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
+            padding:5;
+            border: 1px solid transparent;
+            border-color: #d3e0e9;
+        }
+        
+        .bg-info-hov:hover{
+            background-color: #B7CEFF;
+        }
+        .bg-danger-hov:hover{
+            background-color: #FF7E7E;
+        }
+        .bg-success-hov:hover{
+            background-color: #A2FF7C;
+        }
+        
+        .first {
+            border-radius: 4px 4px 0 0;
+            border-top: solid 1px #d3e0e9;
+        }
+    </style>
+</head>
+
+<body class = "body">
+    
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Smart Analytics</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li>
+            <li><a href="#about">About</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Capgemini</a></li>
+        </ul>
+    </div>
+  </div>
+</nav>
+
+
+<body>
+    <div id="home">
+        <div class="col-md-12" style="margin:0 20 0 20">
+                <h3> HOME </h3>
+        </div>
+        <pre>gohome</pre>
+        <div class="col-md-8" id="stream">
+            <div class="row first tweet">
+                <div class="col-xs-8">
+                    <h4>Customer Name</h4>
+                    <div class="tweet-text bg-info bg-info-hov">
+                        <p class="text-muted">go ho</p>
+                        <p>hanks for the recent follow @kstookey @PaulGambles2 @cleantechken Happy to connect :) have a great Tuesday. >>🆓? http://bit.ly/tweet_thanks_</p>
+                    </div>
+                    <div class="tweet-text bg-danger bg-danger-hov">
+                        <p class="text-muted"></p>
+                        <p>hanks for the recent follow @kstookey @PaulGambles2 @cleantechken Happy to connect :) have a great Tuesday. >>🆓? http://bit.ly/tweet_thanks_</p>
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    
+                </div>
+            </div>
+            <div class="row tweet bg-info bg-info-hov">
+                test tweet 2
+            </div>
+            <div class="row tweet bg-danger bg-danger-hov">
+                test tweet 3
+            </div>
+            <div class="row tweet bg-success bg-success-hov">
+                test tweet 4
+            </div>
+        </div>
+    </div>
+</body>
+</body>
+
+<script>
+    function addTweet (tweet) {
+        var mydiv = document.getElementById('stream');
+        tweet_json = JSON.parse(tweet);
+        t = '<div class="row tweet first';
+        if (tweet_json["sentiment"]>=1){
+            t += ' bg-success-hov">';
+        } else if (tweet_json["sentiment"]<=-1){
+            t += ' bg-danger-hov">';
+        } else {
+            t += ' bg-info-hov">';
+        }
+        t += tweet_json["text"]+'<br>';
+        t += '<div class="text-muted">'+tweet_json["created_at"].slice(0,19)+'</div>';
+        
+        n_char = tweet_json["categories"].length;
+        if (n_char > 0){
+            t += '<br>';
+            cats = tweet_json["categories"].split("|");
+            for (i=1;i<cats.length-1;i++){
+                t += '<kbd>'+cats[i]+'</kbd> ';
+            }
+        }
+        t += '</div>';
+        $('.first').removeClass('first')
+        mydiv.innerHTML = t+mydiv.innerHTML;
+    };
+
+    function addLog (new_text) {
+        console.log(new_text);
+    };
+
+    var socket = new WebSocket('ws://10.170.9.216:8090/twitter_stream');
+    //var socket = new WebSocket('ws://10.170.9.216:8091');
+    socket.onopen = function () {addLog('Connected');};
+
+    socket.onclose = function (event) {
+        if(event.wasClean) {
+            addLog('Clean shutdown');
+        } else {
+            addLog('Connection closed unexpectedly');
+        };
+        addLog('Code: ' + event.code + '; Reason: ' + event.reason); 
+    };
+
+    socket.onerror = function (error) {addLog('Error: ' + error.message);
+                                      setTimeout(function(){}, 5000);};
+
+    socket.onmessage = function (event) {addTweet(event.data); };
+    
+    window.onbeforeunload = function() {
+        socket.onclose = function () {}; // disable onclose handler first
+        socket.close()
+    };
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<script type = "text/javascript" src="/static/js/bootstrap.min.js"></script>
+
+</html>
