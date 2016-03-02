@@ -1,0 +1,25 @@
+a.activator{
+    z-index:1;
+    cursor:pointer;
+}
+.overlay{
+    background:transparent url(../images/overlay.png) repeat top left;
+    position:fixed;
+    top:0px;
+    bottom:0px;
+    left:0px;
+    right:0px;
+    z-index:100;
+}
+.popup-box-right{
+    position:fixed;
+    top:0px;
+    bottom:0px;
+    left:110%;
+    right:-100%;
+    background-color:#fff;
+    border:1px solid #ccc;
+    -moz-box-shadow: 0 1px 5px #333;
+    -webkit-box-shadow: 0 1px 5px #333;
+    z-index:101;
+}

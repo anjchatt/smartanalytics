@@ -1,10 +1,11 @@
 <html>
-<!--link href="/static/css/bootstrap.min.css" ref="stylesheet" media="screen"-->
 <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+<link rel="stylesheet" href="/static/css/custom-objects.css">
 <head>
     <style>
         .body{
             background-color: #f5f8fa;
+            padding-top: 50px;
         }
         .tweet{
             margin:0 20 0 20;
@@ -30,17 +31,18 @@
         .bg-success-hov:hover{
             background-color: #A2FF7C;
         }
-        
         .first {
             border-radius: 4px 4px 0 0;
             border-top: solid 1px #d3e0e9;
         }
+        .tab-page {z-index:0;}
+        .active {z-index:1;} 
     </style>
 </head>
 
 <body class = "body">
     
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-inverse navbar-fixed-top" style="z-index:1">
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2">
@@ -64,17 +66,25 @@
   </div>
 </nav>
 
-
 <body>
-    <div id="home">
-        <div class="col-md-12" style="margin:0 20 0 20">
-                <h3> HOME </h3>
+    <div id="home" class="tab-page active">
+        <div class="overlay boxclose" id="overlay" style="display:none;"></div>
+        <div class="popup-box-right" id="popup-box-right">
+            <iframe src="http://10.170.9.216:8084/" style="width:100%; height:100%; border:0;"></iframe>
         </div>
-        <pre>gohome</pre>
+
+        <div class="col-md-12" style="margin:0 20 0 20">
+            <h3> Closed Loop Service Solution </h3>
+        </div>
         <div class="col-md-8" id="stream">
             <div class="row first tweet">
+                <div class="col-xs-6" style="text-align:left;">
+                    <h4><a class="activator" id="activator">Customer Name</a> (<a href="{twitter.com}">@twittername</a>)</h4>
+                </div>
+                <div class="col-xs-6" style="text-align:left;">
+                    <span class="text-danger" style="float:right;">highest priority</span>
+                </div>
                 <div class="col-xs-8">
-                    <h4>Customer Name</h4>
                     <div class="tweet-text bg-info bg-info-hov">
                         <p class="text-muted">go ho</p>
                         <p>hanks for the recent follow @kstookey @PaulGambles2 @cleantechken Happy to connect :) have a great Tuesday. >>🆓? http://bit.ly/tweet_thanks_</p>
@@ -85,7 +95,13 @@
                     </div>
                 </div>
                 <div class="col-xs-4">
+                    <h5>Persona: {high priority}</h5>
+                    <h5>Influence score: {some score here}</h5>
+                    <hr/>
                     
+                    <h5>Sentiment: negative</h5>
+                    <h5>Folowers: 1203</h5>
+
                 </div>
             </div>
             <div class="row tweet bg-info bg-info-hov">
@@ -157,7 +173,10 @@
         socket.close()
     };
 </script>
+    
+    
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<script type = "text/javascript" src="/static/js/popup-box-right.js"></script>
 <script type = "text/javascript" src="/static/js/bootstrap.min.js"></script>
 
 </html>
