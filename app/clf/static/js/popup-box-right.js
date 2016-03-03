@@ -1,5 +1,5 @@
 $(function() {
-    $('#activator').click(function(){
+    $('.activator').click(function(){
         /* insert 720 page request here */
         $('#overlay').fadeIn('fast',function(){
             $('#popup-box-right').animate({'right':'0', 'left':'10%'},1000);
