@@ -18,6 +18,7 @@
         .tweet-text{
             font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
             padding:5;
+            margin : 5;
             border: 1px solid transparent;
             border-color: #d3e0e9;
         }
@@ -77,12 +78,11 @@
             <div class="popup-box-right" id="popup-box-right">
                 <!--iframe src="http://10.170.9.216:8084/" style="width:100%; height:100%; border:0;"></iframe-->
             </div>
-            <div class="col-md-7" style="margin:0 20 0 20;">
-                <h3> Closed Loop Service Solution </h3>
-                <button id="updateButton" type="button" class="btn btn-primaryс" onclick="updateData()">Update</button>
+            <div class="col-md-7" style="margin:10 20 10 20;">
+                <h3 style="display: inline;"> Closed Loop Service Solution </h3>
+                (<a href="#" id="updateLink">Refresh</a>)
             </div>
-        <div class="col-md-8" id="stream"></div>
-        
+        <div class="col-md-9" id="stream"></div>
         
         
         
@@ -189,7 +189,8 @@
                         t += '</div>';
                     }
                 }
-                t += '</div><div class="col-xs-4"><h5>Persona: '+tweet[0]['segment']+'</h5><h5>Influence score: '+tweet[0]['klout_score']+'</h5><h5>Folowers: '+tweet[0]['followers_count']+'</h5></div>';
+                t += '</div><div class="col-xs-4"><h5>Persona: '+tweet[0]['segment']+'</h5><h5>Influence score: '+tweet[0]['klout_score']+'</h5><h5>Folowers: '+tweet[0]['followers_count']+'</h5>';
+                t += '<div class="chart_div" data-sent="'+tweet[0]['sentiment']+'" style="width: 100%; height: 250px; display: inline-block; margin: 0 auto"></div></div>';
                 $("#stream").append(t);
             });
             $('.activator').click(function(){
@@ -198,8 +199,14 @@
                     $('#popup-box-right').animate({'right':'0', 'left':'10%'},1000);
                 });
             });
+            google.charts.setOnLoadCallback(drawChart);
+
         });
+        
+
     }
+    
+
     
     function addLog (new_text) {
         console.log(new_text);
@@ -230,9 +237,46 @@
         socket.close()
     };
 </script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script type="text/javascript">
+    google.charts.load('current', {'packages':['gauge']});
+    function drawChart() {
+        var options = {
+            redFrom: 75, redTo: 100,
+            yellowFrom:25, yellowTo: 75,
+            minorTicks: 1, min: -100, max: 100
+        };
+        
+        $('.chart_div').each(function(){
+            var sentiment = $(this).data('sent');
+            
+            var data = google.visualization.arrayToDataTable([
+                ['Label', 'Value'],
+                ['Sentiment', -sentiment*50]
+            ]);
+            
+            var chart = new google.visualization.Gauge(this);
+            chart.draw(data, options);
+            
+            function resizeHandler () {
+                chart.draw(data, options);
+            }
+            if (window.addEventListener) {
+                window.addEventListener('resize', resizeHandler, false);
+            }
+            else if (window.attachEvent) {
+                window.attachEvent('onresize', resizeHandler);
+            }
+        })
+    }
+</script>
+    
+    
 <script>
+    $('#updateLink').click( function(){ updateData(); return false; });
     $('#exampleModal').on('show.bs.modal', function (event) {
       var button = $(event.relatedTarget)
       var recipient = button.data('whatever')
@@ -249,7 +293,7 @@
           py_data = $(this).data('py-data');
           console.log(py_data)
           $.post('/reply',{'status':status,'status_id':status_id,'py_data':py_data})
-          $('#exampleModal').hide('hide');
+          $('#exampleModal').modal('hide');
       })
     })
 </script>
