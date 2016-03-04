@@ -21,7 +21,12 @@
             border: 1px solid transparent;
             border-color: #d3e0e9;
         }
-        
+        .agent-text{
+            margin-left:40;
+        }
+        .customer-text{
+            margin-right:40;
+        }
         .bg-info-hov:hover{
             background-color: #B7CEFF;
         }
@@ -77,10 +82,60 @@
                 <button id="updateButton" type="button" class="btn btn-primaryс" onclick="updateData()">Update</button>
             </div>
         <div class="col-md-8" id="stream"></div>
+        
+        
+        
+        
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">New message</h4>
+              </div>
+              <div class="modal-body">
+                <form>
+                  <div class="form-group">
+                    <label for="message-text" class="control-label">Message:</label>
+                    <textarea class="form-control" id="message-text"></textarea>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary modal-post-tweet">Send message</button>
+              </div>
+            </div>
+          </div>
+        </div>
     </div>
 </body>
 </body>
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 <script>
     function updateData(){
         $.getJSON('/data', function(data){
@@ -92,8 +147,10 @@
                     var t = '<div class="row tweet">';
                 }
                 
-                t += '<div class="col-xs-6" style="text-align:left;"><h4><a class="activator">' + tweet[0]['user_name'] + '</a> (<a href="http://twitter.com/' + tweet[0]['user_screen_name'] + '">@' + tweet['user_screen_name'] + '</a>)</h4></div><div class="col-xs-6" style="text-align:left;"><span class="';
+                t += '<div class="col-xs-6" style="text-align:left;"><h4><a class="activator">' + tweet[0]['user_name'] + '</a> (<a href="http://twitter.com/' + tweet[0]['user_screen_name'] + '">@' + tweet[0]['user_screen_name'] + '</a>)</h4></div><div class="col-xs-6" style="text-align:left;"><span class="';
                 tweet[0]['priority_level'] = Math.random()*8;/// REPLACE THIS LINE
+                //var segment_id = tweet[tweet.length-1]['segment_id'];
+                //if ((segment_id >= 4) && (sentiment >= 4))
                 if(tweet[0]['priority_level']<=2) {
                         t += 'text-danger" style="float:right;">highest priority';
                 }else if(tweet[0]['priority_level']<=4) {
@@ -106,24 +163,31 @@
                 t += '</span></div><div class="col-xs-8">';
                 
                 for (i=0;i<tweet.length;i++){
-                    if(tweet[i]['sentiment'] >= 1){
-                            t+='<div class="tweet-text bg-success bg-success-hov">';
-                    }else if(tweet[i]['sentiment'] <= -1){
-                            t+='<div class="tweet-text bg-danger bg-danger-hov">';
+                    if(tweet[i]['is_agent_reply']){
+                        // AGENT TWEET
+                        t+='<div class="tweet-text bg-info bg-info-hov agent-text"><p class="text-muted">' + tweet[i]['created_at'].slice(0,19) + '</p>';
+                        t += '<p>' + tweet[i]['text'] + '</p></div>';
                     }else{
-                            t+='<div class="tweet-text bg-info bg-info-hov">';
-                    }
-                    t += '<p class="text-muted">' + tweet[i]['created_at'].slice(0,19) + '  <a href="http://www.twitter.com/'+tweet[i]['user_screen_name']+'/status/'+tweet[i]['id_str']+'">(link)</a></p>';
-                    t += '<p>' + tweet[i]['text'] + '</p>';
-                    n_char = tweet[i]["categories"].length;
-                    if (n_char > 0){
-                        t += '<br>';
-                        cats = tweet[i]["categories"].split("|");
-                        for (i=1;i<cats.length-1;i++){
-                            t += '<kbd>'+cats[i]+'</kbd> ';
+                        // CUSTOMER TWEET
+                        if(tweet[i]['sentiment'] >= 1){
+                                t+='<div class="tweet-text bg-success bg-success-hov';
+                        }else if(tweet[i]['sentiment'] <= -1){
+                                t+='<div class="tweet-text bg-danger bg-danger-hov';
+                        }else{
+                                t+='<div class="tweet-text bg-info bg-info-hov';
                         }
+                        t += ' customer-text"><p class="text-muted">' + tweet[i]['created_at'].slice(0,19) + '  <a href="http://www.twitter.com/'+tweet[i]['user_screen_name']+'/status/'+tweet[i]['id_str']+'">(link)</a> <a href="" data-toggle="modal" data-target="#exampleModal" data-whatever="@' + tweet[i]['user_screen_name'] + '" data-status-id="'+tweet[i]['id_str']+'" data-py-data="{\'sentiment\':'+tweet[i]['sentiment']+',\'user_name\':\''+tweet[i]['user_name']+'\'}">(reply)</a></p>';
+                        t += '<p>' + tweet[i]['text'] + '</p>';
+                        n_char = tweet[i]["categories"].length;
+                        if (n_char > 0){
+                            t += '<br>';
+                            cats = tweet[i]["categories"].split("|");
+                            for (i=1;i<cats.length-1;i++){
+                                t += '<kbd>'+cats[i]+'</kbd> ';
+                            }
+                        }
+                        t += '</div>';
                     }
-                    t += '</div>';
                 }
                 t += '</div><div class="col-xs-4"><h5>Persona: '+tweet[0]['segment']+'</h5><h5>Influence score: '+tweet[0]['klout_score']+'</h5><h5>Folowers: '+tweet[0]['followers_count']+'</h5></div>';
                 $("#stream").append(t);
@@ -137,33 +201,6 @@
         });
     }
     
-    function addTweet (tweet) {
-        var mydiv = document.getElementById('stream');
-        tweet_json = JSON.parse(tweet);
-        t = '<div class="row tweet first';
-        if (tweet_json["sentiment"]>=1){
-            t += ' bg-success-hov">';
-        } else if (tweet_json["sentiment"]<=-1){
-            t += ' bg-danger-hov">';
-        } else {
-            t += ' bg-info-hov">';
-        }
-        t += tweet_json["text"]+'<br>';
-        t += '<div class="text-muted">'+tweet_json["created_at"].slice(0,19)+'</div>';
-        
-        n_char = tweet_json["categories"].length;
-        if (n_char > 0){
-            t += '<br>';
-            cats = tweet_json["categories"].split("|");
-            for (i=1;i<cats.length-1;i++){
-                t += '<kbd>'+cats[i]+'</kbd> ';
-            }
-        }
-        t += '</div>';
-        $('.first').removeClass('first')
-        mydiv.innerHTML = t+mydiv.innerHTML;
-    };
-
     function addLog (new_text) {
         console.log(new_text);
     };
@@ -192,10 +229,31 @@
         socket.onclose = function () {}; // disable onclose handler first
         socket.close()
     };
-    
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+
+<script>
+    $('#exampleModal').on('show.bs.modal', function (event) {
+      var button = $(event.relatedTarget)
+      var recipient = button.data('whatever')
+      var status_id = button.data('status-id')
+      var py_data = button.data('py-data')
+      var modal = $(this)
+      modal.find('.modal-title').text('New message to ' + recipient)
+      modal.find('.modal-post-tweet').data('status-id', status_id)
+      modal.find('.modal-post-tweet').data('py-data', py_data)
+      $('#message-text').val(recipient+' ')
+      modal.find('.modal-post-tweet').click(function(){
+          status = $('#message-text').val();
+          status_id = $(this).data('status-id');
+          py_data = $(this).data('py-data');
+          console.log(py_data)
+          $.post('/reply',{'status':status,'status_id':status_id,'py_data':py_data})
+          $('#exampleModal').hide('hide');
+      })
+    })
 </script>
     
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 <script type = "text/javascript" src="/static/js/popup-box-right.js"></script>
 <script type = "text/javascript" src="/static/js/bootstrap.min.js"></script>
 
