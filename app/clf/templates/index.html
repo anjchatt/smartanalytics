@@ -7,6 +7,12 @@
             background-color: #f5f8fa;
             padding-top: 50px;
         }
+        table.params th{
+            width: 50%;
+        }
+        table.params td{
+            padding-bottom: 10px;
+        }
         .tweet{
             margin:0 20 0 20;
             padding:10 10 10 10;
@@ -44,34 +50,53 @@
         .tab-page {z-index:0;}
         .active {z-index:1;} 
     </style>
+    
+    <style type="text/css">
+        /* Node Captions */
+        .user text {
+            fill: #000000;
+            text-shadow: none;
+        }
+        .customer text {
+            fill: #000000;
+            text-shadow: none;
+        }
+        .center text {
+            fill: #000000;
+            text-shadow: none;
+        }
+        .edge.active text {
+            fill: #000000;
+            text-shadow: none;
+        }
+    </style>
 </head>
 
 <body class = "body">
     
 <nav class="navbar navbar-inverse navbar-fixed-top" style="z-index:1">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">Smart Analytics</a>
-    </div>
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Smart Analytics</a>
+        </div>
 
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
-        <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li>
-            <li><a href="#about">About</a></li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Capgemini</a></li>
-        </ul>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">Capgemini</a></li>
+            </ul>
+        </div>
     </div>
-  </div>
 </nav>
-
 <body>
     <div id="home" class="tab-page active">
         <div class="overlay boxclose" id="overlay" style="display:none;"></div>
@@ -82,54 +107,53 @@
                 <h3 style="display: inline;"> Closed Loop Service Solution </h3>
                 (<a href="#" id="updateLink">Refresh</a>)
             </div>
-        <div class="col-md-9" id="stream"></div>
-        
-        
-        
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="exampleModalLabel">New message</h4>
-              </div>
-              <div class="modal-body">
-                <form>
-                  <div class="form-group">
-                    <label for="message-text" class="control-label">Message:</label>
-                    <textarea class="form-control" id="message-text"></textarea>
-                  </div>
-                </form>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary modal-post-tweet">Send message</button>
-              </div>
+        <div class="col-md-12" id="stream"></div>
+
+        <!-- Network modal -->
+        <div class="modal fade" id="networkModal" tabindex="-1" role="dialog" aria-labelledby="networkModalLabel">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="networkModalLabel">Customer influence network</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="alchemy" id="alchemy" style="width:100%; height:400px; background:#FFFFFF;"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
             </div>
-          </div>
+        </div>
+
+        <!-- Tweet modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="exampleModalLabel">New message</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="message-text" class="control-label">Message:</label>
+                                <textarea class="form-control" id="message-text"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary modal-post-tweet">Send message</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </body>
 </body>
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     
@@ -146,22 +170,45 @@
                 } else {
                     var t = '<div class="row tweet">';
                 }
-                
-                t += '<div class="col-xs-6" style="text-align:left;"><h4><a class="activator">' + tweet[0]['user_name'] + '</a> (<a href="http://twitter.com/' + tweet[0]['user_screen_name'] + '">@' + tweet[0]['user_screen_name'] + '</a>)</h4></div><div class="col-xs-6" style="text-align:left;"><span class="';
+
+                t += '<div class="col-xs-10" style="text-align:left;"><h4><a class="activator">' + tweet[0]['user_name'] + '</a> (<a href="http://twitter.com/' + tweet[0]['user_screen_name'] + '">@' + tweet[0]['user_screen_name'] + '</a>)</h4></div>';
+                t += '<div class="col-xs-2" style="text-align:left;"><span class="';
                 tweet[0]['priority_level'] = Math.random()*8;/// REPLACE THIS LINE
-                //var segment_id = tweet[tweet.length-1]['segment_id'];
-                //if ((segment_id >= 4) && (sentiment >= 4))
-                if(tweet[0]['priority_level']<=2) {
-                        t += 'text-danger" style="float:right;">highest priority';
-                }else if(tweet[0]['priority_level']<=4) {
-                        t += 'text-warning" style="float:right;">high priority';
-                }else if(tweet[0]['priority_level']<=6) {
-                        t += 'text-info" style="float:right;">medium priority';
-                }else{
-                        t += 'text-success" style="float:right;">low priority';
-                }
-                t += '</span></div><div class="col-xs-8">';
                 
+                var sentiment = tweet[0]['sentiment'];
+                var segment_id = tweet[tweet.length-1]['segment_id'];
+                if (tweet[0]['category']){
+                    var is_froad = tweet[0]['category'].search('froad')>0;
+                }else{
+                    var is_froad = false;
+                }
+                
+                if(tweet[0]['is_agent_reply']){
+                    t += 'text-success" style="float:right;"><span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span> replied';
+                } else if ((segment_id >= 4 && sentiment < 0) || is_froad) {
+                    t += 'text-danger" style="float:right;"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> highest priority';
+                } else if ((segment_id >= 2 && sentiment < 0) || (sentiment < 1)) {
+                    t += 'text-warning" style="float:right;"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> high priority';
+                } else if (sentiment < 0) {
+                    t += 'text-info" style="float:right;"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> medium priority';
+                } else {
+                    t += 'text-success" style="float:right;"><span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span> low priority';
+                }
+                
+                /*
+                if(tweet[0]['priority_level']<=2) {
+                    t += 'text-danger" style="float:right;"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> highest priority';
+                }else if(tweet[0]['priority_level']<=4) {
+                    t += 'text-warning" style="float:right;"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> high priority';
+                }else if(tweet[0]['priority_level']<=6) {
+                    t += 'text-info" style="float:right;"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> medium priority';
+                }else {
+                    t += 'text-success" style="float:right;"><span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span> low priority';
+                }else if(tweet[0]['is_agent_reply']){
+                    t += 'text-success" style="float:right;"><span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span> low priority';
+                }*/
+                t += '</span></div><div class="col-xs-5">';
+
                 for (i=0;i<tweet.length;i++){
                     if(tweet[i]['is_agent_reply']){
                         // AGENT TWEET
@@ -170,13 +217,14 @@
                     }else{
                         // CUSTOMER TWEET
                         if(tweet[i]['sentiment'] >= 1){
-                                t+='<div class="tweet-text bg-success bg-success-hov';
+                            t+='<div class="tweet-text bg-success bg-success-hov';
                         }else if(tweet[i]['sentiment'] <= -1){
-                                t+='<div class="tweet-text bg-danger bg-danger-hov';
+                            t+='<div class="tweet-text bg-danger bg-danger-hov';
                         }else{
-                                t+='<div class="tweet-text bg-info bg-info-hov';
+                            t+='<div class="tweet-text bg-info bg-info-hov';
                         }
-                        t += ' customer-text"><p class="text-muted">' + tweet[i]['created_at'].slice(0,19) + '  <a href="http://www.twitter.com/'+tweet[i]['user_screen_name']+'/status/'+tweet[i]['id_str']+'">(link)</a> <a href="" data-toggle="modal" data-target="#exampleModal" data-whatever="@' + tweet[i]['user_screen_name'] + '" data-status-id="'+tweet[i]['id_str']+'" data-py-data="{\'sentiment\':'+tweet[i]['sentiment']+',\'user_name\':\''+tweet[i]['user_name']+'\'}">(reply)</a></p>';
+                        t += ' customer-text">';
+                        t += '<p class="text-muted">' + tweet[i]['created_at'].slice(0,19) + '  <a href="http://www.twitter.com/'+tweet[i]['user_screen_name']+'/status/'+tweet[i]['id_str']+'">(link)</a> <a href="" data-toggle="modal" data-target="#exampleModal" data-whatever="@' + tweet[i]['user_screen_name'] + '" data-status-id="'+tweet[i]['id_str']+'" data-py-data="{\'sentiment\':'+tweet[i]['sentiment']+',\'user_name\':\''+tweet[i]['user_name']+'\'}">(reply)</a></p>';
                         t += '<p>' + tweet[i]['text'] + '</p>';
                         n_char = tweet[i]["categories"].length;
                         if (n_char > 0){
@@ -189,7 +237,12 @@
                         t += '</div>';
                     }
                 }
-                t += '</div><div class="col-xs-4"><h5>Persona: '+tweet[0]['segment']+'</h5><h5>Influence score: '+tweet[0]['klout_score']+'</h5><h5>Folowers: '+tweet[0]['followers_count']+'</h5>';
+                t += '</div><div class="col-xs-4">';
+                t += '<table class="params" style="width:100%;"><th></th><th></th>';
+                t += '<tr><td>  Segment:</td><td>'+tweet[0]['segment']+'</td></tr>';
+                t += '<tr><td>Influence score:</td><td>'+tweet[0]['klout_score']+'</td></tr>';
+                t += '<tr><td>Folowers:</td><td>'+tweet[0]['followers_count']+'</td></tr></table>';
+                t += '<a href="#" data-toggle="modal" data-target="#networkModal">Show influence network</a>';
                 t += '<div class="chart_div" data-sent="'+tweet[0]['sentiment']+'" style="width: 100%; height: 250px; display: inline-block; margin: 0 auto"></div></div>';
                 $("#stream").append(t);
             });
@@ -200,18 +253,14 @@
                 });
             });
             google.charts.setOnLoadCallback(drawChart);
-
         });
-        
-
     }
-    
-
     
     function addLog (new_text) {
         console.log(new_text);
     };
 
+    /*
     var socket = new WebSocket('ws://10.170.9.216:8090/twitter_stream');
     //var socket = new WebSocket('ws://10.170.9.216:8091');
     socket.onopen = function () {addLog('Connected');};
@@ -229,12 +278,12 @@
                                       setTimeout(function(){}, 5000);};
 
     socket.onmessage = function (event) {addLog('Data: ' + event.data); };
-    
+    */
     window.onload = updateData;
 
     window.onbeforeunload = function() {
-        socket.onclose = function () {}; // disable onclose handler first
-        socket.close()
+        //socket.onclose = function () {}; // disable onclose handler first
+        //socket.close()
     };
 </script>
 
@@ -300,5 +349,72 @@
     
 <script type = "text/javascript" src="/static/js/popup-box-right.js"></script>
 <script type = "text/javascript" src="/static/js/bootstrap.min.js"></script>
+<script src="/static/alchemy.min.js"></script>
 
+<script type="text/javascript">
+
+    var config = {
+        dataSource: '/graph',
+        directedEdges: true,
+        backgroundColor: '#FFFFFF',
+        nodeTypes: { "role": 
+                    ["user", "customer", "center"] 
+                   },
+        graphHeight: function(){ return 400; },
+        graphWidth: function(){ return 800; },
+        nodeStyle: {
+            "all": {
+                "borderColor": "#54a0ed",
+                "color": "#54a0ed",
+                "borderWidth": function(d, radius) {
+                    return radius / 4
+                },
+                "color": function(d) { 
+                    return "rgba(104, 185, 254, " + 
+                        (d.getProperties().memoryUsage / 100) + " )" 
+                }, 
+                "radius": function(d) {
+                    if(d.getProperties().root)
+                        return 15; else return 10 
+                            }, 
+            },
+            "customer":{
+                "color": "#7fb005",
+                "selected": {
+                    "color": "#ffffff",
+                },                    
+                "highlighted": {
+                    "color": "#b4dcff"
+                }
+            },
+            "center":{
+                "color": "#ed020b",
+                "selected": {
+                    "color": "#ffffff",
+                },                    
+                "highlighted": {
+                    "color": "#b4dcff"
+                }
+            }
+        },
+        edgeStyle: {
+            "all": {
+                "width": function(d) {
+                    return (Math.log(d.getProperties().weight) + 0.5)*2
+                },
+                "color": "#7fb005",
+            }
+        },
+        afterLoad : function(){
+            $('#alchemy').width('100%');
+            $('#alchemy').find('svg').width('100%');
+            $('#alchemy').find('svg').height('400');
+        }
+    };
+
+    alchemy = new Alchemy(config);
+    
+</script>
+
+    
 </html>
