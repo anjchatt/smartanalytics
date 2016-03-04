@@ -69,17 +69,13 @@
 <body>
     <div id="home" class="tab-page active">
         <div class="overlay boxclose" id="overlay" style="display:none;"></div>
-        <div class="popup-box-right" id="popup-box-right">
-            <!--iframe src="http://10.170.9.216:8084/" style="width:100%; height:100%; border:0;"></iframe-->
-        </div>
-
-        <div class="col-md-5" style="margin:0 20 0 20;">
-            <h3> Closed Loop Service Solution </h3>
-        </div>
-        <div class="col-md-2 text-right">
-            <button id="updateButton" type="button" class="btn btn-primary" onclick="updateData()" style="float:right;">Update</button>
-        </div>
-        
+            <div class="popup-box-right" id="popup-box-right">
+                <!--iframe src="http://10.170.9.216:8084/" style="width:100%; height:100%; border:0;"></iframe-->
+            </div>
+            <div class="col-md-7" style="margin:0 20 0 20;">
+                <h3> Closed Loop Service Solution </h3>
+                <button id="updateButton" type="button" class="btn btn-primaryс" onclick="updateData()">Update</button>
+            </div>
         <div class="col-md-8" id="stream"></div>
     </div>
 </body>
@@ -117,19 +113,19 @@
                     }else{
                             t+='<div class="tweet-text bg-info bg-info-hov">';
                     }
-                    t += '<p class="text-muted">' + tweet[i]['created_at'] + tweet[i]['sentiment'] + '</p>';
+                    t += '<p class="text-muted">' + tweet[i]['created_at'].slice(0,19) + '  <a href="http://www.twitter.com/'+tweet[i]['user_screen_name']+'/status/'+tweet[i]['id_str']+'">(link)</a></p>';
                     t += '<p>' + tweet[i]['text'] + '</p>';
                     n_char = tweet[i]["categories"].length;
                     if (n_char > 0){
                         t += '<br>';
-                        cats = tweet_json["categories"].split("|");
+                        cats = tweet[i]["categories"].split("|");
                         for (i=1;i<cats.length-1;i++){
                             t += '<kbd>'+cats[i]+'</kbd> ';
                         }
                     }
                     t += '</div>';
                 }
-                t += '</div><div class="col-xs-4"><h5>Persona: {high priority}</h5><h5>Influence score: {some score here}</h5><h5>Folowers: 1203</h5></div>';
+                t += '</div><div class="col-xs-4"><h5>Persona: '+tweet[0]['segment']+'</h5><h5>Influence score: '+tweet[0]['klout_score']+'</h5><h5>Folowers: '+tweet[0]['followers_count']+'</h5></div>';
                 $("#stream").append(t);
             });
             $('.activator').click(function(){
