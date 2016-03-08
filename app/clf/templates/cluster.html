@@ -1,0 +1,338 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+        <!--script src="/static/js/jquery-2.2.1.min.js"></script-->
+        <title>Cluster analysis</title>
+    </head>
+    <body>
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Smart Analytics</a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/">Home <span class="sr-only">(current)</span></a></li>
+                        <li class="active"><a href="/cluster">Cluster Analysis</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#">Capgemini</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div id="Cluster_analysis" class="container">
+            <h3>Cluster analysis</h3>
+            <hr />
+
+            <!-- row0 Bank's ex-worker fined -->
+            <div class="row">
+                <div class="col-md-4 text-center">ID/Name:<br /><b>Bank's ex-worker fined</b></div>
+                <div class="col-md-8" id="row0_activity">Cluster activity</div>
+            </div>
+            <div class="row">
+                <div class="col-md-4" id="row0_tags">Top Tags</div>
+                <div class="col-md-4" id="row0_users">Top users</div>
+                <div class="col-md-4" id="row0_keywords">Keywords</div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">Sample tweets:
+                    <pre>Ex-Fairy Bank analyst fined, suspended over stock rating</pre>
+                    <pre>An analyst falsely certified that the views he expressed in a Febrary 2011 research report accurately reflected his own beliefs</pre>
+                </div>
+            </div>
+            <hr />
+
+            <!-- row1 Bank's financial results -->
+            <hr />
+            <div class="row">
+                <div class="col-md-4 text-center">ID/Name:<br /><b>Bank's financial results</b></div>
+                <div class="col-md-8" id="row1_activity">Cluster activity</div>
+            </div>
+            <div class="row">
+                <div class="col-md-4" id="row1_tags">Top Tags</div>
+                <div class="col-md-4" id="row1_users">Top users</div>
+                <div class="col-md-4" id="row1_keywords">Keywords</div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">Sample tweets:
+                    <pre>#Bank posts 4Q EPS $0.58 Will you get a good return? #Stocks #FinLit# FinTech</pre>
+                    <pre>Bank CEO Alice Deer on Q4 2015 Results Earnings Call Transcript http://seriouslyfinance.com/2016/01/2...s.erious.ly</pre>
+                </div>
+            </div>
+            <hr />
+
+            <!-- row2 Buzz about new promo -->
+            <hr />
+            <div class="row">
+                <div class="col-md-4 text-center">ID/Name:<br /><b>Buzz about new promo</b></div>
+                <div class="col-md-8" id="row2_activity">Cluster activity</div>
+            </div>
+            <div class="row">
+                <div class="col-md-4" id="row2_tags">Top Tags</div>
+                <div class="col-md-4" id="row2_users">Top users</div>
+                <div class="col-md-4" id="row2_keywords">Keywords</div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">Sample tweets:
+                    <pre>#Bank now offers 5% down mortgages without #mortgage insurance</pre>
+                    <pre>Low-income borrowers with good credit get a crack at new Bank home loans. http://bit.ly/...</pre>
+                </div>
+            </div>
+            <hr />
+
+            <!-- row3 Talking about Bank's support -->
+            <hr />
+            <div class="row">
+                <div class="col-md-4 text-center">ID/Name:<br /><b>talks about support</b></div>
+                <div class="col-md-8" id="row3_activity">Cluster activity</div>
+            </div>
+            <div class="row">
+                <div class="col-md-4" id="row3_tags">Top Tags</div>
+                <div class="col-md-4" id="row3_users">Top users</div>
+                <div class="col-md-4" id="row3_keywords">Keywords</div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">Sample tweets:
+                    <pre>#bank #customerexperience #customerservice #worst worst customer service ever!! Not the first time!!! Ur other branches are better</pre>
+                    <pre>Literally the worst bank! Such poor customer service #bank</pre>
+                </div>
+            </div>
+            <hr />
+
+            <!-- row4 Hype about problems in one of the offices -->
+            <hr />
+            <div class="row">
+                <div class="col-md-4 text-center">ID/Name:<br /><b>Hype about problems in one of the offices</b></div>
+                <div class="col-md-8" id="row4_activity">Cluster activity</div>
+            </div>
+            <div class="row">
+                <div class="col-md-4" id="row4_tags">Top Tags</div>
+                <div class="col-md-4" id="row4_users">Top users</div>
+                <div class="col-md-4" id="row4_keywords">Keywords</div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">Sample tweets:
+                    <pre>Temple #Bank Hazmat Scare Caused by Protein Powder Accident http://us105fm.com/...</pre>
+                    <pre>Temple's #Bank on lockdown after suspicious powder found in package left in dropbox: http://ktemnews.com/?p=...</pre>
+                </div>
+            </div>
+            <hr />
+        </div> <!-- id="Cluster_analysis" class="container" -->
+
+        <script src="/static/js/highcharts.js"></script>
+        <script src="/static/js/bootstrap.min.js"></script>
+
+        <script>
+            $(function() {
+                Highcharts.setOptions({
+                    colors: ['#54a0ed', '#ed020b', '#7fb005'], 
+                });
+            });
+            // row0
+            $(function () {$('#row0_activity')
+                .highcharts({chart: {type: 'line', height: 150}, 
+                             title:{text: '', verticalAlign: 'bottom', style: { "color": "rgb(112, 112, 112)", "fill": "rgb(112, 112, 112)", "fontSize": "12px" },}, 
+                             legend:{enabled:false},
+                             xAxis: {categories: ["9 hrs","8 hrs","7 hrs","6 hrs","5 hrs","4 hrs","3 hrs","2 hrs","1 hr", "now"]},
+                             yAxis: {title: {text: 'Activity'}, gridLineDashStyle: "Dash"},
+                             series: [{name: 'Activity',data: [0, 0, 0, 180, 120, 150, 80, 50, 40, 20], color: '#54a0ed',}],
+                             credits:{enabled:false},
+                            });});
+            $(function () {$('#row0_tags')
+                .highcharts({chart: {type: 'bar', width: 300, height: 200}, 
+                             title: {text: '', verticalAlign: 'bottom', style: { "color": "rgb(112, 112, 112)", "fill": "rgb(112, 112, 112)", "fontSize": "12px" },}, 
+                             legend:{enabled:false},
+                             xAxis: {categories: ['#bank', '#fined', '#analyst', '#report']},
+                             yAxis: {title: {text: 'Top hashtags'}, gridLineDashStyle: "Dash", allowDecimals: false},
+                             series: [{name: 'Tags',data: [15, 9, 5, 5], colorByPoint: true}],
+                             credits:{enabled:false},
+                            });});
+            $(function () {$('#row0_users')
+                .highcharts({chart: {type: 'bar', width: 300, height: 200}, 
+                             title: {text: '', verticalAlign: 'bottom', style: { "color": "rgb(112, 112, 112)", "fill": "rgb(112, 112, 112)", "fontSize": "12px" },}, 
+                             legend:{enabled:false},
+                             xAxis: {categories: ['@News_Agency', '@FinanceAround', '@DonaldDuck']},
+                             yAxis: {title: {text: 'Top users'}, gridLineDashStyle: "Dash", allowDecimals: false},
+                             series: [{name: 'Tweets',data: [21, 12, 10], colorByPoint: true}],
+                             credits:{enabled:false},
+                            });});
+            $(function () {$('#row0_keywords')
+                .highcharts({chart: {type: 'bar', width: 300, height: 200}, 
+                             title: {text: ''}, 
+                             legend:{enabled:false},
+                             xAxis: {categories: ['ex-bank', 'analyst', 'fined', 'report', 'falsely']},
+                             yAxis: {title: {text: 'Top keywords'}, gridLineDashStyle: "Dash", allowDecimals: false},
+                             series: [{name: 'Times',data: [9, 7, 4, 2, 2], colorByPoint: true}],
+                             credits:{enabled:false},
+                            });});
+
+            // row1
+            $(function () {$('#row1_activity')
+                .highcharts({chart: {type: 'line', height: 150}, 
+                             title:{text: '', verticalAlign: 'bottom', style: { "color": "rgb(112, 112, 112)", "fill": "rgb(112, 112, 112)", "fontSize": "12px" },}, 
+                             legend:{enabled:false},
+                             xAxis: {categories: ["9 hrs","8 hrs","7 hrs","6 hrs","5 hrs","4 hrs","3 hrs","2 hrs","1 hr", "now"]},
+                             yAxis: {title: {text: 'Activity'}, gridLineDashStyle: "Dash"},
+                             series: [{name: 'Activity',data: [40, 60, 100, 160, 140, 100, 40, 20, 40, 20], color: '#54a0ed',}],
+                             credits:{enabled:false},
+                            });});
+            $(function () {$('#row1_tags')
+                .highcharts({chart: {type: 'bar', width: 300, height: 200}, 
+                             title: {text: '', verticalAlign: 'bottom', style: { "color": "rgb(112, 112, 112)", "fill": "rgb(112, 112, 112)", "fontSize": "12px" },}, 
+                             legend:{enabled:false},
+                             xAxis: {categories: ['#bank', '#stocks', '#FinLit', '#FinTech']},
+                             yAxis: {title: {text: 'Top hashtags'}, gridLineDashStyle: "Dash", allowDecimals: false},
+                             series: [{name: 'Tags',data: [10, 7, 5, 4], colorByPoint: true}],
+                             credits:{enabled:false},
+                            });});
+            $(function () {$('#row1_users')
+                .highcharts({chart: {type: 'bar', width: 300, height: 200}, 
+                             title: {text: '', verticalAlign: 'bottom', style: { "color": "rgb(112, 112, 112)", "fill": "rgb(112, 112, 112)", "fontSize": "12px" },}, 
+                             legend:{enabled:false},
+                             xAxis: {categories: ['@Donald', '@Quant', '@FinanceAnalysis']},
+                             yAxis: {title: {text: 'Top users'}, gridLineDashStyle: "Dash", allowDecimals: false},
+                             series: [{name: 'Tweets',data: [15, 11, 9], colorByPoint: true}],
+                             credits:{enabled:false},
+                            });});
+            $(function () {$('#row1_keywords')
+                .highcharts({chart: {type: 'bar', width: 300, height: 200}, 
+                             title: {text: ''}, 
+                             legend:{enabled:false},
+                             xAxis: {categories: ['bank', 'EPS', 'return', 'report', 'quarter', 'earnings']},
+                             yAxis: {title: {text: 'Top keywords'}, gridLineDashStyle: "Dash", allowDecimals: false},
+                             series: [{name: 'Times',data: [7, 7, 4, 3, 2, 2], colorByPoint: true}],
+                             credits:{enabled:false},
+                            });});
+            //	$(function () {$('#row1_keywords')
+            //		.highcharts({chart: {type: 'pie', width: 300, height: 200}, 
+            //			title: {text: 'Keywords', verticalAlign: 'bottom', style: { "color": "rgb(112, 112, 112)", "fill": "rgb(112, 112, 112)", "fontSize": "12px" }, }, 
+            //			series: [{name: 'Times',data: [{name:'bank', y:7}, {name:'EPS', y:7}, {name:'return', y:4}, {name:'report', y:3}, {name:'quarter', y:2}, {name:'earnings', y:2}]}],
+            //			credits:{enabled:false},
+            //		});});
+
+            // row2
+            $(function () {$('#row2_activity')
+                .highcharts({chart: {type: 'line', height: 150}, 
+                             title:{text: ''}, 
+                             legend:{enabled:false},
+                             xAxis: {categories: ["9 hrs","8 hrs","7 hrs","6 hrs","5 hrs","4 hrs","3 hrs","2 hrs","1 hr", "now"]},
+                             yAxis: {title: {text: 'Activity'}, gridLineDashStyle: "Dash"},
+                             series: [{name: 'Activity',data: [180, 250, 160, 140, 140, 100, 40, 20, 0, 0], color: '#54a0ed',}],
+                             credits:{enabled:false},
+                            });});
+            $(function () {$('#row2_tags')
+                .highcharts({chart: {type: 'bar', width: 300, height: 200}, 
+                             title: {text: ''}, 
+                             legend:{enabled:false},
+                             xAxis: {categories: ['#bank', '#mortgage']},
+                             yAxis: {title: {text: 'Top hashtags'}, gridLineDashStyle: "Dash", allowDecimals: false},
+                             series: [{name: 'Tags',data: [9, 5], colorByPoint: true}],
+                             credits:{enabled:false},
+                            });});
+            $(function () {$('#row2_users')
+                .highcharts({chart: {type: 'bar', width: 300, height: 200}, 
+                             title: {text: ''}, 
+                             legend:{enabled:false},
+                             xAxis: {categories: ['@Jess', '@Marketview', '@Realtors']},
+                             yAxis: {title: {text: 'Top users'}, gridLineDashStyle: "Dash", allowDecimals: false},
+                             series: [{name: 'Tweets',data: [8, 7, 3], colorByPoint: true}],
+                             credits:{enabled:false},
+                            });});
+            $(function () {$('#row2_keywords')
+                .highcharts({chart: {type: 'bar', width: 300, height: 200}, 
+                             title: {text: ''}, 
+                             legend:{enabled:false},
+                             xAxis: {categories: ['offer', 'mortgage', 'insurance', 'percent', 'down', 'credit','loan','FHA']},
+                             yAxis: {title: {text: 'Top keywords'}, gridLineDashStyle: "Dash", allowDecimals: false},
+                             series: [{name: 'Times',data: [10, 9, 4, 4, 3, 3, 2, 2], colorByPoint: true}],
+                             credits:{enabled:false},
+                            });});
+
+            // row3
+            $(function () {$('#row3_activity')
+                .highcharts({chart: {type: 'line', height: 150}, 
+                             title:{text: ''}, 
+                             legend:{enabled:false},
+                             xAxis: {categories: ["9 hrs","8 hrs","7 hrs","6 hrs","5 hrs","4 hrs","3 hrs","2 hrs","1 hr", "now"]},
+                             yAxis: {title: {text: 'Activity'}, gridLineDashStyle: "Dash"},
+                             series: [{name: 'Activity',data: [60, 80, 60, 100, 100, 120, 80, 60, 40, 60], color: '#54a0ed',}],
+                             credits:{enabled:false},
+                            });});
+            $(function () {$('#row3_tags')
+                .highcharts({chart: {type: 'bar', width: 300, height: 200}, 
+                             title: {text: ''}, 
+                             legend:{enabled:false},
+                             xAxis: {categories: ['#bank', '#customerservice', '#customerexperience']},
+                             yAxis: {title: {text: 'Top hashtags'}, gridLineDashStyle: "Dash", allowDecimals: false},
+                             series: [{name: 'Tags',data: [15, 13, 7], colorByPoint: true}],
+                             credits:{enabled:false},
+                            });});
+            $(function () {$('#row3_users')
+                .highcharts({chart: {type: 'bar', width: 300, height: 200}, 
+                             title: {text: ''}, 
+                             legend:{enabled:false},
+                             xAxis: {categories: ['@Seneka_perky', '@LaurenJimmy']},
+                             yAxis: {title: {text: 'Top users'}, gridLineDashStyle: "Dash", allowDecimals: false},
+                             series: [{name: 'Tweets',data: [5, 3], colorByPoint: true}],
+                             credits:{enabled:false},
+                            });});
+            $(function () {$('#row3_keywords')
+                .highcharts({chart: {type: 'bar', width: 300, height: 200}, 
+                             title: {text: ''}, 
+                             legend:{enabled:false},
+                             xAxis: {categories: ['worst', 'service', 'customer', 'poor', 'support', 'phone']},
+                             yAxis: {title: {text: 'Top keywords'}, gridLineDashStyle: "Dash", allowDecimals: false},
+                             series: [{name: 'Times',data: [17, 9, 8, 5, 3, 3], colorByPoint: true}],
+                             credits:{enabled:false},
+                            });});
+
+            // row4
+            $(function () {$('#row4_activity')
+                .highcharts({chart: {type: 'line', height: 150}, 
+                             title:{text: ''}, 
+                             legend:{enabled:false},
+                             xAxis: {categories: ["9 hrs","8 hrs","7 hrs","6 hrs","5 hrs","4 hrs","3 hrs","2 hrs","1 hr", "now"]},
+                             yAxis: {title: {text: 'Activity'}, gridLineDashStyle: "Dash"},
+                             series: [{name: 'Activity',data: [0, 0, 0, 0, 10, 100, 160, 140, 120, 60], color: '#54a0ed',}],
+                             credits:{enabled:false},
+                            });});
+            $(function () {$('#row4_tags')
+                .highcharts({chart: {type: 'bar', width: 300, height: 200}, 
+                             title: {text: ''}, 
+                             legend:{enabled:false},
+                             xAxis: {categories: ['#bank']},
+                             yAxis: {title: {text: 'Top hashtags'}, gridLineDashStyle: "Dash", allowDecimals: false},
+                             series: [{name: 'Tags',data: [8], colorByPoint: true}],
+                             credits:{enabled:false},
+                            });});
+            $(function () {$('#row4_users')
+                .highcharts({chart: {type: 'bar', width: 300, height: 200}, 
+                             title: {text: ''}, 
+                             legend:{enabled:false},
+                             xAxis: {categories: ['@US155fm', '@LaurenJimmy']},
+                             yAxis: {title: {text: 'Top users'}, gridLineDashStyle: "Dash", allowDecimals: false},
+                             series: [{name: 'Tweets',data: [9, 3], colorByPoint: true}],
+                             credits:{enabled:false},
+                            });});
+            $(function () {$('#row4_keywords')
+                .highcharts({chart: {type: 'bar', width: 300, height: 200}, 
+                             title: {text: ''}, 
+                             legend:{enabled:false},
+                             xAxis: {categories: ['lockdown', 'powder', 'suspicious', 'dropbox', 'accident']},
+                             yAxis: {title: {text: 'Top keywords'}, gridLineDashStyle: "Dash", allowDecimals: false},
+                             series: [{name: 'Times',data: [11, 9, 8, 5, 5], colorByPoint: true}],
+                             credits:{enabled:false},
+                            });});		
+        </script>
+    </body>
+</html>
