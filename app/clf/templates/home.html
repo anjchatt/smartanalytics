@@ -222,7 +222,6 @@
                     $('#popup-box-right').animate({'right':'0', 'left':'10%'},1000);
                 });
             });
-            google.charts.setOnLoadCallback(drawChart);
         });
     }
     
@@ -263,9 +262,9 @@
 
 <script type="text/javascript">
 	$(function () {
-		$('.chart_div').each(function () {
-			var sentiment = $(this).data('sent');
-			$(this).highcharts({
+		$('.chart_div').each(function (i, obj) {
+			var sentiment = $(obj).data('sent');
+			var chart = new Highcharts.Chart({
 				chart: { type: 'gauge', height: 200 },
 				title: { text: '' },			
 				pane: [{
@@ -312,11 +311,8 @@
 				plotOptions: { gauge: { dial: { radius: '100%' } } },
 				series: [{ data: [sentiment], }],
 						credits:{enabled:false},
-			},
-
-			function (chart) {
-					chart.redraw();
 			});
+			chart.redraw();
 		});
 });
 </script>
