@@ -1,0 +1,6 @@
+{"token" : "4928196327-OJO2bOcQ8ODxZcvQqcQZOJ1R9WW0N2F4rrzSnhk",
+"token_secret" : "ZVW5ZwNXdp8zn7MxlOnLtlIctPIRYwq52L8FLGwTQVamr",
+"consumer_key" : "Gk8b97BvqMaYnzAG2uUpVxAO4",
+"consumer_secret" : "oXlYxQCgW0uYkJXHbHwuEnZ2sbMEp98hhVg8kLn732eiS1oGrG",
+"twitter_db" : {"database" : "twitter","user" : "postgres"},
+"neo4j" : "http://neo4j:neo4j@localhost:7474/db/data/"}

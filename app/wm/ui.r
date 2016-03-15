@@ -9,7 +9,7 @@ cat_names <- list('Retirement Plan','Investment Management',
 
 
 shinyUI(fluidPage(
-  tags$script(src='/d3.min.js'),
+  #tags$script(src='/d3.min.js'),
   tags$style("body{background: #f0fff0;min-width: 1000px;}"),
   fluidRow(
     column(9,
