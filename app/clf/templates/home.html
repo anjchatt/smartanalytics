@@ -265,7 +265,7 @@
 		$('.chart_div').each(function (i, obj) {
 			var sentiment = $(obj).data('sent');
 			var chart = new Highcharts.Chart({
-				chart: { type: 'gauge', height: 200 },
+				chart: { type: 'gauge', height: 200, renderTo: obj },
 				title: { text: '' },			
 				pane: [{
 					startAngle: -45,
