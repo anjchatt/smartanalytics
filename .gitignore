@@ -7,4 +7,8 @@ data/data_merging/data/*
 data/data_merging/*csv
 app/lm/LM_dataset.csv
 data_marts/customer_matching/*.jar
+<<<<<<< HEAD
 data_analysis/model_draft/churn_rate_and_NBA/data/*
+=======
+data_analysis/model_draft/churn_rate_and_NBA/data/*
+>>>>>>> refs/remotes/origin/master

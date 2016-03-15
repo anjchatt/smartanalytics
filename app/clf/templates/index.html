@@ -2,82 +2,18 @@
 <link rel="stylesheet" href="/static/css/bootstrap.min.css">
 <link rel="stylesheet" href="/static/css/custom-objects.css">
 <head>
+    {% block head %}
     <style>
         .body{
             background-color: #f5f8fa;
             padding-top: 50px;
         }
-        table.params th{
-            width: 50%;
-        }
-        table.params td{
-            padding-bottom: 10px;
-            font-size: 14px;
-        }
-        .tweet{
-            margin:0 20 0 20;
-            padding:10 10 10 10;
-            border: 1px solid transparent;
-            border-top: solid 0px;
-            border-color: #d3e0e9;
-            background-color: #ffffff;
-        }
-        .tweet-text{
-            font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
-            padding:5;
-            margin : 5;
-            border: 1px solid transparent;
-            border-color: #d3e0e9;
-        }
-        .agent-text{
-            margin-left:40;
-        }
-        .customer-text{
-            margin-right:40;
-        }
-        .bg-info-hov:hover{
-            background-color: #B7CEFF;
-        }
-        .bg-danger-hov:hover{
-            background-color: #FF7E7E;
-        }
-        .bg-success-hov:hover{
-            background-color: #A2FF7C;
-        }
-        .first {
-            border-radius: 4px 4px 0 0;
-            border-top: solid 1px #d3e0e9;
-        }
-        .tab-page {z-index:0;}
-        .active {z-index:1;} 
     </style>
-    
-    <style type="text/css">
-        /* Node Captions */
-        .user text {
-            fill: #000000;
-            text-shadow: none;
-        }
-        .customer text {
-            fill: #000000;
-            text-shadow: none;
-        }
-        .center text {
-            fill: #000000;
-            text-shadow: none;
-        }
-        .edge.active text {
-            fill: #000000;
-            text-shadow: none;
-        }
-    </style>
-    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-
+    {% endblock %}
 </head>
 
 <body class = "body">
-    
 <nav class="navbar navbar-inverse navbar-fixed-top" style="z-index:1">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -92,8 +28,9 @@
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li>
+                <li><a href="#">Home <span class="sr-only">(current)</span></a></li>
                 <li><a href="/cluster">Cluster Analysis</a></li>
+                <li><a href="/map">Campaign Analysis</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#">Capgemini</a></li>
@@ -102,334 +39,17 @@
     </div>
 </nav>
 <body>
-    <div id="home" class="tab-page active">
-        <div class="overlay boxclose" id="overlay" style="display:none;"></div>
-            <div class="popup-box-right" id="popup-box-right">
-                <iframe src="http://10.170.9.216:8084/" style="width:100%; height:100%; border:0;"></iframe>
-            </div>
-            <div class="col-md-7" style="margin:10 20 10 20;">
-                <h3 style="display: inline;"> Closed Loop Service Solution </h3>
-                (<a href="#" id="updateLink">Refresh</a>)
-            </div>
-            <div class="col-xs-4" style="margin:10 20 10 20;text-align:right">
-                
-            </div>
-        <div class="col-md-12" id="stream"></div>
+    {% block body %}
 
-        <!-- Network modal -->
-        <div class="modal fade" id="networkModal" tabindex="-1" role="dialog" aria-labelledby="networkModalLabel">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="networkModalLabel">Customer influence network</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="alchemy" id="alchemy" style="width:100%; height:400px; background:#FFFFFF;"></div>
-                    </div>
-                    <div class="modal-footer">
-                        <div class="col-xs-6" style="text-align:center">
-                            (<a href="/download/customers" id="download">download</a>)
-                        </div>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Tweet modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="exampleModalLabel">New message</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form>
-                            <div class="form-group">
-                                <label for="message-text" class="control-label">Message:</label>
-                                <textarea class="form-control" id="message-text"></textarea>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary modal-post-tweet">Send message</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!--div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div-->
+    {% endblock %}
 </body>
 </body>
 
-    
-    
-    
-    
-    
-    
-<script>
-    function updateData(){
-        $.getJSON('/data', function(data){
-            $("#stream").html('');
-            $.each(data['data'], function (block_i,tweet){
-                if (block_i == 0){
-                    var t = '<div class="row first tweet">';
-                } else {
-                    var t = '<div class="row tweet">';
-                }
+{% block bottom %}
 
-                t += '<div class="col-xs-10" style="text-align:left;"><h3><a class="activator">' + tweet[0]['user_name'] + '</a> (<a href="http://twitter.com/' + tweet[0]['user_screen_name'] + '">@' + tweet[0]['user_screen_name'] + '</a>)</h3></div>';
-                t += '<div class="col-xs-2" style="text-align:left;"><span class="';
-                tweet[0]['priority_level'] = Math.random()*8;/// REPLACE THIS LINE
-                
-                var sentiment = tweet[0]['sentiment'];
-                var segment_id = tweet[tweet.length-1]['segment_id'];
-                if (tweet[0]['category']){
-                    var is_froad = tweet[0]['category'].search('froad')>0;
-                }else{
-                    var is_froad = false;
-                }
-                
-                if(tweet[0]['is_agent_reply']){
-                    t += 'text-success" style="float:right; font-size:18px;"><span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span> replied';
-                } else if ((segment_id >= 4 && sentiment < 0) || is_froad) {
-                    t += 'text-danger" style="float:right; font-size:18px;"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> highest priority';
-                } else if ((segment_id >= 2 && sentiment < 0) || (sentiment < 1)) {
-                    t += 'text-warning" style="float:right; font-size:18px;"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> high priority';
-                } else if (sentiment < 0) {
-                    t += 'text-info" style="float:right; font-size:18px;"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> medium priority';
-                } else {
-                    t += 'text-success" style="float:right; font-size:18px;"><span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span> low priority';
-                }
-                
-                t += '</span></div><div class="col-xs-5" style="broder-right: solid 1px #555;">';
-                t += '<ul class="media-list">';
-                for (i=0;i<tweet.length;i++){
-                    if(tweet[i]['is_agent_reply']){
-                        // AGENT TWEET
-                        t += '<li class="media"><div class="media-left"><img class="media-object" src="/static/images/service2.png"></div>';
-                        t += '<div class="media-body">'+'<p class="text-muted">' + tweet[i]['created_at'].slice(0,19) + '</p><p>' + tweet[i]['text']+'<p></div>';
-                    }else{
-                        t += '<li class="media"><div class="media-left"><span class="glyphicon glyphicon-user" style="font-size:64px; color:rgb(127,176,5)" aria-hidden="true"></span></div>';
-                        if(tweet[i]['sentiment'] >= 1){
-                            t+='<div class="media-body bg-success bg-success-hov">';
-                        }else if(tweet[i]['sentiment'] <= -1){
-                            t+='<div class="media-body bg-danger bg-danger-hov">';
-                        }else{
-                            t+='<div class="media-body bg-info bg-info-hov">';
-                        }
-                        t += '<p class="text-muted">' + tweet[i]['created_at'].slice(0,19) + '  <a href="http://www.twitter.com/'+tweet[i]['user_screen_name']+'/status/'+tweet[i]['id_str']+'">(link)</a> <a href="" data-toggle="modal" data-target="#exampleModal" data-whatever="@' + tweet[i]['user_screen_name'] + '" data-status-id="'+tweet[i]['id_str']+'" data-py-data="{\'sentiment\':'+tweet[i]['sentiment']+',\'user_name\':\''+tweet[i]['user_name']+'\'}">(reply)</a></p>';
-                        
-                        t += '<p>' + tweet[i]['text'] + '</p>';
-                        
-                        n_char = tweet[i]["categories"].length;
-                        if (n_char > 0){
-                            t += '<br>';
-                            cats = tweet[i]["categories"].split("|");
-                            for (i=1;i<cats.length-1;i++){
-                                t += '<kbd>'+cats[i]+'</kbd> ';
-                            }
-                        }
-                        t += '</div>';
-                    }
-                    t += '</li>';
-                }
-                t += '</ul>';
-                t += '</div><div class="col-xs-3">';
-                t += '<table class="params" style="width:100%;"><th></th><th></th>';
-                t += '<tr><td>  Segment:</td><td>'+tweet[0]['segment']+'</td></tr>';
-                t += '<tr><td>Influence score:</td><td>'+tweet[0]['klout_score']+'</td></tr>';
-                t += '<tr><td>Folowers:</td><td>'+tweet[0]['followers_count']+'</td></tr></table>';
-                t += '<a href="#" data-toggle="modal" data-target="#networkModal">Show influence network</a>';
-                t += '<div class="chart_div" data-sent="'+tweet[0]['sentiment']+'" style="width: 100%; height: 250px; display: inline-block; margin: 0 auto"></div></div>';
-                
-                t += '<div class="col-xs-3"> <h3 style="text-align:center;"> Next Best Offer </h3>';
-                t += '<div class="list-group" style="font-size:14">';
-                t += '<a href="#" class="list-group-item">Premium Account</a>';
-                t += '<a href="#" class="list-group-item">High Interest CD</a>';
-                t += '<a href="#" class="list-group-item">High Interest Money Market</a>';
-                t += '<a href="#" class="list-group-item">Discounts on investment charges</a>';
-                t += '</div></div>';
-                
-                $("#stream").append(t);
-            });
-            $('.activator').click(function(){
-                /* insert 720 page request here */
-                $('#overlay').fadeIn('fast',function(){
-                    $('#popup-box-right').animate({'right':'0', 'left':'10%'},1000);
-                });
-            });
-            google.charts.setOnLoadCallback(drawChart);
-        });
-    }
-    
-    function addLog (new_text) {
-        console.log(new_text);
-    };
-
-    /*
-    var socket = new WebSocket('ws://10.170.9.216:8090/twitter_stream');
-    //var socket = new WebSocket('ws://10.170.9.216:8091');
-    socket.onopen = function () {addLog('Connected');};
-
-    socket.onclose = function (event) {
-        if(event.wasClean) {
-            addLog('Clean shutdown');
-        } else {
-            addLog('Connection closed unexpectedly');
-        };
-        addLog('Code: ' + event.code + '; Reason: ' + event.reason); 
-    };
-
-    socket.onerror = function (error) {addLog('Error: ' + error.message);
-                                      setTimeout(function(){}, 5000);};
-
-    socket.onmessage = function (event) {addLog('Data: ' + event.data); };
-    */
-    window.onload = updateData;
-
-    window.onbeforeunload = function() {
-        //socket.onclose = function () {}; // disable onclose handler first
-        //socket.close()
-    };
-</script>
-
-<!--script src="http://code.highcharts.com/highcharts.js"></script-->
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-
-
-<script type="text/javascript">
-    google.charts.load('current', {'packages':['gauge']});
-    function drawChart() {
-        var options = {
-            redFrom: -5, redTo: -2,
-            yellowFrom:-2, yellowTo: 2,
-            greenFrom:2, greenTo: 5,
-            minorTicks: 1, majorTicks: 1, min: -8, max: 8
-        };
-        
-        $('.chart_div').each(function(){
-            var sentiment = $(this).data('sent');
-            
-            var data = google.visualization.arrayToDataTable([
-                ['Label', 'Value'],
-                ['Sentiment', sentiment*2]
-            ]);
-            
-            var chart = new google.visualization.Gauge(this);
-            chart.draw(data, options);
-            
-            function resizeHandler () {
-                chart.draw(data, options);
-            }
-            if (window.addEventListener) {
-                window.addEventListener('resize', resizeHandler, false);
-            }
-            else if (window.attachEvent) {
-                window.attachEvent('onresize', resizeHandler);
-            }
-        })
-    }
-</script>
-    
-    
-<script>
-    $('#updateLink').click( function(){ updateData(); return false; });
-    $('#exampleModal').on('show.bs.modal', function (event) {
-      var button = $(event.relatedTarget)
-      var recipient = button.data('whatever')
-      var status_id = button.data('status-id')
-      var py_data = button.data('py-data')
-      var modal = $(this)
-      modal.find('.modal-title').text('New message to ' + recipient)
-      modal.find('.modal-post-tweet').data('status-id', status_id)
-      modal.find('.modal-post-tweet').data('py-data', py_data)
-      $('#message-text').val(recipient+' ')
-      modal.find('.modal-post-tweet').click(function(){
-          status = $('#message-text').val();
-          status_id = $(this).data('status-id');
-          py_data = $(this).data('py-data');
-          $.post('/reply',{'status':status,'status_id':status_id,'py_data':py_data});
-          $('#exampleModal').modal('hide');
-          $('body').removeClass('modal-open');
-          $('.modal-backdrop').remove();
-      })
-    })
-</script>
-    
-<script type = "text/javascript" src="/static/js/popup-box-right.js"></script>
 <script type = "text/javascript" src="/static/js/bootstrap.min.js"></script>
-<script src="/static/alchemy.min.js"></script>
 
-<script type="text/javascript">
-
-    var config = {
-        dataSource: '/graph',
-        directedEdges: true,
-        backgroundColor: '#FFFFFF',
-        nodeTypes: { "role": 
-                    ["user", "customer", "center"] 
-                   },
-        graphHeight: function(){ return 400; },
-        graphWidth: function(){ return 800; },
-        nodeStyle: {
-            "all": {
-                "borderColor": "#54a0ed",
-                "color": "#54a0ed",
-                "borderWidth": function(d, radius) {
-                    return radius / 4
-                },
-                "color": function(d) { 
-                    return "rgba(104, 185, 254, " + 
-                        (d.getProperties().memoryUsage / 100) + " )" 
-                }, 
-                "radius": function(d) {
-                    if(d.getProperties().root)
-                        return 15; else return 10 
-                            }, 
-            },
-            "customer":{
-                "color": "#7fb005",
-                "selected": {
-                    "color": "#ffffff",
-                },                    
-                "highlighted": {
-                    "color": "#b4dcff"
-                }
-            },
-            "center":{
-                "color": "#ed020b",
-                "selected": {
-                    "color": "#ffffff",
-                },                    
-                "highlighted": {
-                    "color": "#b4dcff"
-                }
-            }
-        },
-        edgeStyle: {
-            "all": {
-                "width": function(d) {
-                    return (Math.log(d.getProperties().weight) + 0.5)*2
-                },
-                "color": "#7fb005",
-            }
-        },
-        afterLoad : function(){
-            $('#alchemy').width('100%');
-            $('#alchemy').find('svg').width('100%');
-            $('#alchemy').find('svg').height('400');
-        }
-    };
-
-    alchemy = new Alchemy(config);
-    
-</script>
+{% endblock %}
 
     
 </html>
