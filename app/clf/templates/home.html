@@ -258,40 +258,67 @@
     window.onload = updateData;
 </script>
 
-<!--script src="http://code.highcharts.com/highcharts.js"></script-->
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-more.js"></script>
+
 <script type="text/javascript">
-    google.charts.load('current', {'packages':['gauge']});
-    function drawChart() {
-        var options = {
-            redFrom: -5, redTo: -2,
-            yellowFrom:-2, yellowTo: 2,
-            greenFrom:2, greenTo: 5,
-            minorTicks: 1, majorTicks: 1, min: -8, max: 8
-        };
-        
-        $('.chart_div').each(function(){
-            var sentiment = $(this).data('sent');
-            
-            var data = google.visualization.arrayToDataTable([
-                ['Label', 'Value'],
-                ['Sentiment', sentiment*2]
-            ]);
-            
-            var chart = new google.visualization.Gauge(this);
-            chart.draw(data, options);
-            
-            function resizeHandler () {
-                chart.draw(data, options);
-            }
-            if (window.addEventListener) {
-                window.addEventListener('resize', resizeHandler, false);
-            }
-            else if (window.attachEvent) {
-                window.attachEvent('onresize', resizeHandler);
-            }
-        })
-    }
+	$(function () {
+		$('.chart_div').each(function () {
+			var sentiment = $(this).data('sent');
+			$(this).highcharts({
+				chart: { type: 'gauge', height: 200 },
+				title: { text: '' },			
+				pane: [{
+					startAngle: -45,
+					endAngle: 45,
+					background: null,
+					center: ['50%', '135%'],
+					size: 300
+				}],
+				tooltip: { enabled: false },
+				yAxis: [{
+					min: -5,
+					max: 5,
+					minorTickPosition: 'outside',
+					tickPosition: 'outside',
+					labels: { rotation: 'auto', distance: 10 },
+					plotBands: [{
+						from: -5,
+						to: -2,
+						color: '#ed020b', //'#C02316',
+						innerRadius: '100%',
+						outerRadius: '105%'
+					}, {
+						from: -2,
+						to: 2,
+						color: '#ffcb35',
+						innerRadius: '100%',
+						outerRadius: '105%'
+					},
+					{
+						from: 2,
+						to: 5,
+						color: '#7fb005',
+						innerRadius: '100%',
+						outerRadius: '105%'
+					}],
+					pane: 0,
+					title: {
+						text: 'Sentiment<br/><span style="font-size:10px">score</span>',
+						y: -40
+					}
+				} ],
+
+				plotOptions: { gauge: { dial: { radius: '100%' } } },
+				series: [{ data: [sentiment], }],
+						credits:{enabled:false},
+			},
+
+			function (chart) {
+					chart.redraw();
+			});
+		});
+});
 </script>
     
     
