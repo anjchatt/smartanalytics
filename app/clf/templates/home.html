@@ -215,6 +215,7 @@
                 t += '</div></div>';
                 
                 $("#stream").append(t);
+                
             });
             $('.activator').click(function(){
                 /* insert 720 page request here */
@@ -222,6 +223,7 @@
                     $('#popup-box-right').animate({'right':'0', 'left':'10%'},1000);
                 });
             });
+        drawGauges();
         });
     }
     
@@ -261,60 +263,60 @@
 <script src="https://code.highcharts.com/highcharts-more.js"></script>
 
 <script type="text/javascript">
-	$(function () {
-		$('.chart_div').each(function (i, obj) {
-			var sentiment = $(obj).data('sent');
-			var chart = new Highcharts.Chart({
-				chart: { type: 'gauge', height: 200, renderTo: obj },
-				title: { text: '' },			
-				pane: [{
-					startAngle: -45,
-					endAngle: 45,
-					background: null,
-					center: ['50%', '135%'],
-					size: 300
-				}],
-				tooltip: { enabled: false },
-				yAxis: [{
-					min: -5,
-					max: 5,
-					minorTickPosition: 'outside',
-					tickPosition: 'outside',
-					labels: { rotation: 'auto', distance: 10 },
-					plotBands: [{
-						from: -5,
-						to: -2,
-						color: '#ed020b', //'#C02316',
-						innerRadius: '100%',
-						outerRadius: '105%'
-					}, {
-						from: -2,
-						to: 2,
-						color: '#ffcb35',
-						innerRadius: '100%',
-						outerRadius: '105%'
-					},
-					{
-						from: 2,
-						to: 5,
-						color: '#7fb005',
-						innerRadius: '100%',
-						outerRadius: '105%'
-					}],
-					pane: 0,
-					title: {
-						text: 'Sentiment<br/><span style="font-size:10px">score</span>',
-						y: -40
-					}
-				} ],
+    function drawGauges(){
+        $('.chart_div').each(function (i, obj) {
+            var sentiment = $(obj).data('sent');
+            var chart = new Highcharts.Chart({
+                chart: { type: 'gauge', height: 200, renderTo: obj },
+                title: { text: '' },
+                pane: [{
+                    startAngle: -45,
+                    endAngle: 45,
+                    background: null,
+                    center: ['50%', '135%'],
+                    size: 300
+                }],
+                tooltip: { enabled: false },
+                yAxis: [{
+                    min: -5,
+                    max: 5,
+                    minorTickPosition: 'outside',
+                    tickPosition: 'outside',
+                    labels: { rotation: 'auto', distance: 10 },
+                    plotBands: [{
+                        from: -5,
+                        to: -2,
+                        color: '#ed020b', //'#C02316',
+                        innerRadius: '100%',
+                        outerRadius: '105%'
+                    }, {
+                        from: -2,
+                        to: 2,
+                        color: '#ffcb35',
+                        innerRadius: '100%',
+                        outerRadius: '105%'
+                    },
+                                {
+                                    from: 2,
+                                    to: 5,
+                                    color: '#7fb005',
+                                    innerRadius: '100%',
+                                    outerRadius: '105%'
+                                }],
+                    pane: 0,
+                    title: {
+                        text: 'Sentiment<br/><span style="font-size:10px">score</span>',
+                        y: -40
+                    }
+                } ],
 
-				plotOptions: { gauge: { dial: { radius: '100%' } } },
-				series: [{ data: [sentiment], }],
-						credits:{enabled:false},
-			});
-			chart.redraw();
-		});
-});
+                plotOptions: { gauge: { dial: { radius: '100%' } } },
+                series: [{ data: [sentiment], }],
+                credits:{enabled:false},
+            });
+            chart.redraw();
+        });
+    };
 </script>
     
     
