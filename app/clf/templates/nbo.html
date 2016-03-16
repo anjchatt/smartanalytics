@@ -1,0 +1,131 @@
+{% extends 'index.html' %}
+{% block head %}
+{{ super() }}
+    <title>Next Best Offer</title>
+{% endblock %}
+{% block body %}
+{{ super() }}
+        <div id="NBO" class="container">
+            <h3>Next best offer</h3>
+            <hr />
+
+            <div class="row">
+                <div class="col-md-4 text-center">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading"><a gref="#">Customer 720 View</a></div>
+                                <!-- Customer info Table -->
+                                <table class="table table-bordered" id="CustomerTable">
+                                    <tr><td>Customer Name</td><td>John Smith</td></tr>
+                                    <tr><td>Investable Asset Estimate</td><td>$ 350,000</td></tr>
+                                    <tr><td>Credit Score - FICO</td><td>760</td></tr>
+                                    <tr><td>Customer Address</td><td>Customer address</td></tr>
+                                    <tr><td>Status</td><td>Married</td></tr>
+                                    <tr><td># of Children in home</td><td>2</td></tr>
+                                    <tr><td>Zillow Home Value Estimation</td><td>$ 330,000</td></tr>
+                                    <tr><td>Home Equity Estimate</td><td>$ 150,000</td></tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">NBO Suggestion</div>
+
+                                <!-- Table -->
+                                <table class="table table-bordered" id="NBOTable">
+                                    <tr><th>#</th><th>Offer</th><th>Probability</th></tr>
+                                    <tr class="clickable-row"><td>1</td><td>Platinum credit card</td><td>45.0%</td></tr>
+                                    <tr class="clickable-row"><td>2</td><td>Get 15% back with CapBank platinum credit card</td><td>40.0%</td></tr>
+                                    <tr class="clickable-row"><td>3</td><td>Platinum card with 0% APR</td><td>15.0%</td></tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8 text-center">
+                    <div class="row" id="monthly_profit">Monthly profit</div>
+                    <div class="row" id="sentiment">Sentiment</div>
+                    <div class="row" id="deposit_mix">Deposit Mix</div>
+                    <div class="row" id="call_center">Interactions with Call Center</div>
+                    <div class="row" id="survey">Survey</div>
+                </div>
+            </div>
+            <hr />
+        </div> <!-- id="Cluster_analysis" class="container" -->
+{% endblock %}
+
+{% block bottom %}
+{{ super() }}
+        <script src="/static/js/highcharts.js"></script>
+
+        <script>
+            $('#NBOTable').on('click', '.clickable-row', function(event) {
+                //alert("Click detected!");
+            });
+            $('#NBOTable').on('mouseover', '.clickable-row', function(event) {
+              $(this).addClass('bg-info').siblings().removeClass('bg-info');
+            });
+            $('#NBOTable').on('mouseout', '.clickable-row', function(event) {
+              $(this).removeClass('bg-info');
+            });
+            $(function() {
+                Highcharts.setOptions({
+                    colors: ['#54a0ed', '#ed020b', '#7fb005'], 
+                });
+            });
+            $(function () {$('#monthly_profit')
+                .highcharts({chart: {type: 'line', height: 200}, 
+                             title:{text: '', verticalAlign: 'bottom', style: { "color": "rgb(112, 112, 112)", "fill": "rgb(112, 112, 112)", "fontSize": "12px" },}, 
+                             legend:{enabled: true},
+                             xAxis: {categories: ["Dec","Jan","Feb", "Mar"]},
+                             yAxis: {title: {text: 'Monthly Profit'}, gridLineDashStyle: "Dash"},
+                             series: [{name: 'This year',data: [80, 50, 40, 20], color: '#54a0ed',}, 
+                                      {name: 'Last year',data: [120, 150, 80, 50], color: '#ed020b',}],
+                             credits:{enabled:false},
+                            });});
+            $(function () {$('#sentiment')
+                .highcharts({chart: {type: 'line', height: 200}, 
+                             title:{text: '', verticalAlign: 'bottom', style: { "color": "rgb(112, 112, 112)", "fill": "rgb(112, 112, 112)", "fontSize": "12px" },}, 
+                             legend:{enabled: true},
+                             xAxis: {categories: ["Dec","Jan","Feb", "Mar"]},
+                             yAxis: [{title: {text: '# of Activities'}, gridLineDashStyle: "Dash", allowDecimals: false },
+                                     {title: {text: 'Sentiment'}, gridLineDashStyle: "Dash", opposite: true, min: -5, max: 5,},],
+                             series: [{name: 'Direct',data: [2, 5, 0, 2], color: '#54a0ed', type: 'column', yAxis: 0,}, 
+                                      {name: 'Social activity',data: [5, 7, 4, 8], color: '#ed020b', type: 'column', yAxis: 0,},
+                                      {name: 'Sentiment',data: [-4, 0, 4, 3], color: '#7fb005', yAxis: 1,},],
+                             credits:{enabled:false},
+                            });});
+            $(function () {$('#deposit_mix')
+                .highcharts({chart: {type: 'column', height: 200}, 
+                             plotOptions: { series: { stacking: 'normal' } },
+                             title: {text: '', verticalAlign: 'bottom', style: { "color": "rgb(112, 112, 112)", "fill": "rgb(112, 112, 112)", "fontSize": "12px" },}, 
+                             legend:{enabled: true},
+                             xAxis: {categories: ["Dec","Jan","Feb", "Mar"]},
+                             yAxis: {title: {text: 'Deposit mix'}, gridLineDashStyle: "Dash", allowDecimals: false},
+                             series: [{name: 'Investment',data: [21, 12, 10, 15]}, {name: 'Savings',data: [21, 15, 12, 10]}, {name: 'Checking',data: [30, 21, 12, 10]}],
+                             credits:{enabled:false},
+                            });});
+            $(function () {$('#call_center')
+                .highcharts({chart: {type: 'line', height: 200}, 
+                             title:{text: '', verticalAlign: 'bottom', style: { "color": "rgb(112, 112, 112)", "fill": "rgb(112, 112, 112)", "fontSize": "12px" },}, 
+                             legend:{enabled:false},
+                             xAxis: {categories: ["Dec","Jan","Feb", "Mar"]},
+                             yAxis: {title: {text: 'Call center contacts'}, gridLineDashStyle: "Dash", allowDecimals: false},
+                             series: [{name: '# of calls',data: [7, 3, 1, 6], color: '#54a0ed',}],
+                             credits:{enabled:false},
+                            });});
+            $(function () {$('#survey')
+                .highcharts({chart: {type: 'line', height: 200}, 
+                             title:{text: '', verticalAlign: 'bottom', style: { "color": "rgb(112, 112, 112)", "fill": "rgb(112, 112, 112)", "fontSize": "12px" },}, 
+                             legend:{enabled:false},
+                             xAxis: {categories: ["Dec","Jan","Feb", "Mar"]},
+                             yAxis: {title: {text: 'Survey'}, gridLineDashStyle: "Dash"},
+                             series: [{name: 'Survey',data: [40, 60, 100, 160], color: '#54a0ed',}],
+                             credits:{enabled:false},
+                            });});
+
+        </script>
+{% endblock %}
