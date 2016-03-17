@@ -19,6 +19,8 @@
 {
 	id: "Integer customer Id",
 	state: "two symbol code of US state",
+	name: "string"
+	status: "string, Customer status - i.e. 'Platinum'"
 	churnRate365: "float, probability of churn rate in 365 days"
 	surveys: [ 
 		{ 
