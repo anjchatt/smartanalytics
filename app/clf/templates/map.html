@@ -57,6 +57,7 @@
     <table id="example" class="display" cellspacing="0" width="100%">
         <thead>
             <tr>
+                <th>Importance</th>
                 <th>ID</th>                
                 <th>Customer</th>
                 <th>Attrition</th>
@@ -77,6 +78,7 @@
             destroy: true,
             "columnDefs":[
                 { "visible": false,  "targets": [ 0 ] },
+                { "visible": false,  "targets": [ 1 ] },
             ]
         });
 </script>
@@ -109,7 +111,7 @@
     info.update = function (props) {
         //customer list
         this._div.innerHTML = '<h4>Customer Number</h4>' +  (props ?
-                                                                   '<b>' + props.name + '</b><br />' + Math.round(props.density*1000) + ' people'
+                                                                   '<b>' + props.name + '</b><br />' + props.count + ' people'
                                                                    : 'Hover over a state');
     };
 
@@ -118,13 +120,13 @@
 
     // get color depending on population density value
     function getColor(d) {
-        return d > 1500 ? '#D82735' :
-        d > 1000 ? '#FF7435' :
-        d > 500  ? '#FFA135' :
-        d > 200  ? '#FFCB35' :
-        d > 100  ? '#FFF738' :
-        d > 50   ? '#16DD38' :
-        d > 20   ? '#009E47' :
+        return d > 0.7 ? '#D82735' :
+        d > 0.6 ? '#FF7435' :
+        d > 0.5  ? '#FFA135' :
+        d > 0.4  ? '#FFCB35' :
+        d > 0.3  ? '#FFF738' :
+        d > 0.2   ? '#16DD38' :
+        d > 0.1   ? '#009E47' :
         '#00753A';
     }
 
@@ -134,8 +136,8 @@
             opacity: 1,
             color: 'white',
             dashArray: '3',
-            fillOpacity: 0.7,
-            fillColor: getColor(feature.properties.density)
+            fillOpacity: 0.8,
+            fillColor: getColor(feature.properties.averageChurn)
         };
     }
 
@@ -169,14 +171,15 @@
         $('#example').DataTable({
             destroy: true,
             "ajax": "map/get_customers/"+state,
+            "order": [[ 0, "desc" ]],
             "columnDefs":[
                 { "visible": false,  "targets": [ 0 ] },
+                { "visible": false,  "targets": [ 1 ] },
                 {
                     "render": function (data, type, row) {
-                        debugger;
-                        return '<a href="/nbo/'+row[0]+'">'+data+'</a>';
+                        return '<a href="/nbo/'+row[1]+'">'+data+'</a>';
                     },
-                    "targets": 1
+                    "targets": 2
                 }
             ]
         });
@@ -192,10 +195,12 @@
         });
     }
 
-    geojson = L.geoJson(statesData, {
-        style: style,
-        onEachFeature: onEachFeature
-    }).addTo(map);
+    $.get('/map/get_states_data', function( data ) {
+        geojson = L.geoJson(data, {
+            style: style,
+            onEachFeature: onEachFeature
+        }).addTo(map);
+    })
 
     map.attributionControl.addAttribution('Population data &copy; <a href="http://census.gov/">US Census Bureau</a>');
 
