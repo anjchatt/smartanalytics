@@ -17,14 +17,15 @@
                                 <div class="panel-heading"><a gref="#">Customer 720 View</a></div>
                                 <!-- Customer info Table -->
                                 <table class="table table-bordered" id="CustomerTable">
-                                    <tr><td>Customer Name</td><td>John Smith</td></tr>
-                                    <tr><td>Investable Asset Estimate</td><td>$ 350,000</td></tr>
-                                    <tr><td>Credit Score - FICO</td><td>760</td></tr>
-                                    <tr><td>Customer Address</td><td>Customer address</td></tr>
-                                    <tr><td>Status</td><td>Married</td></tr>
-                                    <tr><td># of Children in home</td><td>2</td></tr>
-                                    <tr><td>Zillow Home Value Estimation</td><td>$ 330,000</td></tr>
-                                    <tr><td>Home Equity Estimate</td><td>$ 150,000</td></tr>
+                                    <tr><td>Customer Name</td><td> {{ customer['name'] }} </td></tr>
+                                    <tr><td>State</td><td> {{ customer['state'] }} </td></tr>
+                                    <tr><td>Investable Asset Estimate</td><td>{{ customer['investableAssetEstimate'] }}<!--$ 350,000--></td></tr>
+                                    <tr><td>Credit Score - FICO</td><td>{{ customer['creditScoreFICO'] }}<!--760--></td></tr>
+                                    <tr><td>E-Mail</td><td>{{ customer['email'] }}</td></tr>
+                                    <tr><td>Marital Status</td><td>{{ customer['maritalStatus'] }}<!--Married--></td></tr>
+                                    <tr><td># of Children in home</td><td>{{ customer['numberOfChildren'] }}<!--2--></td></tr>
+                                    <tr><td>Zillow Home Value Estimation</td><td>{{ customer['zillowHomeValueEstimation'] }}<!--$ 330,000--></td></tr>
+                                    <tr><td>Home Equity Estimate</td><td>{{ customer['homeEquityEstimate'] }}<!--$ 150,000--></td></tr>
                                 </table>
                             </div>
                         </div>
@@ -62,6 +63,7 @@
         <script src="/static/js/highcharts.js"></script>
 
         <script>
+            var None = null; // For handling None values 
             $('#NBOTable').on('click', '.clickable-row', function(event) {
                 //alert("Click detected!");
             });
@@ -80,10 +82,13 @@
                 .highcharts({chart: {type: 'line', height: 200}, 
                              title:{text: '', verticalAlign: 'bottom', style: { "color": "rgb(112, 112, 112)", "fill": "rgb(112, 112, 112)", "fontSize": "12px" },}, 
                              legend:{enabled: true},
-                             xAxis: {categories: ["Dec","Jan","Feb", "Mar"]},
+//                             xAxis: {categories: ["Dec","Jan","Feb", "Mar"]},
+                             xAxis: {categories: {{ customer['profitability_months']|safe }} },
                              yAxis: {title: {text: 'Monthly Profit'}, gridLineDashStyle: "Dash"},
-                             series: [{name: 'This year',data: [80, 50, 40, 20], color: '#54a0ed',}, 
-                                      {name: 'Last year',data: [120, 150, 80, 50], color: '#ed020b',}],
+//                             series: [{name: 'This year',data: [null, null, 40, 20], color: '#54a0ed', connectNulls:true }, 
+//                                      {name: 'Last year',data: [120, 150, 80, 50], color: '#ed020b',}],
+                             series: [{name: 'This year', data: {{ customer['profitability_this_year'] }}, color: '#54a0ed', connectNulls:true }, 
+                                      {name: 'Last year', data: {{ customer['profitability_last_year'] }}, color: '#ed020b', connectNulls:true }],
                              credits:{enabled:false},
                             });});
             $(function () {$('#sentiment')
