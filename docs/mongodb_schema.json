@@ -19,14 +19,21 @@
 {
 	"id": "Integer customer Id",
 	"state": "two symbol code of US state",
-	"name": "string"
-	"status": "string, Customer status - i.e. 'Platinum'"
-	"churnRate365": "float, probability of churn rate in 365 days"
+	"name": "string",
+	"status": "string, Customer status - i.e. 'Platinum|Gold|Silver|Bronze'",
+	"maritalStatus": "string, i.e. single|married|divorced|unknown",
+	"investableAssetEstimate": "float",
+	"creditScoreFICO": "int",
+	"email": "string",
+	"numberOfChildren": "int",
+	"zillowHomeValueEstimation": "float, estimate cost of home",
+	"homeEquityEstimate": "float, estimate customer equity",
+	"churnRate365": "float, probability of churn rate in 365 days",
 	"surveys": [ 
 		{ 
 			"surveyType": "string specifying type of survey",
 			"surveyResult": "Integer value as a result of survey",
-			"surveyDate": "datetime when survey was taken"
+			"surveyDate": "datetime when survey was taken",
 		},
 		{ ... } // here could be many surveys
 	],
@@ -58,7 +65,7 @@
 	"nextBestOffers" : [
 		{
 			"nboName": "string with name of offer",
-			"nboProbability": "float, probability that customers accepts offer"
+			"nboProbability": "float, probability that customers accepts offer",
 		},
 		{ ... } // here could be many nextBestOffers
 	],
