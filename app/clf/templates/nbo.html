@@ -108,9 +108,12 @@
                              plotOptions: { series: { stacking: 'normal' } },
                              title: {text: '', verticalAlign: 'bottom', style: { "color": "rgb(112, 112, 112)", "fill": "rgb(112, 112, 112)", "fontSize": "12px" },}, 
                              legend:{enabled: true},
-                             xAxis: {categories: ["Dec","Jan","Feb", "Mar"]},
+                             xAxis: {categories: {{ customer['products_months']|safe }} },
                              yAxis: {title: {text: 'Deposit mix'}, gridLineDashStyle: "Dash", allowDecimals: false},
-                             series: [{name: 'Investment',data: [21, 12, 10, 15]}, {name: 'Savings',data: [21, 15, 12, 10]}, {name: 'Checking',data: [30, 21, 12, 10]}],
+//                             series: [{name: 'Investment',data: [21, 12, 10, 15]}, {name: 'Savings',data: [21, 15, 12, 10]}, {name: 'Checking',data: [30, 21, 12, 10]}],
+                             series: [{name: 'Investment',data: {{ customer['investment_values'] }} },
+                                      {name: 'Savings',data: {{ customer['savings_values'] }} }, 
+                                      {name: 'Checking',data: {{ customer['checking_values'] }} }],
                              credits:{enabled:false},
                             });});
             $(function () {$('#call_center')
