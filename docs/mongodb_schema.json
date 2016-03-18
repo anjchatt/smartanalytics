@@ -1,79 +1,79 @@
 // collection: activities
 {
-	activityType: "one from set: (social|complaint|inquiry|regular_use)",
-	activityChannel: "one from set: (twitter|e-mail|call|sms|paper|web|shop_front)",
-	date: "datetime of activity",
-	customerId: "Integer Id of customer", // can be empty for unidentified twitter customers
+	"activityType": "one from set: (social|complaint|inquiry|regular_use)",
+	"activityChannel": "one from set: (twitter|e-mail|call|sms|paper|web|shop_front)",
+	"date": "datetime of activity",
+	"customerId": "Integer Id of customer", // can be empty for unidentified twitter customers
 
 	// following fields exist not for all types of activities
-	sentiment: "float, sentiment score of activity",
-	text: "activity content",
+	"sentiment": "float, sentiment score of activity",
+	"text": "activity content",
 
 	// twitter specific fields
-	twitterUserId: "Integer",
-	twitterLabels: [ "array of string labels" ],
-	twitterHashTags: [ "array of string hashtags without #" ],
+	"twitterUserId": "Integer",
+	"twitterLabels": [ "array of string labels" ],
+	"twitterHashTags": [ "array of string hashtags without #" ],
 }
 
 // collection: customers
 {
-	id: "Integer customer Id",
-	state: "two symbol code of US state",
-	name: "string"
-	status: "string, Customer status - i.e. 'Platinum'"
-	churnRate365: "float, probability of churn rate in 365 days"
-	surveys: [ 
+	"id": "Integer customer Id",
+	"state": "two symbol code of US state",
+	"name": "string"
+	"status": "string, Customer status - i.e. 'Platinum'"
+	"churnRate365": "float, probability of churn rate in 365 days"
+	"surveys": [ 
 		{ 
-			surveyType: "string specifying type of survey",
-			surveyResult: "Integer value as a result of survey",
-			surveyDate: "datetime when survey was taken"
+			"surveyType": "string specifying type of survey",
+			"surveyResult": "Integer value as a result of survey",
+			"surveyDate": "datetime when survey was taken"
 		},
 		{ ... } // here could be many surveys
 	],
-	transactions: [
+	"transactions": [
 		{
-			transactionId: "",
-			transactionDate: "datetime",
-			transactionDesc: "string, description of transaction",
-			transactionAmount: "float",
+			"transactionId": "",
+			"transactionDate": "datetime",
+			"transactionDesc": "string, description of transaction",
+			"transactionAmount": "float",
 		},
 		{ ... } // here could be many transactions
 	],
-	lifestyleStates: [
+	"lifestyleStates": [
 		{
-			lifestyleStateName: "string specifying state (i.e. 'preparing a wedding') ",
-			lifestyleStartDate: "datetime",
-			lifestyleEndDate: "datetime", // empty for currently active state
+			"lifestyleStateName": "string specifying state (i.e. 'preparing a wedding') ",
+			"lifestyleStartDate": "datetime",
+			"lifestyleEndDate": "datetime", // empty for currently active state
 		},
 		{ ... } // here could be many KLI_states
 	],
-	lifeEvents: [
+	"lifeEvents": [
 		{
-			eventName: "string, description of event in customer life",
-			eventDate: "datetime",
-			eventCost: "float, estimate cost of event",
+			"eventName": "string, description of event in customer life",
+			"eventDate": "datetime",
+			"eventCost": "float, estimate cost of event",
 		},
 		{ ... } // here could be many lifeEvents
 	],
-	nextBestOffers : [
+	"nextBestOffers" : [
 		{
-			nboName: "string with name of offer",
-			nboProbability: "float, probability that customers accepts offer"
+			"nboName": "string with name of offer",
+			"nboProbability": "float, probability that customers accepts offer"
 		},
 		{ ... } // here could be many nextBestOffers
 	],
-	monthlyProfitabilities: [
+	"monthlyProfitabilities": [
 		{
-			yearAndMonth: "datetime",
-			profitability: "float",
+			"yearAndMonth": "datetime",
+			"profitability": "float",
 		},
 		{ ... } // here could be many monthlyProfitabilities
 	],
-	products: [
+	"products": [
 		{
-			yearAndMonth: "datetime",
-			product: "string, one from set (Investment|Savings|Checking)",
-			monthlyAverage: "float",
+			"yearAndMonth": "datetime",
+			"product": "string, one from set (Investment|Savings|Checking)",
+			"monthlyAverage": "float",
 		},
 		{ ... } // here could be many products
 	],
