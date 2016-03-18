@@ -39,7 +39,8 @@
                                 <table class="table table-bordered" id="NBOTable">
                                     <tr><th>#</th><th>Offer</th><th>Probability</th></tr>
 {% for r in customer['nbo_offers'] %}
-<tr class="clickable-row"><td>{{ r['index'] }}</td><td>{{ r['nboName'] }}</td><td>{{ r['nboProbability'] }}</td></tr>
+<tr class="clickable-row" data-toggle="modal" data-target="#emailModal" data-name="{{ customer['name'] }}" data-nbo="{{ r['nboName'] }}"><td>{{ r['index'] }}</td><td class="nbo-name">{{ r['nboName'] }}</td><td>{{ r['nboProbability'] }}</td></tr>
+                                    
 {% endfor %}
                                 </table>
                             </div>
@@ -56,11 +57,52 @@
             </div>
             <hr />
         </div> <!-- id="NBO" class="container" -->
+
+
+        <div class="modal fade" id="emailModal" tabindex="-1" role="dialog" aria-labelledby="emailModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="emailModalLabel">New message</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="recipient-name" class="control-label">Recipient:</label>
+                                <input type="text" class="form-control" id="recipient-name">
+                            </div>
+                            <div class="form-group">
+                                <label for="message-text" class="control-label">Message:</label>
+                                <textarea class="form-control" id="message-text"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Send message</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 {% endblock %}
 
 {% block bottom %}
 {{ super() }}
         <script src="/static/js/highcharts.js"></script>
+
+        <script>
+            $('#emailModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var recipient = button.data('name');
+                var nbo = button.data('nbo');
+                var modal = $(this);
+                modal.find('.modal-title').text('New message to ' + recipient);
+                modal.find('.modal-body input').val(recipient);
+                modal.find('.modal-body #message-text').val('Dear '+recipient+'\n\nYou are very important customer for us and we would like to make a special offer to you:\n\n'+nbo+'\n\nPlease, consider our offer. You can find more details here: http://best.offer.capbank.com.\n\nBest wishes,\nCapBank Team.');
+                modal.find('.modal-body #message-text').height(300);
+            })
+        </script>
 
         <script>
             var None = null; // For handling None values 
