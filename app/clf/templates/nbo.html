@@ -38,9 +38,9 @@
                                 <!-- Table -->
                                 <table class="table table-bordered" id="NBOTable">
                                     <tr><th>#</th><th>Offer</th><th>Probability</th></tr>
-                                    <tr class="clickable-row"><td>1</td><td>Platinum credit card</td><td>45.0%</td></tr>
-                                    <tr class="clickable-row"><td>2</td><td>Get 15% back with CapBank platinum credit card</td><td>40.0%</td></tr>
-                                    <tr class="clickable-row"><td>3</td><td>Platinum card with 0% APR</td><td>15.0%</td></tr>
+{% for r in customer['nbo_offers'] %}
+<tr class="clickable-row"><td>{{ r['index'] }}</td><td>{{ r['nboName'] }}</td><td>{{ r['nboProbability'] }}</td></tr>
+{% endfor %}
                                 </table>
                             </div>
                         </div>
