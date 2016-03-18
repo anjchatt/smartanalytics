@@ -19,13 +19,13 @@
                                 <table class="table table-bordered" id="CustomerTable">
                                     <tr><td>Customer Name</td><td> {{ customer['name'] }} </td></tr>
                                     <tr><td>State</td><td> {{ customer['state'] }} </td></tr>
-                                    <tr><td>Investable Asset Estimate</td><td>{{ customer['investableAssetEstimate'] }}<!--$ 350,000--></td></tr>
-                                    <tr><td>Credit Score - FICO</td><td>{{ customer['creditScoreFICO'] }}<!--760--></td></tr>
+                                    <tr><td>Investable Asset Estimate</td><td>{{ customer['investableAssetEstimate'] }}</td></tr>
+                                    <tr><td>Credit Score - FICO</td><td>{{ customer['creditScoreFICO'] }}</td></tr>
                                     <tr><td>E-Mail</td><td>{{ customer['email'] }}</td></tr>
-                                    <tr><td>Marital Status</td><td>{{ customer['maritalStatus'] }}<!--Married--></td></tr>
-                                    <tr><td># of Children in home</td><td>{{ customer['numberOfChildren'] }}<!--2--></td></tr>
-                                    <tr><td>Zillow Home Value Estimation</td><td>{{ customer['zillowHomeValueEstimation'] }}<!--$ 330,000--></td></tr>
-                                    <tr><td>Home Equity Estimate</td><td>{{ customer['homeEquityEstimate'] }}<!--$ 150,000--></td></tr>
+                                    <tr><td>Marital Status</td><td>{{ customer['maritalStatus'] }}</td></tr>
+                                    <tr><td># of Children in home</td><td>{{ customer['numberOfChildren'] }}</td></tr>
+                                    <tr><td>Zillow Home Value Estimation</td><td>{{ customer['zillowHomeValueEstimation'] }}</td></tr>
+                                    <tr><td>Home Equity Estimate</td><td>{{ customer['homeEquityEstimate'] }}</td></tr>
                                 </table>
                             </div>
                         </div>
@@ -38,9 +38,9 @@
                                 <!-- Table -->
                                 <table class="table table-bordered" id="NBOTable">
                                     <tr><th>#</th><th>Offer</th><th>Probability</th></tr>
-                                    <tr class="clickable-row"><td>1</td><td>Platinum credit card</td><td>45.0%</td></tr>
-                                    <tr class="clickable-row"><td>2</td><td>Get 15% back with CapBank platinum credit card</td><td>40.0%</td></tr>
-                                    <tr class="clickable-row"><td>3</td><td>Platinum card with 0% APR</td><td>15.0%</td></tr>
+{% for r in customer['nbo_offers'] %}
+<tr class="clickable-row"><td>{{ r['index'] }}</td><td>{{ r['nboName'] }}</td><td>{{ r['nboProbability'] }}</td></tr>
+{% endfor %}
                                 </table>
                             </div>
                         </div>
@@ -82,13 +82,12 @@
                 .highcharts({chart: {type: 'line', height: 200}, 
                              title:{text: '', verticalAlign: 'bottom', style: { "color": "rgb(112, 112, 112)", "fill": "rgb(112, 112, 112)", "fontSize": "12px" },}, 
                              legend:{enabled: true},
-//                             xAxis: {categories: ["Dec","Jan","Feb", "Mar"]},
                              xAxis: {categories: {{ customer['profitability_months']|safe }} },
                              yAxis: {title: {text: 'Monthly Profit'}, gridLineDashStyle: "Dash"},
-//                             series: [{name: 'This year',data: [null, null, 40, 20], color: '#54a0ed', connectNulls:true }, 
-//                                      {name: 'Last year',data: [120, 150, 80, 50], color: '#ed020b',}],
-                             series: [{name: 'This year', data: {{ customer['profitability_this_year'] }}, color: '#54a0ed', connectNulls:true }, 
-                                      {name: 'Last year', data: {{ customer['profitability_last_year'] }}, color: '#ed020b', connectNulls:true }],
+                             series: [{name: 'This year', data: {{ customer['profitability_this_year'] }}, 
+                                       color: '#54a0ed', connectNulls:true }, 
+                                      {name: 'Last year', data: {{ customer['profitability_last_year'] }}, 
+                                       color: '#ed020b', connectNulls:true }],
                              credits:{enabled:false},
                             });});
             $(function () {$('#sentiment')
@@ -110,7 +109,6 @@
                              legend:{enabled: true},
                              xAxis: {categories: {{ customer['products_months']|safe }} },
                              yAxis: {title: {text: 'Deposit mix'}, gridLineDashStyle: "Dash", allowDecimals: false},
-//                             series: [{name: 'Investment',data: [21, 12, 10, 15]}, {name: 'Savings',data: [21, 15, 12, 10]}, {name: 'Checking',data: [30, 21, 12, 10]}],
                              series: [{name: 'Investment',data: {{ customer['investment_values'] }} },
                                       {name: 'Savings',data: {{ customer['savings_values'] }} }, 
                                       {name: 'Checking',data: {{ customer['checking_values'] }} }],
@@ -129,9 +127,16 @@
                 .highcharts({chart: {type: 'line', height: 200}, 
                              title:{text: '', verticalAlign: 'bottom', style: { "color": "rgb(112, 112, 112)", "fill": "rgb(112, 112, 112)", "fontSize": "12px" },}, 
                              legend:{enabled:false},
-                             xAxis: {categories: ["Dec","Jan","Feb", "Mar"]},
+                             xAxis: {type: 'datetime', 
+                                     dateTimeLabelFormats: { month: '%b', week: '%b', day: '%b' }, 
+                                     tickInterval: 30 * 24 * 3600 * 1000, // in milliseconds
+                                     min: {{ customer['surveys_date_from'] }}, 
+                                     max: {{ customer['surveys_date_to'] }},
+                                    },
                              yAxis: {title: {text: 'Survey'}, gridLineDashStyle: "Dash"},
-                             series: [{name: 'Survey',data: [40, 60, 100, 160], color: '#54a0ed',}],
+                             series: [{name: 'Result',
+                                       data: {{ customer['surveys_data'] }},
+                                       color: '#54a0ed',}],
                              credits:{enabled:false},
                             });});
 
