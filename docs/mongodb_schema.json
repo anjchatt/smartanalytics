@@ -24,7 +24,7 @@
 	"maritalStatus": "string, i.e. single|married|divorced|unknown",
 	"investableAssetEstimate": "float",
 	"creditScoreFICO": "int",
-	"customerAddress": "string",
+	"email": "string",
 	"numberOfChildren": "int",
 	"zillowHomeValueEstimation": "float, estimate cost of home",
 	"homeEquityEstimate": "float, estimate customer equity",
