@@ -1,0 +1,120 @@
+{% extends 'index.html' %}
+{% block head %}
+{{ super() }}
+<style>
+    .circle-container {
+      position: relative;
+      width: 30em;
+      height: 30em;
+      border-radius: 50%;
+      padding: 0;
+      list-style: none;
+      margin: 10em auto 0;
+      border: solid 10px #54a0ed;
+      box-shadow: 0 0 30px #54a0ed;
+    }
+    .circle-container > * {
+      display: block;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin: -5em;
+      width: 10em;
+      height: 10em;
+    }
+    .circle-container > *:nth-of-type(1) {
+      -webkit-transform: rotate(-90deg) translate(15em) rotate(90deg);
+              transform: rotate(-90deg) translate(15em) rotate(90deg);
+    }
+    .circle-container > *:nth-of-type(2) {
+      -webkit-transform: rotate(-38.57142857deg) translate(15em) rotate(38.57142857deg);
+              transform: rotate(-38.57142857deg) translate(15em) rotate(38.57142857deg);
+    }
+    .circle-container > *:nth-of-type(3) {
+      -webkit-transform: rotate(12.85714286deg) translate(15em) rotate(-12.85714286deg);
+              transform: rotate(12.85714286deg) translate(15em) rotate(-12.85714286deg);
+    }
+    .circle-container > *:nth-of-type(4) {
+      -webkit-transform: rotate(64.28571429deg) translate(15em) rotate(-64.28571429deg);
+              transform: rotate(64.28571429deg) translate(15em) rotate(-64.28571429deg);
+    }
+    .circle-container > *:nth-of-type(5) {
+      -webkit-transform: rotate(115.71428571deg) translate(15em) rotate(-115.71428571deg);
+              transform: rotate(115.71428571deg) translate(15em) rotate(-115.71428571deg);
+    }
+    .circle-container > *:nth-of-type(6) {
+      -webkit-transform: rotate(167.14285714deg) translate(15em) rotate(-167.14285714deg);
+              transform: rotate(167.14285714deg) translate(15em) rotate(-167.14285714deg);
+    }
+    .circle-container > *:nth-of-type(7) {
+      -webkit-transform: rotate(218.57142857deg) translate(15em) rotate(-218.57142857deg);
+              transform: rotate(218.57142857deg) translate(15em) rotate(-218.57142857deg);
+    }
+    .circle-container > *:nth-of-type(8) {
+      -webkit-transform: rotate(308.57143deg) translate(0em) rotate(-308.57143deg);
+              transform: rotate(308.57143deg) translate(0em) rotate(-308.57143deg);
+    }
+
+    .crop {
+        box-shadow: 0 0 50px rgba(0,0,0,0.4);
+        border-radius: 100%;
+        width: 150px;
+        height: 150px;
+        overflow: hidden;
+    }
+    .crop img{
+        display: block;
+        /*max-width: 100%;*/
+        width:208px;
+        height: 208px;
+        margin: -29 -29;
+        border-radius: 100%;
+        -webkit-filter: grayscale(10%);
+        filter: grayscale(10%);
+        border: solid 0px;
+        -webkit-transition: .15s;
+        transition: .15s;
+    }
+    .crop:hover {
+      -webkit-filter: grayscale(0);
+              filter: grayscale(0);
+      -webkit-transform: scale(1.2);
+              transform: scale(1.2);
+        transition: .15s;
+    }
+    #center {
+        margin:-50px;
+        margin:-50px;
+        width:250px;
+        height:250px;        
+    }
+
+</style>
+
+{% endblock %}
+{% block body %}
+{{ super() }}
+
+<ul class='circle-container'>
+  <li><a href='#'><div class="crop"><img src='static/images/720.png'></div></a></li>
+  <li><a href='/loopfeedback'><div class="crop"><img src='static/images/clf.png'></div></a></li>
+  <li><a href='#'><div class="crop"><img src='static/images/wm.png'></div></a></li>
+  <li><a href='#'><div class="crop"><img src='static/images/pci.png'></div></a></li>
+  <li><a href='#'><div class="crop"><img src='static/images/lm.png'></div></a></li>
+  <li><a href='/cluster'><div class="crop"><img src='static/images/voc.png'></div></a></li>
+  <li><a href='/map'><div class="crop"><img src='static/images/nbo.png'></div></a></li>
+  <li><a href='#'><img id='center' src='static/images/center.png'></a></li>
+</ul>
+
+{% endblock %}
+
+{% block bottom %}
+{{ super() }}
+    
+<script>
+    $('.circle-container').children().each(function() {
+        $(this).addClass('item'+($(this).index() + 1));
+    });
+</script>
+    
+{% endblock %}
