@@ -61,7 +61,7 @@
         <table class="table">
 {% for so in customer['suboffers'][r['nboName']] %}
             <tr class="clickable-row" data-toggle="modal" data-target="#emailModal" 
-                data-name="{{ customer['name'] }}" data-nbo="{{ r['nboName'] }}" data-suboffer-img-id="{{ so['image'] }}">
+                data-name="{{ customer['name'] }}" data-nbo="{{ r['nboName'] }}" data-suboffer-img-id="{{ so['image'] }}" data-suboffer-text="{{ so['text'] }}">
                 <td class="nbo-name">{{ so['name'] }}</td>
             </tr>
 {% endfor %}
@@ -193,10 +193,11 @@
                 var recipient = button.data('name');
                 var nbo = button.data('nbo');
                 var img_id = button.data('suboffer-img-id');
+                var text = button.data('suboffer-text');
                 var modal = $(this);
                 modal.find('.modal-title').text('New message to ' + recipient);
                 modal.find('.modal-body input').val(recipient);
-                modal.find('.modal-body #message-text').val('Dear '+recipient+'\n\nYou are very important customer for us and we would like to make a special offer to you:\n\n'+nbo+'\n\nPlease, consider our offer. You can find more details here: http://best.offer.capbank.com.\n\nBest wishes,\nCapBank Team.');
+                modal.find('.modal-body #message-text').val(text.replace('John', recipient));
                 modal.find('.modal-body #message-text').height(300);
                 modal.find('#email-image-placeholder').html('<img src="/static/images/email/email_tmp' + img_id + '.png">');
 
