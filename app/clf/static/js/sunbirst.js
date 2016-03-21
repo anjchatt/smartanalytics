@@ -2,6 +2,7 @@
 var width = 750;
 var height = 600;
 var radius = Math.min(width, height) / 2;
+var highlighted = {};
 
 // Breadcrumb dimensions: width, height, spacing, width of tip/tail.
 var b = {
@@ -106,8 +107,10 @@ function createVisualization(json) {
       .attr("d", arc)
       .attr("fill-rule", "evenodd")
       .style("fill", function(d) { return colors[d.name]; })
-      .style("opacity", 1)
+      .style("opacity", 0.3)
       .on("mouseover", mouseover);
+
+  mouseover(highlighted);
 
   // Add the mouseleave handler to the bounding circle.
   d3.select("#container").on("mouseleave", mouseleave);
@@ -149,24 +152,25 @@ function mouseover(d) {
 // Restore everything to full opacity when moving off the visualization.
 function mouseleave(d) {
 
-  // Hide the breadcrumb trail
-  d3.select("#trail")
-      .style("visibility", "hidden");
-
-  // Deactivate all segments during transition.
-  d3.selectAll("path").on("mouseover", null);
-
-  // Transition each segment to full opacity and then reactivate it.
-  d3.selectAll("path")
-      .transition()
-      .duration(1000)
-      .style("opacity", 1)
-      .each("end", function() {
-              d3.select(this).on("mouseover", mouseover);
-            });
-
-  d3.select("#explanation")
-      .style("visibility", "hidden");
+//  // Hide the breadcrumb trail
+//  d3.select("#trail")
+//      .style("visibility", "hidden");
+//
+//  // Deactivate all segments during transition.
+//  d3.selectAll("path").on("mouseover", null);
+  mouseover(highlighted);
+//
+//  // Transition each segment to full opacity and then reactivate it.
+//  d3.selectAll("path")
+//      .transition()
+//      .duration(1000)
+//      .style("opacity", 1)
+//      .each("end", function() {
+//              d3.select(this).on("mouseover", mouseover);
+//            });
+//
+//  d3.select("#explanation")
+//      .style("visibility", "hidden");
 }
 
 // Given a node in a partition layout, return an array of all of its ancestor
@@ -333,6 +337,11 @@ function buildHierarchy(csv) {
  	children.push(childNode);
       }
     }
+    if (size = 226220) {
+      highlighted = currentNode;
+    }
   }
+  // point to some segment of diagram
+  highlighted = root.children[1].children[5].children[3].children[5].children[3].children[5];
   return root;
 };

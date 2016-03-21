@@ -2,13 +2,25 @@
 {% block head %}
 {{ super() }}
     <title>Next Best Offer</title>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <link rel="stylesheet" type="text/css"
+      href="https://fonts.googleapis.com/css?family=Open+Sans:400,600">
+    <link rel="stylesheet" type="text/css" href="/static/css/sunbirst.css"/>
 {% endblock %}
 {% block body %}
 {{ super() }}
         <div id="NBO" class="container">
-            <h3>Next best offer</h3>
-            <hr />
-
+            <div class="row">
+                <div class="col-md-4 text-center">
+                    <h3>Next best offer</h3>
+                </div>
+                <div class="col-md-8 text-center">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active"><a href="#graphs" aria-controls="graphs" role="tab" data-toggle="tab">Graphs</a></li>
+                        <li role="presentation"><a href="#KLIs" aria-controls="KLIs" role="tab" data-toggle="tab">KLIs</a></li>
+                    </ul>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-md-4 text-center">
                     <div class="row">
@@ -38,10 +50,30 @@
                                 <div class="panel-heading">NBO Suggestion</div>
 
                                 <!-- Table -->
-                                <table class="table table-bordered" id="NBOTable">
+                                <table class="table table-bordered" style="border-collapse:collapse;" id="NBOTable">
                                     <tr><th>#</th><th>Offer</th><th>Probability</th></tr>
 {% for r in customer['nbo_offers'] %}
-<tr class="clickable-row" data-toggle="modal" data-target="#emailModal" data-name="{{ customer['name'] }}" data-nbo="{{ r['nboName'] }}"><td>{{ r['index'] }}</td><td class="nbo-name">{{ r['nboName'] }}</td><td>{{ r['nboProbability'] }}</td></tr>
+<tr data-toggle="collapse" data-target="#offer{{ r['index'] }}" data-parent="#NBOTable" class="accordion-toggle clickable-row level1offer">
+    <td>{{ r['index'] }}</td><td>{{ r['nboName'] }}</td><td>{{ r['nboProbability'] }}</td>
+</tr>
+<tr>
+    <td colspan="12" class="hiddenRow"><div class="accordion-body collapse" id="offer{{ r['index'] }}">
+        <table class="table">
+            <tr class="clickable-row" data-toggle="modal" data-target="#emailModal" 
+                data-name="{{ customer['name'] }}" data-nbo="{{ r['nboName'] }}">
+                <td class="nbo-name">First suboffer {{ r['nboName'] }}</td>
+            </tr>
+            <tr class="clickable-row" data-toggle="modal" data-target="#emailModal" 
+                data-name="{{ customer['name'] }}" data-nbo="{{ r['nboName'] }}">
+                <td class="nbo-name">Second suboffer {{ r['nboName'] }}</td>
+            </tr>
+            <tr class="clickable-row" data-toggle="modal" data-target="#emailModal" 
+                data-name="{{ customer['name'] }}" data-nbo="{{ r['nboName'] }}">
+                <td class="nbo-name">Third suboffer {{ r['nboName'] }}</td>
+            </tr>
+        </table>
+    </div></td>
+</tr>
                                     
 {% endfor %}
                                 </table>
@@ -49,14 +81,76 @@
                         </div>
                     </div>
                 </div>
+                
+                <!-- Tab panes -->
                 <div class="col-md-8 text-center">
-                    <div class="row" id="monthly_profit">Monthly profit</div>
-                    <div class="row" id="sentiment">Sentiment</div>
-                    <div class="row" id="deposit_mix">Deposit Mix</div>
-                    <div class="row" id="call_center">Interactions with Call Center</div>
-                    <div class="row" id="survey">Survey</div>
-                </div>
-            </div>
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="graphs">
+                            <div class="row" id="monthly_profit">Monthly profit</div>
+                            <div class="row" id="sentiment">Sentiment</div>
+                            <div class="row" id="deposit_mix">Deposit Mix</div>
+                            <div class="row" id="call_center">Interactions with Call Center</div>
+                            <div class="row" id="survey">Survey</div>
+                        </div> <!-- id="graphs" -->
+                        <div role="tabpanel" class="tab-pane" id="KLIs">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">Last Customer transactions</div>
+                                            <!-- Transactions Table -->
+                                            <table class="table table-bordered" id="TransactionsTable">
+                                                <tr><th>ID</th><th>UCIC</th><th>Date</th><th>Transaction</th><th>Amount</th></tr>
+                                                <tr class="clickable-row"><td>1</td><td>12345</td><td>10/29/2015</td><td>WEST VETRINARY HOSPITAL</td><td>$22.00</td></tr>
+                                                <tr class="clickable-row"><td>2</td><td>12345</td><td>10/29/2015</td><td>ORGANIC PET SHOP</td><td>$67.87</td></tr>
+                                                <tr class="clickable-row"><td>3</td><td>12345</td><td>10/30/2015</td><td>COLLARSRUS.COM</td><td>$31.25</td></tr>
+                                                <tr class="clickable-row"><td>4</td><td>12345</td><td>10/30/2015</td><td>BALANCE</td><td>$6556.09</td></tr>
+                                                <tr class="clickable-row"><td>5</td><td>12345</td><td>10/30/2015</td><td>RENT</td><td>$1000.00</td></tr>
+                                                <tr class="clickable-row"><td>6</td><td>12345</td><td>11/02/2015</td><td>GLENFERN GOLF COURSE</td><td>$22.00</td></tr>
+                                                <tr class="clickable-row"><td>7</td><td>12345</td><td>11/03/2015</td><td>GOLF PLANET</td><td>$854.90</td></tr>
+                                                <tr class="clickable-row"><td>8</td><td>12345</td><td>11/06/2015</td><td>GLENFERN GOLF COURSE</td><td>$22.00</td></tr>
+                                                <tr class="clickable-row"><td>9</td><td>12345</td><td>11/09/2015</td><td>GLENFERN GOLF COURSE</td><td>$22.00</td></tr>
+                                                <tr class="clickable-row"><td>10</td><td>12345</td><td>11/09/2015</td><td>SUPERMARKET PLUS</td><td>$56.82</td></tr>
+                                                <tr class="clickable-row"><td>11</td><td>12345</td><td>11/13/2015</td><td>GLENFERN GOLF COURSE</td><td>$43.29</td></tr>
+                                                <tr class="clickable-row"><td>12</td><td>12345</td><td>11/15/2015</td><td>GLENFERN GOLF COURSE</td><td>$22.00</td></tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">Key Indicators</div>
+                                            <!-- KLI Table -->
+                                            <table class="table table-bordered" id="KLITable">
+                                                <tr><th>#</th><th>Indicator</th><th>Duration</th></tr>
+                                                <tr class="clickable-row"><td>1</td><td>SINGLE</td><td>8 years</td></tr>
+                                                <tr class="clickable-row"><td>2</td><td>RENTER</td><td>5 years</td></tr>
+                                                <tr class="clickable-row"><td>3</td><td>INCREASED SAVINGS BALANCE</td><td>1 year</td></tr>
+                                                <tr class="clickable-row"><td>4</td><td>INCREASED CHECKING BALANCE</td><td>3 months</td></tr>
+                                                <tr class="clickable-row"><td>5</td><td>PLANNING A WEDDING</td><td>1 month</td></tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="panel panel-default">
+                                            <div id="main">
+                                                <div id="sequence"></div>
+                                                <div id="chart">
+                                                    <div id="explanation" style="visibility: hidden;">
+                                                        <span id="percentage"></span><br/>
+                                                        of customers
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- id="KLIs" -->
+                    </div> 
+                </div> <!-- class="col-md-8" -->
+            </div> <!-- class="row" -->
             <hr />
         </div> <!-- id="NBO" class="container" -->
 
@@ -107,9 +201,9 @@
         </script>
 
         <script>
-            var None = null; // For handling None values 
-            $('#NBOTable').on('click', '.clickable-row', function(event) {
-                //alert("Click detected!");
+            var None = null; // For handling None values
+            $('#NBOTable').on('click', '.level1offer', function(event) {
+                $('.nav-tabs a[href="#KLIs"]').tab('show');
             });
             $('#NBOTable').on('mouseover', '.clickable-row', function(event) {
               $(this).addClass('bg-info').siblings().removeClass('bg-info');
@@ -186,4 +280,6 @@
                             });});
 
         </script>
+
+    <script type="text/javascript" src="/static/js/sunbirst.js"></script>
 {% endblock %}
