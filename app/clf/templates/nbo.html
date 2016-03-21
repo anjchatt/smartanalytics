@@ -46,18 +46,18 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="panel panel-default">
+                            <div class="panel panel-default" id="accordion">
                                 <div class="panel-heading">NBO Suggestion</div>
 
                                 <!-- Table -->
                                 <table class="table table-bordered" style="border-collapse:collapse;" id="NBOTable">
                                     <tr><th>#</th><th>Offer</th><th>Probability</th></tr>
 {% for r in customer['nbo_offers'] %}
-<tr data-toggle="collapse" data-target="#offer{{ r['index'] }}" data-parent="#NBOTable" class="accordion-toggle clickable-row level1offer">
+<tr data-toggle="collapse" data-target="#offer{{ r['index'] }}" data-parent="#accordion" class="accordion-toggle clickable-row level1offer">
     <td>{{ r['index'] }}</td><td>{{ r['nboName'] }}</td><td>{{ r['nboProbability'] }}</td>
 </tr>
 <tr>
-    <td colspan="12" class="hiddenRow"><div class="accordion-body collapse" id="offer{{ r['index'] }}">
+    <td colspan="12" class="hiddenRow"><div class="panel-collapse collapse" id="offer{{ r['index'] }}">
         <table class="table">
             <tr class="clickable-row" data-toggle="modal" data-target="#emailModal" 
                 data-name="{{ customer['name'] }}" data-nbo="{{ r['nboName'] }}">
@@ -101,18 +101,18 @@
                                             <!-- Transactions Table -->
                                             <table class="table table-bordered" id="TransactionsTable">
                                                 <tr><th>ID</th><th>UCIC</th><th>Date</th><th>Transaction</th><th>Amount</th></tr>
-                                                <tr class="clickable-row"><td>1</td><td>12345</td><td>10/29/2015</td><td>WEST VETRINARY HOSPITAL</td><td>$22.00</td></tr>
-                                                <tr class="clickable-row"><td>2</td><td>12345</td><td>10/29/2015</td><td>ORGANIC PET SHOP</td><td>$67.87</td></tr>
-                                                <tr class="clickable-row"><td>3</td><td>12345</td><td>10/30/2015</td><td>COLLARSRUS.COM</td><td>$31.25</td></tr>
-                                                <tr class="clickable-row"><td>4</td><td>12345</td><td>10/30/2015</td><td>BALANCE</td><td>$6556.09</td></tr>
-                                                <tr class="clickable-row"><td>5</td><td>12345</td><td>10/30/2015</td><td>RENT</td><td>$1000.00</td></tr>
-                                                <tr class="clickable-row"><td>6</td><td>12345</td><td>11/02/2015</td><td>GLENFERN GOLF COURSE</td><td>$22.00</td></tr>
-                                                <tr class="clickable-row"><td>7</td><td>12345</td><td>11/03/2015</td><td>GOLF PLANET</td><td>$854.90</td></tr>
-                                                <tr class="clickable-row"><td>8</td><td>12345</td><td>11/06/2015</td><td>GLENFERN GOLF COURSE</td><td>$22.00</td></tr>
-                                                <tr class="clickable-row"><td>9</td><td>12345</td><td>11/09/2015</td><td>GLENFERN GOLF COURSE</td><td>$22.00</td></tr>
-                                                <tr class="clickable-row"><td>10</td><td>12345</td><td>11/09/2015</td><td>SUPERMARKET PLUS</td><td>$56.82</td></tr>
-                                                <tr class="clickable-row"><td>11</td><td>12345</td><td>11/13/2015</td><td>GLENFERN GOLF COURSE</td><td>$43.29</td></tr>
-                                                <tr class="clickable-row"><td>12</td><td>12345</td><td>11/15/2015</td><td>GLENFERN GOLF COURSE</td><td>$22.00</td></tr>
+                                                <tr class="success"><td>1</td><td>12345</td><td>10/29/2015</td><td>WEST VETRINARY HOSPITAL</td><td>$22.00</td></tr>
+                                                <tr class="success"><td>2</td><td>12345</td><td>10/29/2015</td><td>ORGANIC PET SHOP</td><td>$67.87</td></tr>
+                                                <tr class=""><td>3</td><td>12345</td><td>10/30/2015</td><td>COLLARSRUS.COM</td><td>$31.25</td></tr>
+                                                <tr class="info"><td>4</td><td>12345</td><td>10/30/2015</td><td>BALANCE</td><td>$6556.09</td></tr>
+                                                <tr class="info"><td>5</td><td>12345</td><td>10/30/2015</td><td>RENT</td><td>$1000.00</td></tr>
+                                                <tr class=""><td>6</td><td>12345</td><td>11/02/2015</td><td>GLENFERN GOLF COURSE</td><td>$22.00</td></tr>
+                                                <tr class="danger"><td>7</td><td>12345</td><td>11/03/2015</td><td>GOLF PLANET</td><td>$854.90</td></tr>
+                                                <tr class=""><td>8</td><td>12345</td><td>11/06/2015</td><td>GLENFERN GOLF COURSE</td><td>$22.00</td></tr>
+                                                <tr class=""><td>9</td><td>12345</td><td>11/09/2015</td><td>GLENFERN GOLF COURSE</td><td>$22.00</td></tr>
+                                                <tr class=""><td>10</td><td>12345</td><td>11/09/2015</td><td>SUPERMARKET PLUS</td><td>$56.82</td></tr>
+                                                <tr class=""><td>11</td><td>12345</td><td>11/13/2015</td><td>GLENFERN GOLF COURSE</td><td>$43.29</td></tr>
+                                                <tr class=""><td>12</td><td>12345</td><td>11/15/2015</td><td>GLENFERN GOLF COURSE</td><td>$22.00</td></tr>
                                             </table>
                                         </div>
                                     </div>
@@ -122,11 +122,11 @@
                                             <!-- KLI Table -->
                                             <table class="table table-bordered" id="KLITable">
                                                 <tr><th>#</th><th>Indicator</th><th>Duration</th></tr>
-                                                <tr class="clickable-row"><td>1</td><td>SINGLE</td><td>8 years</td></tr>
-                                                <tr class="clickable-row"><td>2</td><td>RENTER</td><td>5 years</td></tr>
-                                                <tr class="clickable-row"><td>3</td><td>INCREASED SAVINGS BALANCE</td><td>1 year</td></tr>
-                                                <tr class="clickable-row"><td>4</td><td>INCREASED CHECKING BALANCE</td><td>3 months</td></tr>
-                                                <tr class="clickable-row"><td>5</td><td>PLANNING A WEDDING</td><td>1 month</td></tr>
+                                                <tr class="success"><td>1</td><td>SINGLE</td><td>8 years</td></tr>
+                                                <tr class=""><td>2</td><td>RENTER</td><td>5 years</td></tr>
+                                                <tr class="danger"><td>3</td><td>INCREASED SAVINGS BALANCE</td><td>1 year</td></tr>
+                                                <tr class="danger"><td>4</td><td>INCREASED CHECKING BALANCE</td><td>3 months</td></tr>
+                                                <tr class="info"><td>5</td><td>PLANNING A WEDDING</td><td>1 month</td></tr>
                                             </table>
                                         </div>
                                     </div>
@@ -203,6 +203,9 @@
         <script>
             var None = null; // For handling None values
             $('#NBOTable').on('click', '.level1offer', function(event) {
+                $(this).siblings('.panel-collapse').collapse('hide');
+                $('#NBOTable').find('.panel-collapse.in').collapse('hide');
+
                 $('.nav-tabs a[href="#KLIs"]').tab('show');
             });
             $('#NBOTable').on('mouseover', '.clickable-row', function(event) {

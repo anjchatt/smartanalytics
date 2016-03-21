@@ -107,16 +107,16 @@ function createVisualization(json) {
       .attr("d", arc)
       .attr("fill-rule", "evenodd")
       .style("fill", function(d) { return colors[d.name]; })
-      .style("opacity", 0.3)
+      .style("opacity", 1)
       .on("mouseover", mouseover);
-
-  mouseover(highlighted);
 
   // Add the mouseleave handler to the bounding circle.
   d3.select("#container").on("mouseleave", mouseleave);
 
   // Get total size of the tree = value of root node from partition.
   totalSize = path.node().__data__.value;
+
+  mouseover(highlighted);
  };
 
 // Fade all but the current sequence, and show it in the breadcrumb trail.
@@ -138,7 +138,8 @@ function mouseover(d) {
   updateBreadcrumbs(sequenceArray, percentageString);
 
   // Fade all the segments.
-  d3.selectAll("path")
+  debugger;
+  vis.selectAll("path")
       .style("opacity", 0.3);
 
   // Then highlight only those that are an ancestor of the current segment.
