@@ -150,7 +150,7 @@
 
 
         <div class="modal fade" id="emailModal" tabindex="-1" role="dialog" aria-labelledby="emailModalLabel">
-            <div class="modal-dialog" role="document">
+            <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -161,10 +161,16 @@
                             <div class="form-group">
                                 <label for="recipient-name" class="control-label">Recipient:</label>
                                 <input type="text" class="form-control" id="recipient-name">
-                            </div>
-                            <div class="form-group">
-                                <label for="message-text" class="control-label">Message:</label>
-                                <textarea class="form-control" id="message-text"></textarea>
+                                <div class="form-group">
+                                    <label for="message-text" class="control-label">Message:</label>
+                                    <div class="row">
+                                        <div class='col-md-6'>
+                                            <textarea class="form-control" id="message-text"></textarea>
+                                        </div>
+                                        <div id="email-image-placeholder" class='col-md-6'>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -186,11 +192,14 @@
                 var button = $(event.relatedTarget);
                 var recipient = button.data('name');
                 var nbo = button.data('nbo');
+                var img_id = button.data('suboffer-img-id');
                 var modal = $(this);
                 modal.find('.modal-title').text('New message to ' + recipient);
                 modal.find('.modal-body input').val(recipient);
                 modal.find('.modal-body #message-text').val('Dear '+recipient+'\n\nYou are very important customer for us and we would like to make a special offer to you:\n\n'+nbo+'\n\nPlease, consider our offer. You can find more details here: http://best.offer.capbank.com.\n\nBest wishes,\nCapBank Team.');
                 modal.find('.modal-body #message-text').height(300);
+                modal.find('#email-image-placeholder').html('<img src="/static/images/email/email_tmp' + img_id + '.png">');
+
             })
         </script>
 
