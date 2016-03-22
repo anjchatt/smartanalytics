@@ -17,28 +17,28 @@ var colors = {
   "account": "#6ab975",
   "other": "#a173d1",
 
-  "single": "#5687d1",
-  "married": "#7b615c",
-  "divorced": "#6ab975",
-  "unknown": "#a173d1",
+  "age: millenial": "#5687d1",
+  "age: 30~40": "#7b615c",
+  "age: 40~50": "#6ab975",
+  "age: >50": "#a173d1",
 
-  "rent(apartm.)": "#7b615c",
-  "rent(house)": "#de783b",
-  "mortgage": "#bbbbbb",
-  "own(apartm.)": "#5687d1",
-  "own(house)": "#6ab975",
+  "single": "#7b615c",
+  "married": "#de783b",
+  "divorced": "#bbbbbb",
+  "unknown_m": "#5687d1",
+  "unknown_m2": "#6ab975",
 
-  "high school": "#7b615c",
+  "traveller": "#7b615c",
   "prof course": "#bbbbbb",
   "university": "#de783b",
   "basic 9y": "#5687d1",
 
-  "age 30~40": "#7b615c",
-  "age 20~30": "#bbbbbb",
-  "age 40~50": "#de783b",
-  "age 50~60": "#5687d1",
-  "age ~20": "#6ab975",
-  "age 60~": "#a173d1",
+  "(have) mortgage": "#7b615c",
+  "(have) savings": "#bbbbbb",
+  "(have) credit card": "#de783b",
+  "(have) checking": "#5687d1",
+  "(have) money market": "#6ab975",
+  "(have) debit": "#a173d1",
 
   "working": "#7b615c",
   "jobless": "#bbbbbb",
@@ -46,7 +46,7 @@ var colors = {
 
   "travel": "#7b615c",
   "buy car": "#bbbbbb",
-  "wedding": "#de783b",
+  "single child": "#de783b",
   "inc.savings": "#5687d1",
 
   "end": "#bbbbbb"
