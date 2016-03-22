@@ -1,0 +1,87 @@
+yum install bind-utils
+yum install net-tools
+yum install git
+
+rpm --import https://www.mongodb.org/static/pgp/server-3.2.asc 
+
+cat <<EOF >/etc/yum.repos.d/mongodb-org-3.2.repo
+[mongodb-org-3.2]
+name=MongoDB Repository
+baseurl=https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/3.2/x86_64/
+gpgcheck=1
+enabled=1
+EOF
+
+yum install mongodb-org
+yum install python-psycopg2 postgresql-server postgresql
+
+rpm -iUvh http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm
+yum -y install python-pip
+
+yum install numpy
+yum install scipy
+yum install python-pandas
+pip install lifelines
+
+yum install -y gcc
+yum install -y gcc-c++
+pip install notebook
+
+pip install py2neo
+pip install twitter
+pip install pymongo
+pip install flask flask_sockets
+
+pip install requests
+
+
+#setup postgresql
+sudo postgresql-setup initdb
+sudo systemctl start postgresql
+sudo systemctl enable postgresql
+
+sudo -u postgres psql -U postgres -c "CREATE DATABASE twitter"
+
+sudo mkdir /usr/share/java/
+sudo curl -o /usr/share/java/postgresql-9.4.1208.jre6.jar https://jdbc.postgresql.org/download/postgresql-9.4.1208.jre6.jar
+
+sudo -u postgres python local_version/init_tables.py
+sudo -u postgres python local_version/data_preparation.py
+
+rpm --import http://debian.neo4j.org/neotechnology.gpg.key
+vi /etc/yum.repos.d/neo4j.repo
+yum install neo4j-2.3.2
+# copy neo4j database to /var/lib/neo4j
+
+chkconfig --add neo4j
+chkconfig neo4j --level 345 on
+systemctl start neo4j
+
+sudo yum install supervisor
+
+cat << EOF > /etc/supervisord.d/clf_web.ini
+[program:clf_web]
+directory=/home/user/smartanalytics/app/clf
+#environment=ENV_VARIABLE=example,OTHER_ENV_VARIABLE=example2
+command=python2.7 __init__.py
+autostart=true
+autorestart=true
+EOF
+
+cat << EOF > /etc/supervisord.d/data_ing.ini
+[program:data_ing]
+directory=/home/user/smartanalytics/local_version
+#environment=ENV_VARIABLE=example,OTHER_ENV_VARIABLE=example2
+command=python2.7 data_ingestion.py
+autostart=true
+autorestart=true
+EOF
+
+# create /etc/rc.d/init.d/supervisord
+chkconfig --add supervisord
+chkconfig supervisord --level 345 on
+systemctl start supervisord
+
+supervisorctl update
+supervisorctl status data_ing
+supervisorctl status clf_web
