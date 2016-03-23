@@ -12,122 +12,120 @@
         <div id="NBO" class="container">
             <div class="row">
                 <div class="col-md-4 text-center">
-                    <h3>Next best offer</h3>
-                </div>
-                <div class="col-md-8 text-center">
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" class="active"><a href="#graphs" aria-controls="graphs" role="tab" data-toggle="tab">Graphs</a></li>
-                        <li role="presentation"><a href="#KLIs" aria-controls="KLIs" role="tab" data-toggle="tab">KLIs</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4 text-center">
                     <div class="row">
-                        <div class="col-md-12">
-                            <div class="panel panel-default">
-                                <div class="panel-heading"><a gref="#">Customer 720 View</a><br />
-                                    <img src="/static/images/customer_w.png" />
-                                </div>
-                                <!-- Customer info Table -->
-                                <table class="table table-bordered" id="CustomerTable" style="font-size: 14px;">
-                                    <tr bgcolor='#aaaaaa'><td>Customer Name</td><td> {{ customer['name'] }} </td></tr>
-                                    <tr bgcolor='#aaaaaa'><td>State</td><td> {{ customer['state'] }} </td></tr>
-                                    <tr bgcolor='#aaaaaa'><td>E-Mail</td><td>{{ customer['email'] }}</td></tr>
-                                    <tr bgcolor='#ffa135'><td>Marital Status</td><td>{{ customer['maritalStatus'] }}</td></tr>
-                                    <tr bgcolor='#ffa135'><td># of Children in home</td><td>{{ customer['numberOfChildren']|int }}</td></tr>
-                                    <tr bgcolor='#009e47'><td>Predicted life event</td><td>{{ customer['predictedLifeEvent'] }}</td></tr>
-                                    <tr bgcolor='#06a9fc'><td>Credit Score - FICO</td><td>{{ customer['creditScoreFICO']|int }}</td></tr>
-                                    <tr bgcolor='#06a9fc'><td>Investable Asset Estimate</td><td>{{ customer['investableAssetEstimate'] }}</td></tr>
-                                    <tr bgcolor='#06a9fc'><td>Zillow Home Value Estimation</td><td>{{ customer['zillowHomeValueEstimation'] }}</td></tr>
-                                    <tr bgcolor='#06a9fc'><td>Home Equity Estimate</td><td>{{ customer['homeEquityEstimate'] }}</td></tr>
-                                </table>
+                            <h3>Next best offer</h3>
+                    </div>
+                    <div class="row">
+                        <div class="panel panel-default">
+                            <div class="panel-heading"><a gref="#">Customer 720 View</a><br />
+                                <img src="/static/images/customer_w.png" />
                             </div>
+                            <!-- Customer info Table -->
+                            <table class="table table-bordered" id="CustomerTable" style="font-size: 14px;">
+                                <tr bgcolor='#aaaaaa'><td>Customer Name</td><td> {{ customer['name'] }} </td></tr>
+                                <tr bgcolor='#aaaaaa'><td>State</td><td> {{ customer['state'] }} </td></tr>
+                                <tr bgcolor='#aaaaaa'><td>E-Mail</td><td>{{ customer['email'] }}</td></tr>
+                                <tr bgcolor='#ffa135'><td>Marital Status</td><td>{{ customer['maritalStatus'] }}</td></tr>
+                                <tr bgcolor='#ffa135'><td># of Children in home</td><td>{{ customer['numberOfChildren']|int }}</td></tr>
+                                <tr bgcolor='#009e47'><td>Predicted life event</td><td>{{ customer['predictedLifeEvent'] }}</td></tr>
+                                <tr bgcolor='#06a9fc'><td>Credit Score - FICO</td><td>{{ customer['creditScoreFICO']|int }}</td></tr>
+                                <tr bgcolor='#06a9fc'><td>Investable Asset Estimate</td><td>{{ customer['investableAssetEstimate'] }}</td></tr>
+                                <tr bgcolor='#06a9fc'><td>Zillow Home Value Estimation</td><td>{{ customer['zillowHomeValueEstimation'] }}</td></tr>
+                                <tr bgcolor='#06a9fc'><td>Home Equity Estimate</td><td>{{ customer['homeEquityEstimate'] }}</td></tr>
+                            </table>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-12">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">NBO Suggestion</div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">NBO Suggestion</div>
 
-                                <!-- Table -->
-                                <table class="table table-bordered" id="NBOTable" style="font-size: 14px;">
-                                    <tr><th>#</th><th>Offer</th><th>Probability</th></tr>
+                            <!-- Table -->
+                            <table class="table table-bordered" id="NBOTable" style="font-size: 14px;">
+                                <tr><th>#</th><th>Offer</th><th>Probability</th></tr>
 {% for r in customer['nbo_offers'] %}
 <tr class="clickable-row level1offer" style="cursor:pointer">
     <td>{{ r['index'] }}</td><td>{{ r['nboName'] }}</td><td>{{ r['nboProbability'] }}</td>
 </tr>                                    
 {% endfor %}
-                                </table>
-                            </div>
+                            </table>
                         </div>
                     </div>
                 </div>
                 
                 <!-- Tab panes -->
                 <div class="col-md-8 text-center">
-                    <div class="tab-content">
-                        <div role="tabpanel" class="tab-pane active" id="graphs">
-                            <div class="row" id="monthly_profit">Monthly profit</div>
-                            <div class="row" id="sentiment">Sentiment</div>
-                            <div class="row" id="deposit_mix">Deposit Mix</div>
-                            <div class="row" id="call_center">Interactions with Call Center</div>
-                            <div class="row" id="survey">Survey</div>
-                        </div> <!-- id="graphs" -->
-                        <div role="tabpanel" class="tab-pane" id="KLIs">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading">Last Customer transactions</div>
-                                            <!-- Transactions Table -->
-                                            <table class="table table-bordered" id="TransactionsTable">
-                                                <tr><th>ID</th><th>Date</th><th>Transaction</th><th>Amount</th></tr>
-                                                <tr class="success"><td>1</td><td>10/29/2015</td><td>EGENCIA</td><td>$2200.00</td></tr>
-                                                <tr class=""><td>2</td><td>10/29/2015</td><td>ORGANIC PET SHOP</td><td>$67.87</td></tr>
-                                                <tr class=""><td>3</td><td>10/30/2015</td><td>WALMART</td><td>$90.00</td></tr>
-                                                <tr class=""><td>4</td><td>10/30/2015</td><td>TARGET</td><td>$140.00</td></tr>
-                                                <tr class=""><td>5</td><td>10/30/2015</td><td>RENT</td><td>$1000.00</td></tr>
-                                                <tr class=""><td>6</td><td>11/02/2015</td><td>REI SPORTS</td><td>$250.00</td></tr>
-                                                <tr class="success"><td>7</td><td>11/03/2015</td><td>EXPEDIA</td><td>$750.00</td></tr>
-                                                <tr class=""><td>10</td><td>11/09/2015</td><td>SUPERMARKET PLUS</td><td>$56.82</td></tr>
-                                                <tr class=""><td>11</td><td>11/13/2015</td><td>GLENFERN GOLF COURSE</td><td>$43.29</td></tr>
-                                                <tr class=""><td>12</td><td>11/15/2015</td><td>GLENFERN GOLF COURSE</td><td>$22.00</td></tr>
-                                            </table>
+                    <div class="row">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="#graphs" aria-controls="graphs" role="tab" data-toggle="tab">Graphs</a></li>
+                            <li role="presentation"><a href="#KLIs" aria-controls="KLIs" role="tab" data-toggle="tab">KLIs</a></li>
+                            <li role="presentation"><a href="#Design" aria-controls="Design" role="tab" data-toggle="tab">Design</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="row">
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="graphs">
+                                <div class="row" id="monthly_profit">Monthly profit</div>
+                                <div class="row" id="sentiment">Sentiment</div>
+                                <div class="row" id="deposit_mix">Deposit Mix</div>
+                                <div class="row" id="call_center">Interactions with Call Center</div>
+                                <div class="row" id="survey">Survey</div>
+                            </div> <!-- id="graphs" -->
+                            <div role="tabpanel" class="tab-pane" id="KLIs">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">Last Customer transactions</div>
+                                                <!-- Transactions Table -->
+                                                <table class="table table-bordered" id="TransactionsTable">
+                                                    <tr><th>ID</th><th>Date</th><th>Transaction</th><th>Amount</th></tr>
+                                                    <tr class="success"><td>1</td><td>10/29/2015</td><td>EGENCIA</td><td>$2200.00</td></tr>
+                                                    <tr class=""><td>2</td><td>10/29/2015</td><td>ORGANIC PET SHOP</td><td>$67.87</td></tr>
+                                                    <tr class=""><td>3</td><td>10/30/2015</td><td>WALMART</td><td>$90.00</td></tr>
+                                                    <tr class=""><td>4</td><td>10/30/2015</td><td>TARGET</td><td>$140.00</td></tr>
+                                                    <tr class=""><td>5</td><td>10/30/2015</td><td>RENT</td><td>$1000.00</td></tr>
+                                                    <tr class=""><td>6</td><td>11/02/2015</td><td>REI SPORTS</td><td>$250.00</td></tr>
+                                                    <tr class="success"><td>7</td><td>11/03/2015</td><td>EXPEDIA</td><td>$750.00</td></tr>
+                                                    <tr class=""><td>10</td><td>11/09/2015</td><td>SUPERMARKET PLUS</td><td>$56.82</td></tr>
+                                                    <tr class=""><td>11</td><td>11/13/2015</td><td>GLENFERN GOLF COURSE</td><td>$43.29</td></tr>
+                                                    <tr class=""><td>12</td><td>11/15/2015</td><td>GLENFERN GOLF COURSE</td><td>$22.00</td></tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">Key Indicators</div>
+                                                <!-- KLI Table -->
+                                                <table class="table table-bordered" id="KLITable">
+                                                    <tr><th>#</th><th>Indicator</th></tr>
+                                                    <tr class="success"><td>1</td><td>TRAVELER</td></tr>
+                                                    <tr class=""><td>2</td><td>MARRIED</td></tr>
+                                                    <tr class=""><td>3</td><td>AGE: millelnial</td></tr>
+                                                    <tr class=""><td>4</td><td>(Have) Credit Card</td></tr>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading">Key Indicators</div>
-                                            <!-- KLI Table -->
-                                            <table class="table table-bordered" id="KLITable">
-                                                <tr><th>#</th><th>Indicator</th></tr>
-                                                <tr class="success"><td>1</td><td>TRAVELER</td></tr>
-                                                <tr class=""><td>2</td><td>MARRIED</td></tr>
-                                                <tr class=""><td>3</td><td>AGE: millelnial</td></tr>
-                                                <tr class=""><td>4</td><td>(Have) Credit Card</td></tr>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="panel panel-default">
-                                            <div id="main">
-                                                <div id="sequence"></div>
-                                                <div id="chart">
-                                                    <div id="explanation" style="visibility: hidden;">
-                                                        <span id="percentage"></span><br/>
-                                                        of customers
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="panel panel-default">
+                                                <div id="main">
+                                                    <div id="sequence"></div>
+                                                    <div id="chart">
+                                                        <div id="explanation" style="visibility: hidden;">
+                                                            <span id="percentage"></span><br/>
+                                                            of customers
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div><!-- id="KLIs" -->
-                    </div> 
+                            </div><!-- id="KLIs" -->
+                        </div> 
+                    </div> <!-- row with tab-content -->
                 </div> <!-- class="col-md-8" -->
             </div> <!-- class="row" -->
             <hr />
