@@ -43,7 +43,7 @@
                             <table class="table table-bordered" id="NBOTable" style="font-size: 14px;">
                                 <tr><th>#</th><th>Offer</th><th>Probability</th></tr>
 {% for r in customer['nbo_offers'] %}
-<tr class="clickable-row level1offer" style="cursor:pointer">
+<tr class="clickable-row level1offer" style="cursor:pointer;">
     <td>{{ r['index'] }}</td><td>{{ r['nboName'] }}</td><td>{{ r['nboProbability'] }}</td>
 </tr>                                    
 {% endfor %}
@@ -94,16 +94,25 @@
                                             </div>
                                         </div>
                                         <div class="col-md-4">
-                                            <div class="panel panel-default">
-                                                <div class="panel-heading">Key Indicators</div>
-                                                <!-- KLI Table -->
-                                                <table class="table table-bordered" id="KLITable">
-                                                    <tr><th>#</th><th>Indicator</th></tr>
-                                                    <tr class="success"><td>1</td><td>TRAVELER</td></tr>
-                                                    <tr class=""><td>2</td><td>MARRIED</td></tr>
-                                                    <tr class=""><td>3</td><td>AGE: millelnial</td></tr>
-                                                    <tr class=""><td>4</td><td>(Have) Credit Card</td></tr>
-                                                </table>
+                                            <div class="row">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">Key Indicators</div>
+                                                    <!-- KLI Table -->
+                                                    <table class="table table-bordered" id="KLITable">
+                                                        <tr><th>#</th><th>Indicator</th></tr>
+                                                        <tr class="success"><td>1</td><td>TRAVELER</td></tr>
+                                                        <tr class=""><td>2</td><td>MARRIED</td></tr>
+                                                        <tr class=""><td>3</td><td>AGE: millelnial</td></tr>
+                                                        <tr class=""><td>4</td><td>(Have) Credit Card</td></tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <br />
+                                                <br />
+                                                <button type="button" class="btn btn-primary btn-lg active" id="GoToDesign">
+                                                    Go to design
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -124,6 +133,33 @@
                                     </div>
                                 </div>
                             </div><!-- id="KLIs" -->
+
+                            <div role="tabpanel text-center" class="tab-pane" id="Design">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <a href="#" class="thumbnail" data-toggle="modal" data-target="#emailModal" 
+                                           data-name="{{ customer['name'] }}" data-nbo="Platinum Credit Card with 0% APR" 
+                                           data-suboffer-img-id="01" data-suboffer-text="">
+                                            <img src="/static/images/email/email_tmp01.png" style="cursor: pointer;">
+                                        </a>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <a href="#" class="thumbnail" data-toggle="modal" data-target="#emailModal" 
+                                           data-name="{{ customer['name'] }}" data-nbo="Platinum Credit Card with 0% APR" 
+                                           data-suboffer-img-id="02" data-suboffer-text="">
+                                            <img src="/static/images/email/email_tmp02.png" style="cursor: pointer;">
+                                        </a>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <a href="#" class="thumbnail" data-toggle="modal" data-target="#emailModal" 
+                                           data-name="{{ customer['name'] }}" data-nbo="Platinum Credit Card with 0% APR" 
+                                           data-suboffer-img-id="03" data-suboffer-text="">
+                                            <img src="/static/images/email/email_tmp03.png" style="cursor: pointer;">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div><!-- id="Design" -->
+
                         </div> 
                     </div> <!-- row with tab-content -->
                 </div> <!-- class="col-md-8" -->
@@ -194,6 +230,9 @@
                 $('#NBOTable').find('.panel-collapse.in').collapse('hide');
 
                 $('.nav-tabs a[href="#KLIs"]').tab('show');
+            });
+            $('#GoToDesign').on('click', function(event) {
+                $('.nav-tabs a[href="#Design"]').tab('show');
             });
             $('#NBOTable').on('mouseover', '.clickable-row', function(event) {
               $(this).addClass('bg-info').siblings().removeClass('bg-info');
