@@ -138,7 +138,6 @@ function mouseover(d) {
   updateBreadcrumbs(sequenceArray, percentageString);
 
   // Fade all the segments.
-  debugger;
   vis.selectAll("path")
       .style("opacity", 0.3);
 
