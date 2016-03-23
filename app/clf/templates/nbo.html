@@ -3,8 +3,8 @@
 {{ super() }}
     <title>Next Best Offer</title>
     <script src="http://d3js.org/d3.v3.min.js"></script>
-    <link rel="stylesheet" type="text/css"
-      href="https://fonts.googleapis.com/css?family=Open+Sans:400,600">
+    <!--<link rel="stylesheet" type="text/css"
+      href="https://fonts.googleapis.com/css?family=Open+Sans:400,600">-->
     <link rel="stylesheet" type="text/css" href="/static/css/sunbirst.css"/>
 {% endblock %}
 {% block body %}
@@ -30,45 +30,33 @@
                                     <img src="/static/images/customer_w.png" />
                                 </div>
                                 <!-- Customer info Table -->
-                                <table class="table table-bordered" id="CustomerTable">
-                                    <tr><td>Customer Name</td><td> {{ customer['name'] }} </td></tr>
-                                    <tr><td>State</td><td> {{ customer['state'] }} </td></tr>
-                                    <tr><td>Investable Asset Estimate</td><td>{{ customer['investableAssetEstimate'] }}</td></tr>
-                                    <tr><td>Credit Score - FICO</td><td>{{ customer['creditScoreFICO'] }}</td></tr>
-                                    <tr><td>E-Mail</td><td>{{ customer['email'] }}</td></tr>
-                                    <tr><td>Marital Status</td><td>{{ customer['maritalStatus'] }}</td></tr>
-                                    <tr><td># of Children in home</td><td>{{ customer['numberOfChildren'] }}</td></tr>
-                                    <tr><td>Zillow Home Value Estimation</td><td>{{ customer['zillowHomeValueEstimation'] }}</td></tr>
-                                    <tr><td>Home Equity Estimate</td><td>{{ customer['homeEquityEstimate'] }}</td></tr>
+                                <table class="table table-bordered" id="CustomerTable" style="font-size: 14px;">
+                                    <tr bgcolor='#aaaaaa'><td>Customer Name</td><td> {{ customer['name'] }} </td></tr>
+                                    <tr bgcolor='#aaaaaa'><td>State</td><td> {{ customer['state'] }} </td></tr>
+                                    <tr bgcolor='#aaaaaa'><td>E-Mail</td><td>{{ customer['email'] }}</td></tr>
+                                    <tr bgcolor='#ffa135'><td>Marital Status</td><td>{{ customer['maritalStatus'] }}</td></tr>
+                                    <tr bgcolor='#ffa135'><td># of Children in home</td><td>{{ customer['numberOfChildren']|int }}</td></tr>
+                                    <tr bgcolor='#009e47'><td>Predicted life event</td><td>{{ customer['predictedLifeEvent'] }}</td></tr>
+                                    <tr bgcolor='#06a9fc'><td>Credit Score - FICO</td><td>{{ customer['creditScoreFICO']|int }}</td></tr>
+                                    <tr bgcolor='#06a9fc'><td>Investable Asset Estimate</td><td>{{ customer['investableAssetEstimate'] }}</td></tr>
+                                    <tr bgcolor='#06a9fc'><td>Zillow Home Value Estimation</td><td>{{ customer['zillowHomeValueEstimation'] }}</td></tr>
+                                    <tr bgcolor='#06a9fc'><td>Home Equity Estimate</td><td>{{ customer['homeEquityEstimate'] }}</td></tr>
                                 </table>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="panel panel-default" id="accordion">
+                            <div class="panel panel-default">
                                 <div class="panel-heading">NBO Suggestion</div>
 
                                 <!-- Table -->
-                                <table class="table table-bordered" style="border-collapse:collapse;" id="NBOTable">
+                                <table class="table table-bordered" id="NBOTable" style="font-size: 14px;">
                                     <tr><th>#</th><th>Offer</th><th>Probability</th></tr>
 {% for r in customer['nbo_offers'] %}
-<tr data-toggle="collapse" data-target="#offer{{ r['index'] }}" data-parent="#accordion" class="accordion-toggle clickable-row level1offer">
+<tr class="clickable-row level1offer" style="cursor:pointer">
     <td>{{ r['index'] }}</td><td>{{ r['nboName'] }}</td><td>{{ r['nboProbability'] }}</td>
-</tr>
-<tr>
-    <td colspan="12" class="hiddenRow"><div class="panel-collapse collapse" id="offer{{ r['index'] }}">
-        <table class="table">
-{% for so in customer['suboffers'][r['nboName']] %}
-            <tr class="clickable-row" data-toggle="modal" data-target="#emailModal" 
-                data-name="{{ customer['name'] }}" data-nbo="{{ r['nboName'] }}" data-suboffer-img-id="{{ so['image'] }}" data-suboffer-text="{{ so['text'] }}">
-                <td class="nbo-name">{{ so['name'] }}</td>
-            </tr>
-{% endfor %}
-        </table>
-    </div></td>
-</tr>
-                                    
+</tr>                                    
 {% endfor %}
                                 </table>
                             </div>
