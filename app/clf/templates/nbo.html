@@ -137,21 +137,25 @@
                             <div role="tabpanel text-center" class="tab-pane" id="Design">
                                 <div class="row">
                                     <div class="col-md-12">
+                                        <div id="offer_send_result"><!--AJAX result of form submission will be shown here--></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
                                         <a href="#" class="thumbnail" data-toggle="modal" data-target="#emailModal" 
                                            data-name="{{ customer['name'] }}" data-nbo="Platinum Credit Card with 0% APR" 
                                            data-suboffer-img-id="01" data-suboffer-text="Hi John,
-                                                                                         We have a exciting offer for you. You are eligible for a new Travel Rewards Credit Card with 0% APR. 
-                                                                                         Benefits: 
-                                                                                         - Earn unlimited 1.5 points for every $1 you spend on all purchases and points don't expire 
-                                                                                         - 0% Intro APR on purchases 
-                                                                                         - No annual fee. No blackout dates 
-                                                                                         - Any airline, any hotel, any time 
-                                                                                         - Get a 10% customer points bonus on every purchase when you have an active CapBank checking or savings account 
-                                                                                         
-                                                                                         Reach out to us at 1800-999-9999 for more details. 
-                                                                                         
-                                                                                         Regards 
-                                                                                         CapBank">
+    We have a exciting offer for you. You are eligible for a new Travel Rewards Credit Card with 0% APR. 
+    Benefits: 
+    - Earn unlimited 1.5 points for every $1 you spend on all purchases and points don't expire 
+    - 0% Intro APR on purchases 
+    - No annual fee. No blackout dates 
+    - Any airline, any hotel, any time 
+    - Get a 10% customer points bonus on every purchase when you have an active CapBank checking or savings account 
+    Reach out to us at 1800-999-9999 for more details. 
+
+    Regards 
+    CapBank">
                                             <img src="/static/images/email/email_tmp01.png" style="cursor: pointer;">
                                         </a>
                                     </div>
@@ -159,18 +163,18 @@
                                         <a href="#" class="thumbnail" data-toggle="modal" data-target="#emailModal" 
                                            data-name="{{ customer['name'] }}" data-nbo="Platinum Credit Card with 0% APR" 
                                            data-suboffer-img-id="02" data-suboffer-text="Hi John,
-                                                                                         We have a exciting offer for you. You are eligible for a new Platinum Card with 15% cash back. 
-                                                                                         Benefits: 
-                                                                                         - Earn unlimited 1.5 points for every $1 you spend on all purchases and points don't expire 
-                                                                                         - 15% cash back 
-                                                                                         - No annual fee. No blackout dates 
-                                                                                         - Any airline, any hotel, any time 
-                                                                                         - Get a 10% customer points bonus on every purchase when you have an active CapBank checking or savings account 
-                                                                                         
-                                                                                         Reach out to us at 1800-999-9999 for more details. 
-                                                                                         
-                                                                                         Regards 
-                                                                                         CapBank">
+    We have a exciting offer for you. You are eligible for a new Platinum Card with 15% cash back. 
+    Benefits: 
+    - Earn unlimited 1.5 points for every $1 you spend on all purchases and points don't expire 
+    - 15% cash back 
+    - No annual fee. No blackout dates 
+    - Any airline, any hotel, any time 
+    - Get a 10% customer points bonus on every purchase when you have an active CapBank checking or savings account 
+    
+    Reach out to us at 1800-999-9999 for more details. 
+    
+    Regards 
+    CapBank">
                                             <img src="/static/images/email/email_tmp02.png" style="cursor: pointer;">
                                         </a>
                                     </div>
@@ -178,18 +182,18 @@
                                         <a href="#" class="thumbnail" data-toggle="modal" data-target="#emailModal" 
                                            data-name="{{ customer['name'] }}" data-nbo="Platinum Credit Card with 0% APR" 
                                            data-suboffer-img-id="03" data-suboffer-text="Hi John,
-                                                                                         We have a exciting offer for you. You are eligible for a new Travel Rewards Credit Card with 0% APR. 
-                                                                                         Benefits: 
-                                                                                         - Earn unlimited 1.5 points for every $1 you spend on all purchases and points don't expire 
-                                                                                         - 0% Intro APR on purchases 
-                                                                                         - No annual fee. No blackout dates 
-                                                                                         - Any airline, any hotel, any time 
-                                                                                         - Get a 10% customer points bonus on every purchase when you have an active CapBank checking or savings account 
-                                                                                         
-                                                                                         Reach out to us at 1800-999-9999 for more details. 
-                                                                                         
-                                                                                         Regards 
-                                                                                         CapBank">
+    We have a exciting offer for you. You are eligible for a new Travel Rewards Credit Card with 0% APR. 
+    Benefits: 
+    - Earn unlimited 1.5 points for every $1 you spend on all purchases and points don't expire 
+    - 0% Intro APR on purchases 
+    - No annual fee. No blackout dates 
+    - Any airline, any hotel, any time 
+    - Get a 10% customer points bonus on every purchase when you have an active CapBank checking or savings account 
+    
+    Reach out to us at 1800-999-9999 for more details. 
+    
+    Regards 
+    CapBank">
                                             <img src="/static/images/email/email_tmp03.png" style="cursor: pointer;">
                                         </a>
                                     </div>
@@ -207,32 +211,34 @@
         <div class="modal fade" id="emailModal" tabindex="-1" role="dialog" aria-labelledby="emailModalLabel">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="emailModalLabel">New message</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form>
+                    <form role="form" id="send_offer">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="emailModalLabel">New message</h4>
+                        </div>
+                        <div class="modal-body">
                             <div class="form-group">
                                 <label for="recipient-name" class="control-label">Recipient:</label>
-                                <input type="text" class="form-control" id="recipient-name">
+                                <input type="text" class="form-control" id="recipient-name" name="recipient-name"/>
+                                <input type="hidden" class="form-control" id="offer-image-id" name="offer-image-id" />
                                 <div class="form-group">
                                     <label for="message-text" class="control-label">Message:</label>
                                     <div class="row">
                                         <div class='col-md-6'>
-                                            <textarea class="form-control" id="message-text"></textarea>
+                                            <textarea class="form-control" id="message-text" name="message-text"></textarea>
                                         </div>
                                         <div id="email-image-placeholder" class='col-md-6'>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Send message</button>
-                    </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div id="loadingDiv"><i class="fa fa-spinner fa-spin"></i></div>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" id="submit">Send message</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -251,12 +257,38 @@
                 var text = button.data('suboffer-text');
                 var modal = $(this);
                 modal.find('.modal-title').text('New message to ' + recipient);
-                modal.find('.modal-body input').val(recipient);
+                modal.find('.modal-body #recipient-name').val(recipient);
+                modal.find('.modal-body #offer-image-id').val(img_id);
                 modal.find('.modal-body #message-text').val(text.replace('John', recipient));
                 modal.find('.modal-body #message-text').height(300);
                 modal.find('#email-image-placeholder').html('<img src="/static/images/email/email_tmp' + img_id + '.png">');
 
             })
+            $(function() {
+                var $loading = $('#loadingDiv').hide();
+                $(document)
+                    .ajaxStart(function () {
+                    $loading.show();
+                })
+                    .ajaxStop(function () {
+                    $loading.hide();
+                });
+                $("button#submit").click(function(){
+                    $("button#submit").html('Sending...');
+                    $.ajax({ type: "POST",
+                        url: "/send_offer",
+                        data: $('form#send_offer').serialize(),
+                        success: function(msg){
+                            $("#offer_send_result").html(msg)
+                            $("#emailModal").modal('hide'); 
+                        },
+                        error: function(){
+                            alert("fail send request to server");
+                        }
+                    });
+                    $("button#submit").html('Send message');
+                });
+            });
         </script>
 
         <script>
