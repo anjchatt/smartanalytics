@@ -6,9 +6,19 @@
     <!--<link rel="stylesheet" type="text/css"
       href="https://fonts.googleapis.com/css?family=Open+Sans:400,600">-->
     <link rel="stylesheet" type="text/css" href="/static/css/sunbirst.css"/>
+    <style>
+        #graphs {
+            padding: 0 20 0 20px;
+        }
+    </style>
 {% endblock %}
 {% block body %}
 {{ super() }}
+        <div class="overlay boxclose" id="overlay" style="display:none;"></div>
+        <div class="popup-box-right" id="popup-box-right">
+            <!--iframe src="http://10.170.9.196:8084/" style="width:100%; height:100%; border:0;"></iframe-->
+            <img src="/static/images/cltv2.png" width=100%>
+        </div>
         <div id="NBO" class="container">
             <div class="row">
                 <div class="col-md-4 text-center">
@@ -17,7 +27,7 @@
                     </div>
                     <div class="row">
                         <div class="panel panel-default">
-                            <div class="panel-heading"><a gref="#">Customer 720 View</a><br />
+                            <div class="panel-heading"><a class="activator">Customer 720 View</a><br />
                                 <img src="/static/images/customer_w.png" />
                             </div>
                             <!-- Customer info Table -->
@@ -49,6 +59,14 @@
 {% endfor %}
                             </table>
                         </div>
+                        <div class="row">
+                            <br />
+                            <br />
+                            <button type="button" class="btn btn-primary" id="GoToDesign" style='background-color: #06a9fc'>
+                                Go to design
+                            </button>
+                        </div>
+
                     </div>
                 </div>
                 
@@ -106,13 +124,6 @@
                                                         <tr class=""><td>4</td><td>(Have) Credit Card</td></tr>
                                                     </table>
                                                 </div>
-                                            </div>
-                                            <div class="row">
-                                                <br />
-                                                <br />
-                                                <button type="button" class="btn btn-primary btn-lg active" id="GoToDesign">
-                                                    Go to design
-                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -345,6 +356,18 @@
                             });});
 
         </script>
+
+    <script type = "text/javascript" src="/static/js/popup-box-right.js"></script>
+    <script>
+        window.onload = function(){
+            $('.activator').click(function(){
+                /* insert 720 page request here */
+                $('#overlay').fadeIn('fast',function(){
+                    $('#popup-box-right').animate({'right':'0', 'left':'10%'},1000);
+                });
+            });
+        }
+    </script>
 
     <script type="text/javascript" src="/static/js/sunbirst.js"></script>
 {% endblock %}
