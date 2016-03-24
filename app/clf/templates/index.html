@@ -9,7 +9,29 @@
             background-color: #f5f8fa;
             padding-top: 50px;
         }
+        .btn{
+            border-radius: 4px;
+        }
+        .navbar-nav a {
+            font-size: 90%;
+        }
+        .footer {
+            /*position: absolute;*/
+            bottom: 0;
+            width: 100%;
+            margin-top: 200px;
+            /* Set the fixed height of the footer here */
+            height: 60px;
+            background-color: #f5f5f5;
+        }
+
+        .container .text-muted {
+            margin: 20px 0;
+        }
     </style>
+    
+    
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Merriweather:400,700' rel='stylesheet' type='text/css'>
     {% endblock %}
@@ -30,21 +52,32 @@
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
             <ul class="nav navbar-nav">
-                <li><a href="/loopfeedback">Closed Loop<span class="sr-only">(current)</span></a></li>
+                <li><a href="/loopfeedback">Closed Loop Service<span class="sr-only">(current)</span></a></li>
                 <li><a href="/cluster">Cluster Analysis</a></li>
-                <li><a href="/map">Campaign Analysis</a></li>
+                <li><a href="/map">Next Best Offer</a></li>
+                <li><a href="#">720 Customer View</a></li>
+                <li><a href="#">Wealth Management</a></li>
+                <li><a href="#">Loyalty Management</a></li>
+                <li><a href="#">Voice of Customer</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Capgemini</a></li>
+                <li><a href="#"><img src='/static/images/capgemini-logo.png' style="display: inline-block; height: 30px; margin-top: -5px"></a></li>
             </ul>
         </div>
     </div>
 </nav>
-<body>
+<body height="100%">
     {% block body %}
 
     {% endblock %}
 </body>
+    <footer class="footer">
+        <div class="container">
+            <hr>
+            <p class="text-muted">Contact us:</p>
+            <p class="text-muted">Gunjan Aggarwal - <a href="mailto:gunjan.aggarwal@capgemini.com">gunjan.aggarwal@capgemini.com</a></p>
+        </div>
+    </footer>
 </body>
 
 {% block bottom %}
