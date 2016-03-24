@@ -1,6 +1,6 @@
 library(shiny)
 
-path <- '/home/smartanalytics/projects/smartanalytics/app/lm'
+path <- 'lm'
 
 print('starting LM app')
 

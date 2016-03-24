@@ -1,6 +1,6 @@
 library(shiny)
 
-path <- '/home/smartanalytics/projects/smartanalytics/app/wm'
+path <- 'wm'
 
 print('starting WM app')
 
