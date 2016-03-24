@@ -190,8 +190,8 @@
                         if (n_char > 0){
                             t += '<br>';
                             cats = tweet[i]["categories"].split("|");
-                            for (i=1;i<cats.length-1;i++){
-                                t += '<kbd>'+cats[i]+'</kbd> ';
+                            for (i_cat=1;i_cat<cats.length-1;i_cat++){
+                                t += '<kbd>'+cats[i_cat]+'</kbd> ';
                             }
                         }
                         t += '</div>';
