@@ -3,4 +3,7 @@
 "consumer_key" : "Gk8b97BvqMaYnzAG2uUpVxAO4",
 "consumer_secret" : "oXlYxQCgW0uYkJXHbHwuEnZ2sbMEp98hhVg8kLn732eiS1oGrG",
 "twitter_db" : {"database" : "twitter","user" : "postgres"},
-"neo4j" : "http://neo4j:neo4j@localhost:7474/db/data/"}
+"neo4j" : "http://neo4j:neo4j@localhost:7474/db/data/",
+"gmail_user": "capgbank@gmail.com",
+"gmail_pass": "my!Smart",
+"gmail_recipient": ["timofei.chernousov@ecotomsk.com", "georgiy.trofimov@ecotomsk.com"]}
