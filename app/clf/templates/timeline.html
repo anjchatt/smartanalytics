@@ -1,0 +1,58 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="http://visjs.org/dist/vis.css">
+    </head>
+    <body>
+    <script src="http://visjs.org/dist/vis.js"></script>
+
+    <div id="visualization1"></div>
+    <div id="visualization2"></div>
+
+<script>
+  // DOM element where the Timeline will be attached
+  var container1 = document.getElementById('visualization1');
+  var container2 = document.getElementById('visualization2');
+
+  // Create a DataSet (allows two way data-binding)
+  var items1 = new vis.DataSet([
+    {id: 1, content: '<i class="fa fa-fw fa-user" style="color:blue"></i> First Job', start: '2004-06', style: "background-color: DarkKhaki"},
+    {id: 2, content: '<i class="fa fa-fw" style="color:blue">&#xf1b9;</i> Car', start: '2010-06', style: "background-color: MediumPurple"},
+    {id: 3, content: 'Marriage', start: '2008-06', style: "background-color: pink"},
+    {id: 4, content: '<i class="fa fa-fw" style="color:blue">&#xf1ae;</i> First child', start: '2011-06', style: "background-color: PowderBlue"},
+    {id: 5, content: '<i class="fa fa-fw fa-money" style="color:green"></i> Cecking Account', start: '2013-08', style: "background-color: GoldenRod"},
+    {id: 6, content: '<i class="fa fa-fw fa-credit-card" style="color:red"></i> Credit Card', start: '2015-08', style: "background-color: GoldenRod"},
+    {id: 7, content: '<i class="fa fa-fw fa-user" style="color:blue"></i> Job change', start: '2014-06', style: "background-color: DarkKhaki"}
+  ]);
+  var items2 = new vis.DataSet([
+    {id: 1, content: '<i class="fa fa-fw fa-user" style="color:blue"></i> First Job', start: '2002-06', style: "background-color: DarkKhaki"},
+    {id: 2, content: '<i class="fa fa-fw" style="color:blue">&#xf1b9;</i> Car', start: '2008-06', style: "background-color: MediumPurple"},
+    {id: 3, content: 'Marriage', start: '2009-06', style: "background-color: pink"},
+    {id: 4, content: '<i class="fa fa-fw fa-money" style="color:green"></i> Cecking Account', start: '2014-02', style: "background-color: GoldenRod"},
+    {id: 5, content: '<i class="fa fa-fw" style="color:blue">&#xf015;</i> First Home', start: '2014-06', style: "background-color: Tan"},
+    {id: 6, content: '<i class="fa fa-fw fa-credit-card" style="color:green"></i> Credit Card', start: '2014-08', style: "background-color: GoldenRod"},
+    {id: 7, content: '<i class="fa fa-fw fa-user" style="color:red"></i> Job change', start: '2015-06', style: "background-color: DarkKhaki"}
+  ]);
+
+  // Configuration for the Timeline
+  var options = {
+    width: '60%',
+    maxHeight: '300px',
+    zoomable: false,
+    selectable: true,
+    moveable: true,
+    showCurrentTime: false,
+    margin: {
+      item: 5
+    },
+    timeAxis: {scale: 'year', step: 1}
+  };
+
+  // Create a Timeline
+  var timeline = new vis.Timeline(container1, items1, options);
+  var timeline = new vis.Timeline(container2, items2, options);
+
+</script>
+
+    </body>
+</html>
