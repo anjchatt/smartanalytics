@@ -1,0 +1,88 @@
+{% extends 'index.html' %}
+{% block head %}
+{{ super() }}
+    <title>Customer 720 degree view</title>
+    <style>
+        /*.body{
+            background:#fff;
+            margin: 0 15 0 15px;
+        }
+        .footer{
+            background:#fff;
+        }*/
+        .name-box{
+            background:#54a0ed;
+        }
+        .name-box td{
+            color: #fff;
+        }
+        .text-box{
+            background:#fff;
+            margin: 0;
+            padding: 15 0 15 0px;
+        }
+        .text-box h4{
+            color:rgb(340,115,30);
+        }
+        .main-box table{
+            width:100%;
+        }
+        .main-box td{
+            padding: 5 15 5 15px;
+            width:50%;
+        }
+        .main-box hr{
+            margin: 10 0 10 0px;
+        }
+        .first-col {
+            text-align: right;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+{{ super() }}
+<body class='body'>
+    <h3 style="margin-left: 15px">Customer 720 degree view</h3>
+    <div class='col-md-3'>
+        <div class='name-box' style="display:inline-block; width:100%">
+            <table style='width:100%'><tr>
+                <td style='width:100px'>
+                    <img src='/static/images/photo_female.png' style="margin-left: 0px; left: 0">
+                </td>
+                <td>
+                    <h3 style="text-align: center; margin-top: 0px;">Customer Name</h3>
+                </td>
+            </tr></table>
+        </div>
+        <div class="text-box main-box">
+            <h4 style="text-align: center;">Contact information</h4>
+            <table>
+                <tr><td class='first-col'>Phone Number</td><td>212-2222-245</td></tr>
+                <tr><td class='first-col'>Email</td><td>sms@capgemini.com</td></tr>
+                <tr><td class='first-col'>Address</td><td>1000, Blue Jay Way</td></tr>
+            </table>
+            <hr>
+            <h4 style="text-align: center;">Personal information</h4>
+            <table>
+                <tr><td class='first-col'>Status</td><td>Married</td></tr>
+                <tr><td class='first-col'>Number of children in Home</td><td>1</td></tr>
+            </table>
+            <hr>
+            <h4 style="text-align: center;">Financial information</h4>
+            <table>
+                <tr><td class='first-col'>Ivestable Asset Value</td><td>350000</td></tr>
+                <tr><td class='first-col'>Credit FICO</td><td>780</td></tr>
+                <tr><td class='first-col'>Zillow Estimate</td><td>339000</td></tr>
+                <tr><td class='first-col'>Home Equity Estimate</td><td>150000</td></tr>
+            </table>
+            <hr>
+            <h4 style="text-align: center;">Financial information</h4>
+            <table>
+                <tr><td class='first-col'>Ivestable Asset Value</td><td>350000</td></tr>
+                <tr><td class='first-col'>Credit FICO</td><td>350000</td></tr>
+            </table>
+        </div>
+    </div>
+<body>
+{% endblock %}
