@@ -21,8 +21,14 @@
             margin: 0;
             padding: 15 0 15 0px;
         }
-        .text-box h4{
+        .main-box .glyphicon{
             color:rgb(340,115,30);
+        }
+        h4{
+            color:rgb(340,115,30);
+        }
+        .text-box h4{
+            text-align: center;
         }
         .main-box table{
             width:100%;
@@ -36,6 +42,12 @@
         }
         .first-col {
             text-align: right;
+        }
+        .alerts td {
+            padding:10px;
+        }
+        .glyphicon-exclamation-sign{
+            color:rgb(255, 27, 36);
         }
     </style>
 {% endblock %}
@@ -56,33 +68,328 @@
             </tr></table>
         </div>
         <div class="text-box main-box">
-            <h4 style="text-align: center;">Contact information</h4>
+            <!--h4 style="text-align: center;">Contact information</h4-->
             <table>
-                <tr><td class='first-col'>Phone Number</td><td>212-2222-245</td></tr>
-                <tr><td class='first-col'>Email</td><td>sms@capgemini.com</td></tr>
-                <tr><td class='first-col'>Address</td><td>1000, Blue Jay Way</td></tr>
+                <tr><td class='first-col'><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span></td><td>212-2222-245</td></tr>
+                <tr><td class='first-col'><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></td><td>sms@capgemini.com</td></tr>
+                <tr><td class='first-col'><span class="glyphicon glyphicon-home" aria-hidden="true"></span></td><td>1000, Blue Jay Way</td></tr>
             </table>
             <hr>
-            <h4 style="text-align: center;">Personal information</h4>
+            <h4><img src="/static/images/icons/people.png" height=24px> <!--Personal information--></h4>
             <table>
                 <tr><td class='first-col'>Status</td><td>Married</td></tr>
                 <tr><td class='first-col'>Number of children in Home</td><td>1</td></tr>
             </table>
             <hr>
-            <h4 style="text-align: center;">Financial information</h4>
+            <h4><span class="glyphicon glyphicon-usd" aria-hidden="true"></span><!--Financial information--></h4>
             <table>
-                <tr><td class='first-col'>Ivestable Asset Value</td><td>350000</td></tr>
+                <tr><td class='first-col'>Ivestable Asset Value</td><td>$350,000</td></tr>
                 <tr><td class='first-col'>Credit FICO</td><td>780</td></tr>
-                <tr><td class='first-col'>Zillow Estimate</td><td>339000</td></tr>
-                <tr><td class='first-col'>Home Equity Estimate</td><td>150000</td></tr>
-            </table>
-            <hr>
-            <h4 style="text-align: center;">Financial information</h4>
-            <table>
-                <tr><td class='first-col'>Ivestable Asset Value</td><td>350000</td></tr>
-                <tr><td class='first-col'>Credit FICO</td><td>350000</td></tr>
+                <tr><td class='first-col'>Zillow Estimate</td><td>$339,000</td></tr>
+                <tr><td class='first-col'>Home Equity Estimate</td><td>$150,000</td></tr>
             </table>
         </div>
     </div>
+    <div class='col-md-6 text-box main-box'>
+        <div class='col-md-6'>
+            <div id="churn_chart" style="width: 100%; height: 250px; margin: 0 auto; padding: 0 20 0 20px"></div>
+        </div>
+        <div class='col-md-6'>
+            <div id="nps_chart" style="width: 100%; height: 250px; margin: 0 auto; padding: 0 20 0 20px"></div>
+        </div>
+    </div>
+    <div class='col-md-3 alerts' style='padding-left: 15px;padding-right: 15px;'>
+        <div class='text-box' style='width: 100%;'>
+            <h4>Customer status</h4>
+            <table>
+                <tr><td style="width:10px"><span class="glyphicon glyphicon-exclamation-sign"></span></td><td>Disputed Credit Card Billing</td></tr>
+                <tr><td style="width:10px"><span class="glyphicon glyphicon-exclamation-sign"></span></td><td>Never logged in mobile App</td></tr>
+                <tr><td style="width:10px"><span class="glyphicon glyphicon-exclamation-sign"></span></td><td>Not Checked in Internet Account from 30 days</td></tr>
+            </table>
+        </div>
+    </div>
+    <div class='col-md-9' style='margin:15 0 0 0px;padding-left:0'>
+        <div class='row text-box'>
+            <div class='col-md-5' style="margin:0px">
+                <div id="transaction_chart" style="width: 100%; height: 400px; margin: 0 auto; padding: 0 20 0 20px"></div>
+            </div>
+            <div class='col-md-7' style="margin:0px">
+                <div id="communication_chart" style="width: 100%; height: 350px; margin: 0 auto; padding: 0 20 0 20px"></div>
+            </div>
+        </div>
+    </div>
+        
 <body>
+{% endblock %}
+    
+    
+{% block bottom %}
+{{ super() }}
+    
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+<script>
+    $(function () {
+    $('#communication_chart').highcharts({
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Channel Usage'
+        },
+        xAxis: {
+            categories: ['2010', '2011', '2012', '2013', '2014', '2015', '2016']
+        },
+        yAxis: {
+            title: null,
+            labels: {
+                enabled: false
+            }
+        },
+        exporting: { enabled: false },
+        credits: { enabled: false },
+        legend: {
+            align: 'right',
+            x: -30,
+            verticalAlign: 'top',
+            y: 25,
+            floating: true,
+            backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
+            borderColor: '#CCC',
+            borderWidth: 1,
+            shadow: false
+        },
+        tooltip: {
+            headerFormat: '<b>{point.x}</b><br/>',
+            pointFormat: '{series.name}: {point.percentage:.1f} %<br/>'
+        },
+        plotOptions: {
+            column: {
+                stacking: 'normal',
+                dataLabels: {
+                    enabled: false
+                }
+            }
+        },
+        series: [{
+            name: 'SMS',
+            data: [20,20,30,35,39,43,48]
+        }, {
+            name: 'Email',
+            data: [16,16,24,29,37,42,53]
+        }, {
+            name: 'Paper',
+            data: [46,46,36,28,21,18,11]
+        }, {
+            name: 'Internet',
+            data: [14,20,24,29,36,41,47]
+        }, {
+            name: 'Call Center',
+            data: [55,47,34,42,31,26,21]
+        }, {
+            name: 'Branch',
+            data: [49,42,31,26,21,17,14]
+        }]
+    });
+});
+    
+    
+    $(function () {
+    $('#transaction_chart').highcharts({
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: 0,
+            plotShadow: false
+        },
+        title: {
+            text: 'Transaction <br>Type',
+            align: 'center',
+            verticalAlign: 'middle',
+            y: -40
+        },
+        tooltip: {
+            pointFormat: ''
+        },
+        credits: {
+            enabled: false
+        },
+        exporting: { enabled: false },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                dataLabels: {
+                    enabled: true,
+                    format: '{point.percentage:.0f} %',
+                },
+                startAngle: -0,
+                endAngle: 360,
+                center: ['50%', '50%'],
+                showInLegend: true
+            }
+        },
+        
+        series: [{
+            type: 'pie',
+            name: 'Transaction',
+            innerSize: '70%',
+            data: [
+                {
+                    name: 'Credit',
+                    y: 476,
+                },{
+                    name: 'Eating',
+                    y: 725,
+                },{
+                    name: 'Entertainment',
+                    y: 550,
+                },{
+                    name: 'Gas & Lodging',
+                    y: 856,
+                },{
+                    name: 'Home',
+                    y: 350,
+                },{
+                    name: 'Kids',
+                    y: 225,
+                },{
+                    name: 'Shopping',
+                    y: 150,
+                },{
+                    name: 'Travel',
+                    y: 925,
+                }
+            ]
+        }]
+    });
+});
+    
+$(function () {
+    $('#churn_chart').highcharts({
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: 0,
+            plotShadow: false
+        },
+        title: {
+            text: 'Churn Rate',
+            align: 'center',
+            verticalAlign: 'middle',
+            y: 0
+        },
+        tooltip: {
+            pointFormat: ''
+        },
+        credits: {
+            enabled: false
+        },
+        exporting: { enabled: false },
+        plotOptions: {
+            pie: {
+                dataLabels: {
+                    enabled: false,
+                    distance: -50,
+                    style: {
+                        fontWeight: 'bold',
+                        color: 'black',
+                    }
+                },
+                startAngle: -0,
+                endAngle: 360,
+                center: ['50%', '50%']
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: 'Churn rate',
+            innerSize: '70%',
+            data: [
+                {
+                    name: 'Churn',
+                    color: '#54a0ed',
+                    y: 71,
+                    dataLabels: {
+                        format: '{point.percentage:.0f} %',
+                        enabled: true
+                    }
+                },
+                {
+                    name: 'Retention',
+                    color: '#ccc',
+                    y: 29,
+                    dataLabels: {
+                        enabled: false
+                    }
+                }
+            ]
+        }]
+    });
+});
+
+$(function () {
+    $('#nps_chart').highcharts({
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: 0,
+            plotShadow: false
+        },
+        title: {
+            text: 'NPS',
+            align: 'center',
+            verticalAlign: 'middle',
+            y: 0
+        },
+        tooltip: {
+            pointFormat: ''
+        },
+        credits: {
+            enabled: false
+        },
+        exporting: { enabled: false },
+        plotOptions: {
+            pie: {
+                dataLabels: {
+                    enabled: false,
+                    distance: -50,
+                    style: {
+                        fontWeight: 'bold',
+                        color: 'black'
+                    }
+                },
+                startAngle: -0,
+                endAngle: 360,
+                center: ['50%', '50%']
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: 'Net Promoter Score',
+            innerSize: '70%',
+            data: [
+                {
+                    name: 'Score',
+                    color: '#54a0ed',
+                    y: 35,
+                    dataLabels: {
+                        format: '{point.percentage:.0f} %',
+                        enabled: true
+                    }
+                },
+                {
+                    name: 'Score',
+                    color: '#ccc',
+                    y: 65,
+                    dataLabels: {
+                        enabled: false
+                    }
+                }
+            ]
+        }]
+    });
+});
+
+</script>
+    
 {% endblock %}
