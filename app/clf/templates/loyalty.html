@@ -1,0 +1,346 @@
+{% extends 'index.html' %}
+{% block head %}
+{{ super() }}
+    <title>Loyalty Management</title>
+    <link rel="stylesheet" href="http://visjs.org/dist/vis.css" />
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+{% endblock %}
+{% block body %}
+{{ super() }}
+        <style>
+            .newData {
+                background: #fdd;
+            }
+        </style>
+
+        <div id="Loyalty" class="container">
+            <div class="row">
+                <div class="col-md-3 text-center">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <img src="/static/images/customer_m.jpg" class="img-responsive" />
+                                </div>
+                                <!-- Customer info Table -->
+                                <table class="table table-bordered" id="CustomerTable" style="font-size: 14px;">
+                                    <tr bgcolor=''><td>Customer Name</td><td>John Smith</td></tr>
+                                    <tr bgcolor=''><td>Customer Age</td><td>32</td></tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row" style="height: 260">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    Social Networks
+                                </div>
+                                <!-- Social networks panel -->
+                                <div class="text-left">
+                                    <div style="padding-left: 8px">
+                                        <strong>Last message</strong><br>
+                                        <div id="lastSNMessage" style="font-style: italic;"></div><br>
+                                        <strong>Upcomming Event</strong><br>
+                                        <span style="color:#777" id="eventTime"></span><br>
+                                        <div id="upcEvent" style="font-style: italic;"></div>
+                                        Distance to event: <span id="distEvent"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 text-center">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    Current status
+                                </div>
+                                <div class="text-left">
+                                    <table cellpadding="10" cellspacing="10" width="100%"><tbody>
+                                        <tr><td style="padding: 5px 0px 5px 8px; border-bottom: 1px solid black;">Current Date</td>
+                                            <td style="padding: 5px 0px 5px 0px; border-bottom: 1px solid black;" id="curDate"></td></tr>
+                                        <tr><td style="padding: 5px 0px 5px 8px; border-bottom: 1px solid black;">Current Time</td>
+                                            <td style="padding: 5px 0px 5px 0px; border-bottom: 1px solid black;" id="curTime"></td></tr>
+                                        <tr><td style="padding: 5px 0px 5px 8px; border-bottom: 1px solid black;">Last Activity</td>
+                                            <td style="padding: 5px 0px 5px 0px; border-bottom: 1px solid black;" id="lastAct"></td></tr>
+                                        <tr><td style="padding: 5px 0px 5px 8px; border-bottom: 1px solid black;">Distance to home</td>
+                                            <td style="padding: 5px 0px 5px 0px; border-bottom: 1px solid black;" id="distHome"></td></tr>
+                                        <tr><td style="padding: 5px 0px 5px 8px;">Weather</td>
+                                            <td style="padding: 5px 0px 5px 0px;" id="weather"></td></tr>
+                                    </tbody></table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    Last transactions
+                                </div>
+                                <div class="text-left">
+                                    <table cellpadding="10" cellspacing="10" width="100%"><tbody>
+                                        <tr><td style="padding: 5px 0px 5px 8px; border-bottom: 1px solid black;">Last transaction date</td>
+                                            <td style="padding: 5px 0px 5px 10px; border-bottom: 1px solid black;" id="tranDate">23-10-2015</td></tr>
+                                        <tr><td style="padding: 5px 0px 5px 8px; border-bottom: 1px solid black;">Transaction Amount</td>
+                                            <td style="padding: 5px 0px 5px 10px; border-bottom: 1px solid black;" id="tranAmount"></td></tr>
+                                        <tr><td style="padding: 5px 0px 5px 8px;">Merchant Type</td><td style="padding: 5px 0px 5px 10px;" id="merType"></td></tr>
+                                    </tbody></table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 text-center">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <!-- Map will be here-->
+                            <div style=" margin: 10px 0px 5px 0px; border: 0px solid #FFA500; border-top: 0px solid #FFA500; padding: 15px 10px 10px 10px; background: #fff; width: 100%; border-radius: 5px;">
+                                <div id="prediction_map" style="width:100%; height:350px" class="leaflet"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    System actions
+                                </div>
+                                <table cellpadding="10" cellspacing="10" width="100%"><tbody>
+                                    <tr>
+                                        <td style="padding: 5px 0px 5px 8px;" width="50%"><span style="font-size: 100%"><strong>Loyalty Improvement Opportunity</strong></span><hr style="margin:5px"></td>
+                                        <td style="padding: 5px 0px 5px 8px;" width="50%"><span style="font-size: 100%"><strong>Latest offer</strong></span><hr style="margin:5px"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 5px 0px 5px 8px;"><div id="oppMessage"></div></td>
+                                        <td style="padding: 5px 0px 5px 8px;"><div id="latestSMS"></div></td>
+                                    </tr>
+                                </tbody></table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- class="row" -->
+            <div class="row">
+                <div class="col-md-12"> 
+                <!-- put timeline here -->
+                    <div id="EventTimeline" ></div>
+                </div>
+            </div> <!-- class="row" -->
+            <hr />
+        </div> <!-- id="Loyalty" class="container" -->
+{% endblock %}
+
+{% block bottom %}
+{{ super() }}
+<script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+<script>
+var mymap = L.map('prediction_map').setView([40.6413762, -73.7781391], 14);
+var osmAttr = '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>';
+
+L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: osmAttr, maxZoom: 18} ).addTo(mymap)
+
+</script>
+
+<script src="http://visjs.org/dist/vis.js"></script>
+
+<script>
+  function am_pm_to_hours(time) {
+    var hours = Number(time.match(/^(\d+)/)[1]);
+    var minutes = Number(time.match(/:(\d+)/)[1]);
+    var AMPM = time.match(/\s(.*)$/)[1];
+    if (AMPM == "PM" && hours < 12) hours = hours + 12;
+    if (AMPM == "AM" && hours == 12) hours = hours - 12;
+    var sHours = hours.toString();
+    var sMinutes = minutes.toString();
+    if (hours < 10) sHours = "0" + sHours;
+    if (minutes < 10) sMinutes = "0" + sMinutes;
+    return (sHours +':'+sMinutes);
+  };
+  function updateData (element, newStr) {
+    if(element.html() != newStr) {
+        element.html(newStr);
+        element.addClass("newData");
+    };
+  };
+  var data = [
+    {"Current Date":"23-10-2015","Current Time":"08:05 AM","Last Action":"Transaction","Weather":"Sunny","Transaction Amount":"$ 13.98",
+     "Merchant Type":"Airport Mixed Store","Last SN message":"Back to New York! Back home.","Last SN activity time":"07:50 AM",
+     "Upcomming event":"The Nutcracker opera","Event time":"05:30 PM","Current Location lng":-73.7781391,"Current Location lat":40.6413762,
+     "Previous Location lng":49.0096906,"Previous Location lat":2.5479245,"Map Zoom":14,"Event Location lng":-73.9855873,"Event Location lat":40.7724407,
+     "Home Location lng":-73.9826006,"Home Location lat":40.7659873,"Latest SMS":null,"Opportunity Message":null, "Icon":"fa-dollar", "Event Type": "Activity"},
+    {"Current Date":"23-10-2015", "Current Time":"08:06 AM","Last Action":"Transaction","Weather":"Sunny","Transaction Amount":"$ 13.98",
+     "Merchant Type":"Airport Mixed Store","Last SN message":"Back to New York! Back home.","Last SN activity time":"07:50 AM",
+     "Upcomming event":"The Nutcracker opera","Event time":"05:30 PM","Current Location lng":-73.7781391,"Current Location lat":40.6413762,
+     "Previous Location lng":49.0096906,"Previous Location lat":2.5479245,"Map Zoom":14,"Event Location lng":-73.9855873,"Event Location lat":40.7724407,
+     "Home Location lng":-73.9826006,"Home Location lat":40.7659873,
+     "Latest SMS":"Hey! Are you looking for taxi? We have a unique offer for you! Response to this message, get Yellow Cab right to your doors now and get free next trip.",
+     "Opportunity Message":"Opportunity detected<br><br><i>System detect an opportunity to offer taxi service<\/i>", "Icon":null, "Event Type": "Offer"},
+    {"Current Date":"23-10-2015","Current Time":"11:30 AM","Last Action":"Twitter feed","Weather":"Sunny","Transaction Amount":"$ 25.00",
+     "Merchant Type":"Taxi","Last SN message":"Got a cashback for taxi from Airport. Just in time. Good job, guys!","Last SN activity time":"09:15 AM",
+     "Upcomming event":"The Nutcracker opera","Event time":"05:30 PM","Current Location lng":-73.9826006,"Current Location lat":40.7659873,
+     "Previous Location lng":49.0096906,"Previous Location lat":2.5479245,"Map Zoom":17,"Event Location lng":-73.9855873,"Event Location lat":40.7724407,
+     "Home Location lng":-73.9826006,"Home Location lat":40.7659873,"Latest SMS":null,"Opportunity Message":null, "Icon":"fa-twitter", "Event Type": "Activity"},
+    {"Current Date":"23-10-2015","Current Time":"11:31 AM","Last Action":"Twitter feed","Weather":"Sunny","Transaction Amount":"$ 25.00",
+     "Merchant Type":"Taxi","Last SN message":"Got next free taxi trip. Good job, guys!","Last SN activity time":"09:15 AM",
+     "Upcomming event":"The Nutcracker opera","Event time":"05:30 PM","Current Location lng":-73.9826006,"Current Location lat":40.7659873,
+     "Previous Location lng":49.0096906,"Previous Location lat":2.5479245,"Map Zoom":14,"Event Location lng":-73.9855873,
+     "Event Location lat":40.7724407,"Home Location lng":-73.9826006,"Home Location lat":40.7659873,
+     "Latest SMS":"We just thought you might be interested in nearest grocery stores where you can earn additional bonus points. Here is the list...",
+     "Opportunity Message":"Opportunity detected<br><br><i>System detect an opportunity to offer bonus points in partner's store<\/i>", "Icon":null, "Event Type": "Offer"},
+    {"Current Date":"23-10-2015","Current Time":"1:05 PM","Last Action":"Transaction","Weather":"Cloudy","Transaction Amount":"$ 168.31",
+     "Merchant Type":"Grocery","Last SN message":"Found a new grocery store near my home! Going to take a look.","Last SN activity time":"11:55 AM",
+     "Upcomming event":"The Nutcracker opera","Event time":"05:30 PM","Current Location lng":-73.9828726,"Current Location lat":40.76836,
+     "Previous Location lng":49.0096906,"Previous Location lat":2.5479245,"Map Zoom":14,"Event Location lng":-73.9855873,"Event Location lat":40.7724407,
+     "Home Location lng":-73.9826006,"Home Location lat":40.7659873,"Latest SMS":null,"Opportunity Message":null, "Icon":"fa-dollar", "Event Type": "Activity"},
+    {"Current Date":"23-10-2015", "Current Time":"4:30 PM","Last Action":"Facebook like","Weather":"Cloudy","Transaction Amount":"$ 168.31","Merchant Type":"Grocery",
+     "Last SN message":"Liked: Mary Jane is going to <i>The Nutcracker opera<\/i>","Last SN activity time":"3:50 PM",
+     "Upcomming event":"The Nutcracker opera","Event time":"05:30 PM","Current Location lng":-73.9826006,"Current Location lat":40.7659873,
+     "Previous Location lng":49.0096906,"Previous Location lat":2.5479245,"Map Zoom":14,"Event Location lng":-73.9855873,"Event Location lat":40.7724407,
+     "Home Location lng":-73.9826006,"Home Location lat":40.7659873,
+     "Latest SMS":null, "Opportunity Message":null, "Icon":"fa-facebook", "Event Type": "Activity"},
+    {"Current Date":"23-10-2015","Current Time":"4:31 PM","Last Action":"Facebook like","Weather":"Cloudy","Transaction Amount":"$ 168.31",
+     "Merchant Type":"Grocery","Last SN message":"Liked: Mary Jane is going to <i>The Nutcracker opera<\/i>","Last SN activity time":"3:50 PM",
+     "Upcomming event":"The Nutcracker opera","Event time":"05:30 PM","Current Location lng":-73.9855873,"Current Location lat":40.7724407,
+     "Previous Location lng":49.0096906,"Previous Location lat":2.5479245,"Map Zoom":16,"Event Location lng":-73.9855873,"Event Location lat":40.7724407,
+     "Home Location lng":-73.9826006,"Home Location lat":40.7659873,
+     "Latest SMS":"Don't miss a chance to make your beloved happy. Respond to this messgae with address and time, and we will deliver there a bouquet of 13 roses. We will withdraw $10 right from your bank account automatically. 33 Flowers and your bank.",
+     "Opportunity Message":"Opportunity detected<br><br><i>System detect an opportunity to offer flowers delivery service<\/i>", "Icon":null, "Event Type": "Offer"},
+    {"Current Date":"23-10-2015","Current Time":"09:05 PM", "Last Action":"Transaction","Weather":"Cloudy","Transaction Amount":"$ 79.61","Merchant Type":"Restaurant",
+     "Last SN message":"Liked: Mary Jane is going to <i>The Nutcracker opera<\/i>","Last SN activity time":"3:50 PM","Upcomming event":null,
+     "Event time":"-","Current Location lng":-73.9720554739,"Current Location lat":40.7627931175,"Previous Location lng":49.0096906,"Previous Location lat":2.5479245,
+     "Map Zoom":14,"Event Location lng":-73.9855873,"Event Location lat":40.7724407,"Home Location lng":-73.9826006,"Home Location lat":40.7659873,
+     "Latest SMS":null,"Opportunity Message":null, "Icon": "fa-dollar", "Event Type": "Activity"},
+    {"Current Date":"23-10-2015","Current Time":"09:06 PM","Last Action":"Transaction","Weather":"Raining",
+     "Transaction Amount":"$ 79.61","Merchant Type":"Restaurant","Last SN message":"Liked: Mary Jane is going to <i>The Nutcracker opera<\/i>",
+     "Last SN activity time":"3:50 PM","Upcomming event":null,"Event time":"-","Current Location lng":-73.9720554739,"Current Location lat":40.7627931175,
+     "Previous Location lng":49.0096906,"Previous Location lat":2.5479245,"Map Zoom":14,"Event Location lng":-73.9855873,"Event Location lat":40.7724407,
+     "Home Location lng":-73.9826006,"Home Location lat":40.7659873,"Latest SMS":"Hey, if you need a taxi just answer to this text back to this message with your final distanation.",
+     "Opportunity Message":"Opportunity detected<br><br><i>System detect an opportunity to offer taxi service<\/i>", "Icon":null, "Event Type": "Offer"},
+    {"Current Date":"23-10-2015", "Current Time":"10:05 PM","Last Action":"Facebook activity","Weather":"Raining","Transaction Amount":"$ 79.61","Merchant Type":"Restaurant",
+     "Last SN message":"I made it! I made her a proposal and she said YES! I am the happiest man alive! #engaged","Last SN activity time":"10:55 PM",
+     "Upcomming event":null,"Event time":"-","Current Location lng":-73.9826006,"Current Location lat":40.7659873,"Previous Location lng":49.0096906,
+     "Previous Location lat":2.5479245,"Map Zoom":14,"Event Location lng":-73.9855873,"Event Location lat":40.7724407,"Home Location lng":-73.9826006,
+     "Home Location lat":40.7659873,"Latest SMS":null,"Opportunity Message":null, "Icon": "fa-facebook", "Event Type": "Activity"},
+    {"Current Date":"24-10-2015","Current Time":"08:05 AM",
+     "Last Action":"Facebook activity","Weather":"Raining","Transaction Amount":"$ 79.61","Merchant Type":"Restaurant",
+     "Last SN message":"I made it! I made her a proposal and she said YES! I am the happiest man alive! #engaged",
+     "Last SN activity time":"10:56 PM","Upcomming event":null,"Event time":"-","Current Location lng":-73.9826006,"Current Location lat":40.7659873,
+     "Previous Location lng":49.0096906,"Previous Location lat":2.5479245,"Map Zoom":14,"Event Location lng":-73.9855873,"Event Location lat":40.7724407,
+     "Home Location lng":-73.9826006,"Home Location lat":40.7659873,"Latest SMS":"If you are planning a travel now is the best time to join our Loyal Traveler and get your amazing discounts.",
+     "Opportunity Message":"Opportunity detected<br><br><i>System detect an opportunity to offer partner airline service<\/i>", "Icon":null, "Event Type": "Offer"}
+    ];
+
+  var notablePoints = [{"time_slot":3,"lng":-73.9826006,"lat":40.7659873,"size":10,"popup":"Home address"},{"time_slot":4,"lng":-73.9828726,"lat":40.76836,"size":40,"popup":"Grocery"},{"time_slot":4,"lng":-73.987303,"lat":40.7662502,"size":40,"popup":"Grocery"},{"time_slot":4,"lng":-73.98058,"lat":40.76187,"size":40,"popup":"Grocery"},{"time_slot":4,"lng":-73.9849554,"lat":40.7644551,"size":40,"popup":"Grocery"},{"time_slot":4,"lng":-73.9810574,"lat":40.7640127,"size":40,"popup":"Grocery"},{"time_slot":4,"lng":-73.9793166,"lat":40.7646366,"size":40,"popup":"Grocery"},{"time_slot":4,"lng":-73.976924,"lat":40.7653824,"size":40,"popup":"Grocery"},{"time_slot":4,"lng":-73.9852512,"lat":40.7697495,"size":40,"popup":"Grocery"},{"time_slot":5,"lng":-73.9828726,"lat":40.76836,"size":40,"popup":"Grocery"},{"time_slot":5,"lng":-73.987303,"lat":40.7662502,"size":40,"popup":"Grocery"},{"time_slot":5,"lng":-73.98058,"lat":40.76187,"size":40,"popup":"Grocery"},{"time_slot":5,"lng":-73.9849554,"lat":40.7644551,"size":40,"popup":"Grocery"},{"time_slot":5,"lng":-73.9810574,"lat":40.7640127,"size":40,"popup":"Grocery"},{"time_slot":5,"lng":-73.9793166,"lat":40.7646366,"size":40,"popup":"Grocery"},{"time_slot":5,"lng":-73.976924,"lat":40.7653824,"size":40,"popup":"Grocery"},{"time_slot":5,"lng":-73.9852512,"lat":40.7697495,"size":40,"popup":"Grocery"}];
+  // DOM element where the Timeline will be attached
+  var container1 = document.getElementById('EventTimeline');
+
+  var dataset = []
+
+  for (i = 0; i < data.length; i++) {
+    var row = [];
+    row['id'] = i;
+    row['content'] =  "" + (i+1) + ": " + data[i]['Event Type'];
+    row['start'] = data[i]['Current Date'].split('-').reverse().join('-') + 'T' + am_pm_to_hours(data[i]['Current Time'].replace('<hl>', '').replace('</hl>', ''));
+	if(data[i]['Event Type'] == "Offer") { row['style'] = "border-color: orange;"; }
+	if(data[i]['Icon']) {
+		row['content'] = '<i class="fa fa-fw ' + data[i]['Icon'] + '" style="color:black"></i>' + row['content']
+	}
+    dataset.push(row);
+  }
+  // Create a DataSet (allows two way data-binding)
+  var items1 = new vis.DataSet(dataset);
+
+  // Configuration for the Timeline
+  var options = {
+    width: '100%',
+    maxHeight: '300px',
+    zoomable: false,
+    selectable: true,
+    moveable: false,
+    showCurrentTime: false,
+    margin: {
+      item: 5
+    },
+    timeAxis: {scale: 'hour', step: 4}
+  };
+
+  // Create a Timeline
+  var timeline = new vis.Timeline(container1, items1, options);
+  var marker = null; // Marker with current position
+  var curPoints = []; // Array with circles shown on map
+  var lastSelection = [0];
+ 
+  // Select first event
+  timeline.setSelection([0]);
+  eventSelected( { "items": [0] } );
+
+  timeline.on('select', eventSelected);
+
+// Available fields:
+// "Current Date";"Current Time";"Last Action";"Weather";"Transaction Amount";"Merchant Type";"Last SN message";"Last SN activity time";
+// "Upcomming event";"Event time";"Current Location lng";"Current Location lat";"Previous Location lng";"Previous Location lat";"Map Zoom";
+// "Event Location lng";"Event Location lat";"Home Location lng";"Home Location lat";"Latest SMS";"Opportunity Message"
+  function eventSelected(properties) {
+    if(properties.items.length < 1) { timeline.setSelection(lastSelection); return; }
+    lastSelection = properties.items;
+
+    var row = data[properties.items[0]];
+
+    $('.newdata').removeClass('newData'); // clear previously highlithed items
+
+    updateData($('#curDate'), row['Current Date']);
+    updateData($('#curTime'), row['Current Time']);
+    updateData($('#lastAct'), row['Last Action']);
+    updateData($('#weather'), row['Weather']);
+    //updateData($('#tranDate'), row['Current Date']);
+    updateData($('#tranAmount'), row['Transaction Amount']);
+    updateData($('#merType'), row['Merchant Type']);
+    updateData($('#lastSNMessage'), row['Last SN message']);
+    //$('#').html(row['Last SN activity time']);
+    updateData($('#upcEvent'), row['Upcomming event']);
+    updateData($('#eventTime'), row['Event time']);
+    updateData($('#latestSMS'), row['Latest SMS']);
+    updateData($('#oppMessage'), row['Opportunity Message']);
+
+    if(row['Upcomming event']) {
+        var fi1 = row['Current Location lat'] * Math.PI / 180, 
+            fi2 = row['Event Location lat'] * Math.PI / 180,
+            delta = (row['Event Location lng']-row['Current Location lng']) * Math.PI / 180, 
+            R = 6371; 
+        var d = Math.acos( Math.sin(fi1)*Math.sin(fi2) + Math.cos(fi1)*Math.cos(fi2) * Math.cos(delta) ) * R; // gives d in kilometres
+        var dist = Math.round(d * 10)/ 10;
+        updateData($('#distEvent'), " " + dist + " km");
+    } else { updateData($('#distEvent'), "-"); };
+
+    // Calculate and show distance to home
+    {
+        var fi1 = row['Current Location lat'] * Math.PI / 180, 
+            fi2 = row['Home Location lat'] * Math.PI / 180,
+            delta = (row['Home Location lng']-row['Current Location lng']) * Math.PI / 180, 
+            R = 6371; 
+        var d = Math.acos( Math.sin(fi1)*Math.sin(fi2) + Math.cos(fi1)*Math.cos(fi2) * Math.cos(delta) ) * R; // gives d in kilometres
+        var dist = Math.round(d * 10)/ 10;
+        updateData($('#distHome'), " " + dist + " km");
+    };
+    // Update points on map
+    for (i in curPoints) {
+        mymap.removeLayer(curPoints[i]);
+    };
+    curPoints = [];
+    for (i in notablePoints) {
+        if(notablePoints[i]['time_slot'] == (properties.items[0] + 1) ) { 
+            var circle = L.circle([notablePoints[i]['lat'], notablePoints[i]['lng'] ], notablePoints[i]['size'], {
+                                    color: 'blue',
+                                    fillColor: 'blue',
+                                    fillOpacity: 0.5
+                                }).addTo(mymap);
+            circle.bindPopup(notablePoints[i]['popup']);
+            curPoints.push(circle);
+        };
+    };
+    // Move current position and map
+    if(marker) { mymap.removeLayer(marker); }
+    marker = L.marker([ row['Current Location lat'], row['Current Location lng'] ]).addTo(mymap);
+    mymap.setView([ row['Current Location lat'], row['Current Location lng'] ], row['Map Zoom'], {animation: true});
+  }
+</script>
+
+{% endblock %}
