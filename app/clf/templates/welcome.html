@@ -1,6 +1,7 @@
 {% extends 'index.html' %}
 {% block head %}
 {{ super() }}
+    <title>Smart Analytics Platform</title>
 <style>
     .circle-container {
       position: relative;
@@ -67,7 +68,7 @@
         /*max-width: 100%;*/
         width:208px;
         height: 208px;
-        margin: -29 -29;
+        margin: -29px -29px;
         border-radius: 100%;
         -webkit-filter: grayscale(10%);
         filter: grayscale(10%);
@@ -88,24 +89,28 @@
         width:250px;
         height:250px;        
     }
-
+    html { max-height: 100vh;}
+    body {
+		height: 85%; /* fix for footer to be on the bottom of the page */
+        /*min-height: 700px;*/
+    }
 </style>
 
 {% endblock %}
 {% block body %}
 {{ super() }}
-
-<ul class='circle-container'>
-  <li><a href='#'><div class="crop"><img src='static/images/720.png'></div></a></li>
-  <li><a href='/loopfeedback'><div class="crop"><img src='static/images/clf.png'></div></a></li>
-  <li><a href='#'><div class="crop"><img src='static/images/wm.png'></div></a></li>
-  <li><a href='#'><div class="crop"><img src='static/images/pci.png'></div></a></li>
-  <li><a href='#'><div class="crop"><img src='static/images/lm.png'></div></a></li>
-  <li><a href='/cluster'><div class="crop"><img src='static/images/voc.png'></div></a></li>
-  <li><a href='/map'><div class="crop"><img src='static/images/nbo.png'></div></a></li>
-  <li><a href='#'><img id='center' src='static/images/center.png'></a></li>
-</ul>
-
+<div style="height: 520">
+	<ul class='circle-container'>
+	  <li><a href='#'><div class="crop"><img src='static/images/720.png'></div></a></li>
+	  <li><a href='/loopfeedback'><div class="crop"><img src='static/images/clf.png'></div></a></li>
+	  <li><a href='#'><div class="crop"><img src='static/images/wm.png'></div></a></li>
+	  <li><a href='#'><div class="crop"><img src='static/images/pci.png'></div></a></li>
+	  <li><a href='/loyalty'><div class="crop"><img src='static/images/lm.png'></div></a></li>
+	  <li><a href='/cluster'><div class="crop"><img src='static/images/voc.png'></div></a></li>
+	  <li><a href='/map'><div class="crop"><img src='static/images/nbo.png'></div></a></li>
+	  <li><a href='#'><img id='center' src='static/images/center.png'></a></li>
+	</ul>
+</div>
 {% endblock %}
 
 {% block bottom %}
