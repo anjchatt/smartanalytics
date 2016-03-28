@@ -85,17 +85,17 @@
             <div class='name-box' style="display:inline-block; width:100%">
                 <table style='width:100%'><tr>
                     <td style='width:100px'>
-                        <img src='/static/images/photo_female.png' style="margin-left: 0px; left: 0">
+                        <img src="{{ customer['photo'] }}" style="margin-left: 0px; left: 0">
                     </td>
                     <td>
-                        <h3 style="text-align: center; margin-top: 0px;">Customer Name</h3>
+                        <h3 style="text-align: center; margin-top: 0px;">{{ customer['name'] }}</h3>
                     </td>
                     </tr></table>
             </div>
             <div class="text-box main-box">
                 <!--h4 style="text-align: center;">Contact information</h4-->
                 <table>
-                    <tr><td style="width:26px"><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span></td><td>212-2222-245</td></tr>
+                    <tr><td style="width:26px"><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span></td><td>{{ customer['phone'] }}</td></tr>
                     <tr><td style="width:26px"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></td><td>sms@capgemini.com</td></tr>
                     <tr><td style="width:26px"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></td><td>1000, Blue Jay Way</td></tr>
                 </table>
@@ -103,7 +103,7 @@
                 <table>
                     <tr>
                         <td rowspan="2" style="width:26px"><h4><img src="/static/images/icons/people.png" height=24px> <!--Personal information--></h4></td>
-                        <td class='first-col'>Status</td><td>Married</td></tr>
+                        <td class='first-col'>Status</td><td>{{ customer['status'] }}</td></tr>
                     <tr><td class='first-col'>Number of children in Home</td><td>1</td></tr>
                 </table>
                 <hr>
