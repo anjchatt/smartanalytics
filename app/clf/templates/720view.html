@@ -30,18 +30,22 @@
         .text-box h4{
             text-align: center;
         }
+        .icon_h{
+            font-size: 26px;
+        }
         .main-box table{
             width:100%;
         }
         .main-box td{
             padding: 5 15 5 15px;
-            width:50%;
+            /*width:50%;*/
         }
         .main-box hr{
             margin: 10 0 10 0px;
         }
         .first-col {
             text-align: right;
+            width: 40%;
         }
         .alerts td {
             padding:10px;
@@ -49,7 +53,27 @@
         .glyphicon-exclamation-sign{
             color:rgb(255, 27, 36);
         }
+        #interaction_table {
+            width: 100%;
+        }
+        #interaction_table td{
+            padding: 0 10 10 10px;
+        }
+        #interaction_table .first_td{
+            width:25px;
+        }
+        .glyphicon-ok-sign{
+            color: green;
+        }
+        .fa-twitter{
+            color: #00aced;
+        }
+        #visualization1{
+            font-size: 14px;
+        }
+        
     </style>
+    <link rel="stylesheet" href="http://visjs.org/dist/vis.css">
 {% endblock %}
 
 {% block body %}
@@ -70,23 +94,98 @@
         <div class="text-box main-box">
             <!--h4 style="text-align: center;">Contact information</h4-->
             <table>
-                <tr><td class='first-col'><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span></td><td>212-2222-245</td></tr>
-                <tr><td class='first-col'><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></td><td>sms@capgemini.com</td></tr>
-                <tr><td class='first-col'><span class="glyphicon glyphicon-home" aria-hidden="true"></span></td><td>1000, Blue Jay Way</td></tr>
+                <tr><td style="width:26px"><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span></td><td>212-2222-245</td></tr>
+                <tr><td style="width:26px"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></td><td>sms@capgemini.com</td></tr>
+                <tr><td style="width:26px"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></td><td>1000, Blue Jay Way</td></tr>
             </table>
             <hr>
-            <h4><img src="/static/images/icons/people.png" height=24px> <!--Personal information--></h4>
             <table>
-                <tr><td class='first-col'>Status</td><td>Married</td></tr>
+                <tr>
+                    <td rowspan="2" style="width:26px"><h4><img src="/static/images/icons/people.png" height=24px> <!--Personal information--></h4></td>
+                    <td class='first-col'>Status</td><td>Married</td></tr>
                 <tr><td class='first-col'>Number of children in Home</td><td>1</td></tr>
             </table>
             <hr>
-            <h4><span class="glyphicon glyphicon-usd" aria-hidden="true"></span><!--Financial information--></h4>
             <table>
-                <tr><td class='first-col'>Ivestable Asset Value</td><td>$350,000</td></tr>
+                <tr>
+                    <td rowspan="4" style="width:26px"><h4><span class="glyphicon glyphicon-usd" aria-hidden="true"></span><!--Financial information--></h4>
+                    <td class='first-col'>Ivestable Asset Value</td><td>$350,000</td></tr>
                 <tr><td class='first-col'>Credit FICO</td><td>780</td></tr>
                 <tr><td class='first-col'>Zillow Estimate</td><td>$339,000</td></tr>
                 <tr><td class='first-col'>Home Equity Estimate</td><td>$150,000</td></tr>
+            </table>
+            <hr>
+            <table>
+                <tr>
+                    <td rowspan="4" style="width:26px"><h4><img src="/static/images/icons/networking.png" height=24px> <!--Personal information--></h4>
+                    <td class='first-col'>Twitter Followers</td><td>2200</td></tr>
+                <tr><td class='first-col'>Facebook Friends</td><td>192</td></tr>
+                <tr><td class='first-col'>Klout Score</td><td>39</td></tr>
+                <tr><td class='first-col'>SentimentScore</td><td>Negative</td></tr>
+            </table>
+            <hr>
+            <table id="interaction_table">
+                <tr>
+                    <td rowspan="2" style="width:26px; padding:15px;"><h4><i class="icon_h fa fa-comments-o"></i></h4></td>
+                    <td class="first_td">
+                        <span class="glyphicon glyphicon-earphone" aria-hidden="true" style="color:black"></span>
+                    </td><td style='width:20px'>
+                        21.02.2016
+                    </td><td>
+                        Internet banking account not working
+                    </td><td style='width:20px'>
+                        <span class="glyphicon glyphicon-ok-sign" aria-hidden="true" style="color:green"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first_td">
+                        <i class="fa fa-twitter"></i>
+                    </td><td style='width:20px'>
+                        21.02.2016
+                    </td><td>
+                        Travel Card Enquiry
+                    </td><td style='width:20px'>
+                        <span class="glyphicon glyphicon-ok-sign" aria-hidden="true" style="color:green"></span>
+                    </td>
+                </tr>
+            </table>
+            <hr>
+            <table id="interaction_table">
+                <tr>
+                    <td rowspan="3" style="width:26px; padding:15px;"><h4><i class="icon_h fa fa-globe"></i></h4></td>
+                    <td class='first-col'>
+                        21.02.2016
+                    </td><td>
+                        Homepage
+                    </td>
+                </tr>
+                <tr>
+                    <td class='first-col'>
+                        21.02.2016
+                    </td><td>
+                        Borrowing->Mortgage
+                    </td>
+                </tr>
+                <tr>
+                    <td class='first-col'>
+                        22.02.2016
+                    </td><td>
+                        Borrowing->Getting the Best Rates
+                    </td>
+                </tr>
+            </table>
+            <hr>
+            <table id="interaction_table">
+                <tr>
+                    <td rowspan="3" style="width:26px; padding:15px;"><h4><i class="icon_h fa fa-hand-o-up"></i></h4></td>
+                    <td class='first-col'>Visits</td><td>2</td>
+                </tr>
+                <tr>
+                    <td class='first-col'>Pageviews</td><td>6</td>
+                </tr>
+                <tr>
+                    <td class='first-col'>TimeSpent</td><td>3:02</td>
+                </tr>
             </table>
         </div>
     </div>
@@ -100,7 +199,8 @@
     </div>
     <div class='col-md-3 alerts' style='padding-left: 15px;padding-right: 15px;'>
         <div class='text-box' style='width: 100%;'>
-            <h4>Customer status</h4>
+            <h4><i class="fa fa-exclamation-triangle" style='font-size:150%; color:red;'></i>  <b>ALERTS</b></h4>
+            <br>
             <table>
                 <tr><td style="width:10px"><span class="glyphicon glyphicon-exclamation-sign"></span></td><td>Disputed Credit Card Billing</td></tr>
                 <tr><td style="width:10px"><span class="glyphicon glyphicon-exclamation-sign"></span></td><td>Never logged in mobile App</td></tr>
@@ -118,7 +218,16 @@
             </div>
         </div>
     </div>
-        
+    <!--div class='col-md-3'>
+        <div class="text-box" style="margin-top:15px">
+            -- tables --
+        </div>
+    </div-->
+    <div class='col-md-9' style="margin-top:0px; padding-left:0px">
+        <div class="text-box" style="margin-top:15px; padding:10px;">
+            <div id="visualization1"></div>
+        </div>
+    </div>
 <body>
 {% endblock %}
     
@@ -172,6 +281,7 @@
                 }
             }
         },
+        
         series: [{
             name: 'SMS',
             data: [20,20,30,35,39,43,48]
@@ -392,4 +502,45 @@ $(function () {
 
 </script>
     
+    <script src="http://visjs.org/dist/vis.js"></script>
+    <script>
+        var container1 = document.getElementById('visualization1');
+
+        // Create a DataSet (allows two way data-binding)
+        var items1 = new vis.DataSet([
+            {id: 1, content: '<i class="fa fa-fw fa-user" style="color:blue"></i> First Job', start: '2004-06', style: "background-color: #FFB446"},
+            {id: 2, content: '<i class="fa fa-fw" style="color:blue">&#xf1b9;</i> Car', start: '2010-06', style: "background-color: #FFB446"},
+            {id: 3, content: 'Marriage', start: '2008-06', style: "background-color: #54A0ED"},
+            {id: 4, content: '<i class="fa fa-fw" style="color:blue">&#xf1ae;</i> First child', start: '2011-06', style: "background-color: #54A0ED"},
+            {id: 5, content: '<i class="fa fa-fw fa-money" style="color:green"></i> Cecking Account', start: '2013-08', style: "background-color: rgb(127, 176, 5)"},
+            {id: 6, content: '<i class="fa fa-fw fa-credit-card" style="color:red"></i> Credit Card', start: '2015-08', style: "background-color: rgb(127, 176, 5)"},
+            {id: 7, content: '<i class="fa fa-fw fa-user" style="color:blue"></i> Job change', start: '2014-06', style: "background-color: #FFB446"}
+        ]);
+        var items2 = new vis.DataSet([
+            {id: 1, content: '<i class="fa fa-fw fa-user" style="color:blue"></i> First Job', start: '2002-06', style: "background-color: DarkKhaki"},
+            {id: 2, content: '<i class="fa fa-fw" style="color:blue">&#xf1b9;</i> Car', start: '2008-06', style: "background-color: MediumPurple"},
+            {id: 3, content: 'Marriage', start: '2009-06', style: "background-color: pink"},
+            {id: 4, content: '<i class="fa fa-fw fa-money" style="color:green"></i> Cecking Account', start: '2014-02', style: "background-color: GoldenRod"},
+            {id: 5, content: '<i class="fa fa-fw" style="color:blue">&#xf015;</i> First Home', start: '2014-06', style: "background-color: Tan"},
+            {id: 6, content: '<i class="fa fa-fw fa-credit-card" style="color:green"></i> Credit Card', start: '2014-08', style: "background-color: GoldenRod"},
+            {id: 7, content: '<i class="fa fa-fw fa-user" style="color:red"></i> Job change', start: '2015-06', style: "background-color: DarkKhaki"}
+        ]);
+
+        // Configuration for the Timeline
+        var options = {
+            width: '100%',
+            maxHeight: '400px',
+            zoomable: false,
+            selectable: true,
+            moveable: true,
+            showCurrentTime: false,
+            margin: {
+                item: 5
+            },
+            timeAxis: {scale: 'year', step: 1}
+        };
+
+        // Create a Timeline
+        var timeline = new vis.Timeline(container1, items1, options);
+    </script>
 {% endblock %}
