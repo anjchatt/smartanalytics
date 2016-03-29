@@ -3,35 +3,19 @@
 {{ super() }}
     <title>Customer 720 degree view</title>
     <style>
-        /*.body{
-            background:#fff;
-            margin: 0 15 0 15px;
+        h4{
+            color:rgb(340,115,30);
         }
-        .footer{
-            background:#fff;
-        }*/
+
         .name-box{
             background:#54a0ed;
         }
         .name-box td{
             color: #fff;
         }
-        .text-box{
-            background:#fff;
-            margin: 0;
-            padding: 15 0 15 0px;
-        }
+        
         .main-box .glyphicon{
             color:rgb(340,115,30);
-        }
-        h4{
-            color:rgb(340,115,30);
-        }
-        .text-box h4{
-            text-align: center;
-        }
-        .icon_h{
-            font-size: 26px;
         }
         .main-box table{
             width:100%;
@@ -43,24 +27,32 @@
         .main-box hr{
             margin: 10 0 10 0px;
         }
+
+        .text-box{
+            background:#fff;
+            margin: 0;
+            padding: 15 0 15 0px;
+        }
+        .text-box h4{
+            text-align: center;
+        }
+        
+        .icon_h{
+            font-size: 26px;
+        }
         .first-col {
             text-align: right;
             width: 40%;
         }
+        .icon_td{
+            width:25px;
+        }
         .alerts td {
             padding:10px;
         }
+        
         .glyphicon-exclamation-sign{
             color:rgb(255, 27, 36);
-        }
-        #interaction_table {
-            width: 100%;
-        }
-        #interaction_table td{
-            padding: 0 10 10 10px;
-        }
-        .first_td{
-            width:25px;
         }
         .glyphicon-ok-sign{
             color: green;
@@ -68,8 +60,15 @@
         .fa-twitter{
             color: #00aced;
         }
+        
         #visualization1{
             font-size: 14px;
+        }
+        #interaction_table {
+            width: 100%;
+        }
+        #interaction_table td{
+            padding: 0 10 10 10px;
         }
         
     </style>
@@ -78,159 +77,158 @@
 
 {% block body %}
 {{ super() }}
-<body class='body'>
-    <div id="content" class="container" style="width:100%">
-        <h3 style="margin-left: 15px">Customer 720 degree view</h3>
-        <div class='col-md-3'>
-            <div class='name-box' style="display:inline-block; width:100%">
-                <table style='width:100%'><tr>
-                    <td style='width:100px'>
-                        <img src="{{ customer['photo'] }}" style="margin-left: 0px; left: 0">
+<div class='container-fluid'>
+    <h3 style="margin-left: 15px">Customer 720 degree view</h3>
+    <div class='col-md-3'>
+        <div class='name-box' style="display:inline-block; width:100%">
+            <table style='width:100%'><tr>
+                <td style='width:100px'>
+                    <img src="{{ customer['photo'] }}" style="margin-left: 0px; left: 0">
+                </td>
+                <td>
+                    <h3 style="text-align: center; margin-top: 0px;">{{ customer['name'] }}</h3>
+                </td>
+                </tr></table>
+        </div>
+        <div class="text-box main-box">
+            <!--h4 style="text-align: center;">Contact information</h4-->
+            <table>
+                <tr><td style="width:26px"><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span></td><td>{{ customer['phone'] }}</td></tr>
+                <tr><td style="width:26px"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></td><td>sms@capgemini.com</td></tr>
+                <tr><td style="width:26px"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></td><td>1000, Blue Jay Way</td></tr>
+            </table>
+            <hr>
+            <table>
+                <tr>
+                    <td rowspan="2" style="width:26px"><h4><img src="/static/images/icons/people.png" height=24px> <!--Personal information--></h4></td>
+                    <td class='first-col'>Status</td><td>{{ customer['status'] }}</td></tr>
+                <tr><td class='first-col'>Number of children in Home</td><td>1</td></tr>
+            </table>
+            <hr>
+            <table>
+                <tr>
+                    <td rowspan="4" style="width:26px"><h4><span class="glyphicon glyphicon-usd" aria-hidden="true"></span><!--Financial information--></h4>
+                    <td class='first-col'>Investable Asset Value</td><td>$350,000</td></tr>
+                <tr><td class='first-col'>Credit FICO</td><td>780</td></tr>
+                <tr><td class='first-col'>Zillow Estimate</td><td>$339,000</td></tr>
+                <tr><td class='first-col'>Home Equity Estimate</td><td>$150,000</td></tr>
+            </table>
+            <hr>
+            <table>
+                <tr>
+                    <td rowspan="4" style="width:26px"><h4><img src="/static/images/icons/networking.png" height=24px> <!--Personal information--></h4>
+                    <td class='first-col'>Twitter Followers</td><td>2200</td></tr>
+                <tr><td class='first-col'>Facebook Friends</td><td>192</td></tr>
+                <tr><td class='first-col'>Klout Score</td><td>39</td></tr>
+                <tr><td class='first-col'>SentimentScore</td><td>Negative</td></tr>
+            </table>
+            <hr>
+            <table id="interaction_table">
+                <tr>
+                    <td rowspan="2" style="width:26px; padding:15px;"><h4><i class="icon_h fa fa-comments-o"></i></h4></td>
+                    <td class="icon_td">
+                        <span class="glyphicon glyphicon-earphone" aria-hidden="true" style="color:black"></span>
+                    </td><td style='width:20px'>
+                    21.02.2016
+                    </td><td>
+                    Internet banking account not working
+                    </td><td style='width:20px'>
+                    <span class="glyphicon glyphicon-ok-sign" aria-hidden="true" style="color:green"></span>
                     </td>
-                    <td>
-                        <h3 style="text-align: center; margin-top: 0px;">{{ customer['name'] }}</h3>
+                </tr>
+                <tr>
+                    <td class="icon_td">
+                        <i class="fa fa-twitter"></i>
+                    </td><td style='width:20px'>
+                    21.02.2016
+                    </td><td>
+                    Travel Card Enquiry
+                    </td><td style='width:20px'>
+                    <span class="glyphicon glyphicon-ok-sign" aria-hidden="true" style="color:green"></span>
                     </td>
-                    </tr></table>
-            </div>
-            <div class="text-box main-box">
-                <!--h4 style="text-align: center;">Contact information</h4-->
-                <table>
-                    <tr><td style="width:26px"><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span></td><td>{{ customer['phone'] }}</td></tr>
-                    <tr><td style="width:26px"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></td><td>sms@capgemini.com</td></tr>
-                    <tr><td style="width:26px"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></td><td>1000, Blue Jay Way</td></tr>
-                </table>
-                <hr>
-                <table>
-                    <tr>
-                        <td rowspan="2" style="width:26px"><h4><img src="/static/images/icons/people.png" height=24px> <!--Personal information--></h4></td>
-                        <td class='first-col'>Status</td><td>{{ customer['status'] }}</td></tr>
-                    <tr><td class='first-col'>Number of children in Home</td><td>1</td></tr>
-                </table>
-                <hr>
-                <table>
-                    <tr>
-                        <td rowspan="4" style="width:26px"><h4><span class="glyphicon glyphicon-usd" aria-hidden="true"></span><!--Financial information--></h4>
-                        <td class='first-col'>Ivestable Asset Value</td><td>$350,000</td></tr>
-                    <tr><td class='first-col'>Credit FICO</td><td>780</td></tr>
-                    <tr><td class='first-col'>Zillow Estimate</td><td>$339,000</td></tr>
-                    <tr><td class='first-col'>Home Equity Estimate</td><td>$150,000</td></tr>
-                </table>
-                <hr>
-                <table>
-                    <tr>
-                        <td rowspan="4" style="width:26px"><h4><img src="/static/images/icons/networking.png" height=24px> <!--Personal information--></h4>
-                        <td class='first-col'>Twitter Followers</td><td>2200</td></tr>
-                    <tr><td class='first-col'>Facebook Friends</td><td>192</td></tr>
-                    <tr><td class='first-col'>Klout Score</td><td>39</td></tr>
-                    <tr><td class='first-col'>SentimentScore</td><td>Negative</td></tr>
-                </table>
-                <hr>
-                <table id="interaction_table">
-                    <tr>
-                        <td rowspan="2" style="width:26px; padding:15px;"><h4><i class="icon_h fa fa-comments-o"></i></h4></td>
-                        <td class="first_td">
-                            <span class="glyphicon glyphicon-earphone" aria-hidden="true" style="color:black"></span>
-                        </td><td style='width:20px'>
+                </tr>
+            </table>
+            <hr>
+            <table>
+                <tr>
+                    <td rowspan="3" style="width:26px; padding:15px;"><h4><i class="icon_h fa fa-globe"></i></h4></td>
+                    <td class='first-col'>
                         21.02.2016
-                        </td><td>
-                        Internet banking account not working
-                        </td><td style='width:20px'>
-                        <span class="glyphicon glyphicon-ok-sign" aria-hidden="true" style="color:green"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="first_td">
-                            <i class="fa fa-twitter"></i>
-                        </td><td style='width:20px'>
+                    </td><td>
+                    Homepage
+                    </td>
+                </tr>
+                <tr>
+                    <td class='first-col'>
                         21.02.2016
-                        </td><td>
-                        Travel Card Enquiry
-                        </td><td style='width:20px'>
-                        <span class="glyphicon glyphicon-ok-sign" aria-hidden="true" style="color:green"></span>
-                        </td>
-                    </tr>
-                </table>
-                <hr>
-                <table>
-                    <tr>
-                        <td rowspan="3" style="width:26px; padding:15px;"><h4><i class="icon_h fa fa-globe"></i></h4></td>
-                        <td class='first-col'>
-                            21.02.2016
-                        </td><td>
-                        Homepage
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class='first-col'>
-                            21.02.2016
-                        </td><td>
-                        Borrowing->Mortgage
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class='first-col'>
-                            22.02.2016
-                        </td><td>
-                        Borrowing->Getting the Best Rates
-                        </td>
-                    </tr>
-                </table>
-                <hr>
-                <table>
-                    <tr>
-                        <td rowspan="3" style="width:26px; padding:15px;"><h4><i class="icon_h fa fa-hand-o-up"></i></h4></td>
-                        <td class='first-col'>Visits</td><td>2</td>
-                    </tr>
-                    <tr>
-                        <td class='first-col'>Pageviews</td><td>6</td>
-                    </tr>
-                    <tr>
-                        <td class='first-col'>TimeSpent</td><td>3:02</td>
-                    </tr>
-                </table>
-            </div>
+                    </td><td>
+                    Borrowing->Mortgage
+                    </td>
+                </tr>
+                <tr>
+                    <td class='first-col'>
+                        22.02.2016
+                    </td><td>
+                    Borrowing->Getting the Best Rates
+                    </td>
+                </tr>
+            </table>
+            <hr>
+            <table>
+                <tr>
+                    <td rowspan="3" style="width:26px; padding:15px;"><h4><i class="icon_h fa fa-hand-o-up"></i></h4></td>
+                    <td class='first-col'>Visits</td><td>2</td>
+                </tr>
+                <tr>
+                    <td class='first-col'>Pageviews</td><td>6</td>
+                </tr>
+                <tr>
+                    <td class='first-col'>TimeSpent</td><td>3:02</td>
+                </tr>
+            </table>
         </div>
-        <div class='col-md-6 text-box main-box'>
-            <div class='col-md-6'>
-                <div id="churn_chart" style="width: 100%; height: 250px; margin: 0 auto; padding: 0 20 0 20px"></div>
-            </div>
-            <div class='col-md-6'>
-                <div id="nps_chart" style="width: 100%; height: 250px; margin: 0 auto; padding: 0 20 0 20px"></div>
-            </div>
+    </div>
+    <div class='col-md-6 text-box main-box'>
+        <div class='col-md-6'>
+            <div id="churn_chart" style="width: 100%; height: 250px; margin: 0 auto; padding: 0 20 0 20px"></div>
         </div>
-        <div class='col-md-3 alerts' style='padding-left: 15px;padding-right: 15px;'>
-            <div class='text-box' style='width: 100%;'>
-                <h4><i class="fa fa-exclamation-triangle" style='font-size:150%; color:red;'></i>  <b>ALERTS</b></h4>
-                <br>
-                <table>
-                    <tr><td style="width:10px"><span class="glyphicon glyphicon-exclamation-sign"></span></td><td>Disputed Credit Card Billing</td></tr>
-                    <tr><td style="width:10px"><span class="glyphicon glyphicon-exclamation-sign"></span></td><td>Never logged in mobile App</td></tr>
-                    <tr><td style="width:10px"><span class="glyphicon glyphicon-exclamation-sign"></span></td><td>Not Checked in Internet Account from 30 days</td></tr>
-                </table>
-            </div>
+        <div class='col-md-6'>
+            <div id="nps_chart" style="width: 100%; height: 250px; margin: 0 auto; padding: 0 20 0 20px"></div>
         </div>
-        <div class='col-md-9' style='margin:15 0 0 0px;padding-left:0'>
-            <div class='row text-box'>
-                <div class='col-md-5' style="margin:0px">
-                    <div id="transaction_chart" style="width: 100%; height: 400px; margin: 0 auto; padding: 0 20 0 20px"></div>
-                </div>
-                <div class='col-md-7' style="margin:0px">
-                    <div id="communication_chart" style="width: 100%; height: 350px; margin: 0 auto; padding: 0 20 0 20px"></div>
-                </div>
-            </div>
+    </div>
+    <div class='col-md-3 alerts' style='padding-left: 15px;padding-right: 15px;'>
+        <div class='text-box' style='width: 100%;'>
+            <h4><i class="fa fa-exclamation-triangle" style='font-size:150%; color:red;'></i>  <b>ALERTS</b></h4>
+            <br>
+            <table>
+                <tr><td style="width:10px"><span class="glyphicon glyphicon-exclamation-sign"></span></td><td>Disputed Credit Card Billing</td></tr>
+                <tr><td style="width:10px"><span class="glyphicon glyphicon-exclamation-sign"></span></td><td>Never logged in mobile App</td></tr>
+                <tr><td style="width:10px"><span class="glyphicon glyphicon-exclamation-sign"></span></td><td>Not Checked in Internet Account from 30 days</td></tr>
+            </table>
         </div>
-        <!--div class='col-md-3'>
-<div class="text-box" style="margin-top:15px">
--- tables --
-</div>
-</div-->
-        <div class='col-md-9' style="margin-top:0px; padding-left:0px">
-            <div class="text-box" style="margin-top:15px; padding:10px;">
-                <div id="visualization1"></div>
+    </div>
+    <div class='col-md-9' style='margin:15 0 0 0px;padding-left:0'>
+        <div class='row text-box'>
+            <div class='col-md-5' style="margin:0px">
+                <div id="transaction_chart" style="width: 100%; height: 400px; margin: 0 auto; padding: 0 20 0 20px"></div>
+            </div>
+            <div class='col-md-7' style="margin:0px">
+                <div id="communication_chart" style="width: 100%; height: 350px; margin: 0 auto; padding: 0 20 0 20px"></div>
             </div>
         </div>
     </div>
-<body>
+    <!--div class='col-md-3'>
+    <div class="text-box" style="margin-top:15px">
+    - tables -
+    </div>
+    </div-->
+    <div class='col-md-9' style="margin-top:0px; padding-left:0px">
+        <div class="text-box" style="margin-top:15px; padding:10px;">
+            <div id="visualization1"></div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}
     
     

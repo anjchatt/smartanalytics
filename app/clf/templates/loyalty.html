@@ -8,113 +8,164 @@
 {% block body %}
 {{ super() }}
         <style>
+            h4{
+                color:rgb(340,115,30);
+            }
+            .vis-item.vis-selected {
+                background-color: #7EFF73;
+            }
+             
             .newData {
-                background: #fdd;
+                background: #7EFF73;
+            }
+            .icon_h{
+                font-size: 26px;
+            }
+
+            .name-box{
+                background:#54a0ed;
+            }
+            .name-box td{
+                color: #fff;
+            }
+            .main-box .glyphicon{
+                color:rgb(340,115,30);
+            }
+            .main-box table{
+                width:100%;
+            }
+            .main-box td{
+                padding: 5 15 5 15px;
+                /*width:50%;*/
+            }
+            .main-box hr{
+                margin: 10 0 10 0px;
+            }
+            
+            .text-box h4{
+                text-align: center;
+            }
+            .text-box{
+                background:#fff;
+                margin: 0;
+                padding: 15 0 15 0px;
+            }
+            
+            .first-col {
+                text-align: right;
+                width: 40%;
+            }
+            .first_td{
+                width:25px;
+            }
+            
+            .glyphicon-exclamation-sign{
+                color:rgb(255, 27, 36);
+            }
+            .glyphicon-ok-sign{
+                color: green;
+            }
+            .fa-twitter{
+                color: #00aced;
+            }
+            .fa-facebook-square{
+                color: #3b5998;
             }
         </style>
 
+        <br>
         <div id="Loyalty" class="container">
             <div class="row">
                 <div class="col-md-3 text-center">
-                    <div class="col-md-12">
-                        <div class="row">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <img src="/static/images/customer_m.jpg" class="img-responsive" />
-                                </div>
-                                <!-- Customer info Table -->
-                                <table class="table table-bordered" id="CustomerTable" style="font-size: 14px;">
-                                    <tr bgcolor=''><td>Customer Name</td><td>John Smith</td></tr>
-                                    <tr bgcolor=''><td>Customer Age</td><td>32</td></tr>
-                                </table>
-                            </div>
+                    <div class="row">
+                        <div class='name-box' style="display:inline-block; width:100%">
+                            <table style='width:100%'><tr>
+                                <td style='width:100px'>
+                                    <img src="/static/images/customer_m_cut.png" style="margin-left: 0px; left: 0">
+                                </td>
+                                <td>
+                                    <h3 style="text-align: center; margin-top: 0px;">John Smith</h3>
+                                </td>
+                                </tr>
+                            </table>
                         </div>
-                        <div class="row" style="height: 260px">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    Social Networks
-                                </div>
-                                <!-- Social networks panel -->
-                                <div class="text-left">
-                                    <div style="padding-left: 8px">
-                                        <strong>Last message</strong><br>
-                                        <div id="lastSNMessage" style="font-style: italic;"></div><br>
-                                        <strong>Upcomming Event</strong><br>
-                                        <span style="color:#777" id="eventTime"></span><br>
-                                        <div id="upcEvent" style="font-style: italic;"></div>
-                                        Distance to event: <span id="distEvent"></span>
-                                    </div>
-                                </div>
+                    </div>
+                    <div class="row">
+                        <div class="text-box main-box">
+                            <table>
+                                <tr>
+                                    <td rowspan="3" style="width:26px"><h4><img src="/static/images/icons/people.png" height=24px></h4></td>
+                                    <td class='first-col'>Customer Age</td><td>32</td></tr>
+                                <tr><td class='first-col'>Status</td><td>Single</td></tr>
+                                <tr><td class='first-col'>Number of children in Home</td><td>-</td></tr>
+                            </table>
+                            <hr>
+                            <!-- Social networks panel -->
+                            <div class="text-left">
+                                <h4>Last message <i class="icon_h fa fa-share-alt"></i></h4>
+                                <table>
+                                    <tr>
+                                        <td style="text-align:right;"><div id="lastSNMessageSource"></div></td>
+                                        <td><div id="lastSNMessage"></div></td>
+                                    </tr>
+                                </table>
+                                <h4>Upcomming Event <i class="fa fa-calendar"></i></h4>
+                                <table>
+                                    <tr><td class='first-col'><i class="fa fa-clock-o"></i></td><td><span class="text-muted" id="eventTime"></span></td></tr>
+                                    <tr><td class='first-col'>Description</td><td><div id="upcEvent"></div></td></tr>
+                                    <tr><td class='first-col'>Distance to event place</td><td><span id="distEvent"></span></td></tr>
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3 text-center">
-                    <div class="col-md-12">
-                        <div class="row">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    Current status
-                                </div>
-                                <div class="text-left">
-                                    <table cellpadding="10" cellspacing="10" width="100%"><tbody>
-                                        <tr><td style="padding: 5px 0px 5px 8px; border-bottom: 1px solid black;">Current Date</td>
-                                            <td style="padding: 5px 0px 5px 0px; border-bottom: 1px solid black;" id="curDate"></td></tr>
-                                        <tr><td style="padding: 5px 0px 5px 8px; border-bottom: 1px solid black;">Current Time</td>
-                                            <td style="padding: 5px 0px 5px 0px; border-bottom: 1px solid black;" id="curTime"></td></tr>
-                                        <tr><td style="padding: 5px 0px 5px 8px; border-bottom: 1px solid black;">Last Activity</td>
-                                            <td style="padding: 5px 0px 5px 0px; border-bottom: 1px solid black;" id="lastAct"></td></tr>
-                                        <tr><td style="padding: 5px 0px 5px 8px; border-bottom: 1px solid black;">Distance to home</td>
-                                            <td style="padding: 5px 0px 5px 0px; border-bottom: 1px solid black;" id="distHome"></td></tr>
-                                        <tr><td style="padding: 5px 0px 5px 8px;">Weather</td>
-                                            <td style="padding: 5px 0px 5px 0px;" id="weather"></td></tr>
-                                    </tbody></table>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    Last transactions
-                                </div>
-                                <div class="text-left">
-                                    <table cellpadding="10" cellspacing="10" width="100%"><tbody>
-                                        <tr><td style="padding: 5px 0px 5px 8px; border-bottom: 1px solid black;">Last transaction date</td>
-                                            <td style="padding: 5px 0px 5px 10px; border-bottom: 1px solid black;" id="tranDate">23-10-2015</td></tr>
-                                        <tr><td style="padding: 5px 0px 5px 8px; border-bottom: 1px solid black;">Transaction Amount</td>
-                                            <td style="padding: 5px 0px 5px 10px; border-bottom: 1px solid black;" id="tranAmount"></td></tr>
-                                        <tr><td style="padding: 5px 0px 5px 8px;">Merchant Type</td><td style="padding: 5px 0px 5px 10px;" id="merType"></td></tr>
-                                    </tbody></table>
-                                </div>
-                            </div>
+                    <div class="text-box main-box">
+                        <h4>Current status <i class="fa fa-user"></i></h4>
+                        <table cellpadding="10" cellspacing="10" width="100%">
+                            <tr><td class="first-col">Current Date</td>
+                                <td class="first-col" id="curDate"></td></tr>
+                            <tr><td class="first-col">Current Time</td>
+                                <td class="first-col" id="curTime"></td></tr>
+                            <tr><td class="first-col">Last Activity</td>
+                                <td class="first-col" id="lastAct"></td></tr>
+                            <tr><td class="first-col">Distance to home</td>
+                                <td class="first-col" id="distHome"></td></tr>
+                            <tr><td class="first-col">Weather</td>
+                                <td class="first-col" id="weather"></td></tr>
+                        </table>
+                        <hr>
+                        <h4>Last transactions <span class="glyphicon glyphicon-usd" aria-hidden="true"></span></h4>
+                        <div class="text-left">
+                            <table cellpadding="10" cellspacing="10" width="100%"><tbody>
+                                <tr><td class='first-col'>Last transaction date</td><td id="tranDate">23-10-2015</td></tr>
+                                <tr><td class='first-col'>Transaction Amount</td><td id="tranAmount"></td></tr>
+                                <tr><td class='first-col'>Merchant Type</td><td id="merType"></td></tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 text-center">
-                    <div class="col-md-12">
-                        <div class="row">
-                            <!-- Map will be here-->
-                            <div style=" margin: 10px 0px 5px 0px; border: 0px solid #FFA500; border-top: 0px solid #FFA500; padding: 15px 10px 10px 10px; background: #fff; width: 100%; border-radius: 5px;">
-                                <div id="prediction_map" style="width:100%; height:350px" class="leaflet"></div>
-                            </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <!-- Map will be here-->
+                        <div style=" margin: 0px 0px 15px 0px; border: 0px solid #FFA500; border-top: 0px solid #FFA500; padding: 15px 10px 10px 10px; background: #fff; width: 100%; border-radius: 5px;">
+                            <div id="prediction_map" style="width:100%; height:350px" class="leaflet"></div>
                         </div>
-                        <div class="row">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    System actions
-                                </div>
-                                <table cellpadding="10" cellspacing="10" width="100%"><tbody>
-                                    <tr>
-                                        <td style="padding: 5px 0px 5px 8px;" width="50%"><span style="font-size: 100%"><strong>Loyalty Improvement Opportunity</strong></span><hr style="margin:5px"></td>
-                                        <td style="padding: 5px 0px 5px 8px;" width="50%"><span style="font-size: 100%"><strong>Latest offer</strong></span><hr style="margin:5px"></td>
-                                    </tr>
-                                    <tr>
-                                        <td style="padding: 5px 0px 5px 8px;"><div id="oppMessage"></div></td>
-                                        <td style="padding: 5px 0px 5px 8px;"><div id="latestSMS"></div></td>
-                                    </tr>
-                                </tbody></table>
-                            </div>
-                        </div>
+                    </div>
+                    <div class="text-box main-box">
+                        <h4 style="margin:0;padding:0;">System actions <i class="fa fa-cogs"></i></h4>
+                        <table width="100%"><tbody>
+                            <tr>
+                                <td width="50%"><span style="font-size: 100%"><h5>Loyalty Improvement Opportunity</h5></span></td>
+                                <td width="50%"><span style="font-size: 100%"><h5>Latest offer</h5></span></td>
+                            </tr>
+                            <tr>
+                                <td><div id="oppMessage"></div></td>
+                                <td><div id="latestSMS"></div></td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div> <!-- class="row" -->
@@ -155,73 +206,102 @@ L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: o
     return (sHours +':'+sMinutes);
   };
   function updateData (element, newStr) {
-    if(element.html() != newStr) {
-        element.html(newStr);
-        element.addClass("newData");
-    };
+      if(element.html() != newStr) {
+          element.html(newStr);
+          if(element.attr("id") != "lastSNMessageSource"){
+              element.addClass("newData");
+          };
+      };
   };
   var data = [
     {"Current Date":"23-10-2015","Current Time":"08:05 AM","Last Action":"Transaction","Weather":"Sunny","Transaction Amount":"$ 13.98",
-     "Merchant Type":"Airport Mixed Store","Last SN message":"Back to New York! Back home.","Last SN activity time":"07:50 AM",
+     "Merchant Type":"Airport Mixed Store",
+     "Last SN message":"Back to New York! Back home.",
+     "Last SN message source":"facebook",
+     "Last SN activity time":"07:50 AM",
      "Upcomming event":"The Nutcracker opera","Event time":"05:30 PM","Current Location lng":-73.7781391,"Current Location lat":40.6413762,
      "Previous Location lng":49.0096906,"Previous Location lat":2.5479245,"Map Zoom":14,"Event Location lng":-73.9855873,"Event Location lat":40.7724407,
      "Home Location lng":-73.9826006,"Home Location lat":40.7659873,"Latest SMS":null,"Opportunity Message":null, "Icon":"fa-dollar", "Event Type": "Activity"},
     {"Current Date":"23-10-2015", "Current Time":"08:06 AM","Last Action":"Transaction","Weather":"Sunny","Transaction Amount":"$ 13.98",
-     "Merchant Type":"Airport Mixed Store","Last SN message":"Back to New York! Back home.","Last SN activity time":"07:50 AM",
+     "Merchant Type":"Airport Mixed Store",
+     "Last SN message":"Back to New York! Back home.",
+     "Last SN message source":"facebook",
+     "Last SN activity time":"07:50 AM",
      "Upcomming event":"The Nutcracker opera","Event time":"05:30 PM","Current Location lng":-73.7781391,"Current Location lat":40.6413762,
      "Previous Location lng":49.0096906,"Previous Location lat":2.5479245,"Map Zoom":14,"Event Location lng":-73.9855873,"Event Location lat":40.7724407,
      "Home Location lng":-73.9826006,"Home Location lat":40.7659873,
      "Latest SMS":"Hey! Are you looking for taxi? We have a unique offer for you! Response to this message, get Yellow Cab right to your doors now and get free next trip.",
      "Opportunity Message":"Opportunity detected<br><br><i>System detect an opportunity to offer taxi service<\/i>", "Icon":null, "Event Type": "Offer"},
     {"Current Date":"23-10-2015","Current Time":"11:30 AM","Last Action":"Twitter feed","Weather":"Sunny","Transaction Amount":"$ 25.00",
-     "Merchant Type":"Taxi","Last SN message":"Got a cashback for taxi from Airport. Just in time. Good job, guys!","Last SN activity time":"09:15 AM",
+     "Merchant Type":"Taxi",
+     "Last SN message":"Got a cashback for taxi from Airport. Just in time. Good job, guys!",
+     "Last SN message source":"twitter",
+     "Last SN activity time":"09:15 AM",
      "Upcomming event":"The Nutcracker opera","Event time":"05:30 PM","Current Location lng":-73.9826006,"Current Location lat":40.7659873,
      "Previous Location lng":49.0096906,"Previous Location lat":2.5479245,"Map Zoom":17,"Event Location lng":-73.9855873,"Event Location lat":40.7724407,
      "Home Location lng":-73.9826006,"Home Location lat":40.7659873,"Latest SMS":null,"Opportunity Message":null, "Icon":"fa-twitter", "Event Type": "Activity"},
     {"Current Date":"23-10-2015","Current Time":"11:31 AM","Last Action":"Twitter feed","Weather":"Sunny","Transaction Amount":"$ 25.00",
-     "Merchant Type":"Taxi","Last SN message":"Got next free taxi trip. Good job, guys!","Last SN activity time":"09:15 AM",
+     "Merchant Type":"Taxi",
+     "Last SN message":"Got next free taxi trip. Good job, guys!",
+     "Last SN message source":"facebook",
+     "Last SN activity time":"09:15 AM",
      "Upcomming event":"The Nutcracker opera","Event time":"05:30 PM","Current Location lng":-73.9826006,"Current Location lat":40.7659873,
      "Previous Location lng":49.0096906,"Previous Location lat":2.5479245,"Map Zoom":14,"Event Location lng":-73.9855873,
      "Event Location lat":40.7724407,"Home Location lng":-73.9826006,"Home Location lat":40.7659873,
      "Latest SMS":"We just thought you might be interested in nearest grocery stores where you can earn additional bonus points. Here is the list...",
      "Opportunity Message":"Opportunity detected<br><br><i>System detect an opportunity to offer bonus points in partner's store<\/i>", "Icon":null, "Event Type": "Offer"},
     {"Current Date":"23-10-2015","Current Time":"1:05 PM","Last Action":"Transaction","Weather":"Cloudy","Transaction Amount":"$ 168.31",
-     "Merchant Type":"Grocery","Last SN message":"Found a new grocery store near my home! Going to take a look.","Last SN activity time":"11:55 AM",
+     "Merchant Type":"Grocery",
+     "Last SN message":"Found a new grocery store near my home! Going to take a look.",
+     "Last SN message source":"facebook",
+     "Last SN activity time":"11:55 AM",
      "Upcomming event":"The Nutcracker opera","Event time":"05:30 PM","Current Location lng":-73.9828726,"Current Location lat":40.76836,
      "Previous Location lng":49.0096906,"Previous Location lat":2.5479245,"Map Zoom":14,"Event Location lng":-73.9855873,"Event Location lat":40.7724407,
      "Home Location lng":-73.9826006,"Home Location lat":40.7659873,"Latest SMS":null,"Opportunity Message":null, "Icon":"fa-dollar", "Event Type": "Activity"},
     {"Current Date":"23-10-2015", "Current Time":"4:30 PM","Last Action":"Facebook like","Weather":"Cloudy","Transaction Amount":"$ 168.31","Merchant Type":"Grocery",
-     "Last SN message":"Liked: Mary Jane is going to <i>The Nutcracker opera<\/i>","Last SN activity time":"3:50 PM",
+     "Last SN message":"Liked: Mary Jane is going to <i>The Nutcracker opera<\/i>",
+     "Last SN message source":"facebook",
+     "Last SN activity time":"3:50 PM",
      "Upcomming event":"The Nutcracker opera","Event time":"05:30 PM","Current Location lng":-73.9826006,"Current Location lat":40.7659873,
      "Previous Location lng":49.0096906,"Previous Location lat":2.5479245,"Map Zoom":14,"Event Location lng":-73.9855873,"Event Location lat":40.7724407,
      "Home Location lng":-73.9826006,"Home Location lat":40.7659873,
      "Latest SMS":null, "Opportunity Message":null, "Icon":"fa-facebook", "Event Type": "Activity"},
     {"Current Date":"23-10-2015","Current Time":"4:31 PM","Last Action":"Facebook like","Weather":"Cloudy","Transaction Amount":"$ 168.31",
-     "Merchant Type":"Grocery","Last SN message":"Liked: Mary Jane is going to <i>The Nutcracker opera<\/i>","Last SN activity time":"3:50 PM",
+     "Merchant Type":"Grocery",
+     "Last SN message":"Liked: Mary Jane is going to <i>The Nutcracker opera<\/i>",
+     "Last SN message source":"facebook",
+     "Last SN activity time":"3:50 PM",
      "Upcomming event":"The Nutcracker opera","Event time":"05:30 PM","Current Location lng":-73.9855873,"Current Location lat":40.7724407,
      "Previous Location lng":49.0096906,"Previous Location lat":2.5479245,"Map Zoom":16,"Event Location lng":-73.9855873,"Event Location lat":40.7724407,
      "Home Location lng":-73.9826006,"Home Location lat":40.7659873,
      "Latest SMS":"Don't miss a chance to make your beloved happy. Respond to this messgae with address and time, and we will deliver there a bouquet of 13 roses. We will withdraw $10 right from your bank account automatically. 33 Flowers and your bank.",
      "Opportunity Message":"Opportunity detected<br><br><i>System detect an opportunity to offer flowers delivery service<\/i>", "Icon":null, "Event Type": "Offer"},
     {"Current Date":"23-10-2015","Current Time":"09:05 PM", "Last Action":"Transaction","Weather":"Cloudy","Transaction Amount":"$ 79.61","Merchant Type":"Restaurant",
-     "Last SN message":"Liked: Mary Jane is going to <i>The Nutcracker opera<\/i>","Last SN activity time":"3:50 PM","Upcomming event":null,
+     "Last SN message":"Liked: Mary Jane is going to <i>The Nutcracker opera<\/i>",
+     "Last SN message source":"facebook",
+     "Last SN activity time":"3:50 PM","Upcomming event":null,
      "Event time":"-","Current Location lng":-73.9720554739,"Current Location lat":40.7627931175,"Previous Location lng":49.0096906,"Previous Location lat":2.5479245,
      "Map Zoom":14,"Event Location lng":-73.9855873,"Event Location lat":40.7724407,"Home Location lng":-73.9826006,"Home Location lat":40.7659873,
      "Latest SMS":null,"Opportunity Message":null, "Icon": "fa-dollar", "Event Type": "Activity"},
     {"Current Date":"23-10-2015","Current Time":"09:06 PM","Last Action":"Transaction","Weather":"Raining",
-     "Transaction Amount":"$ 79.61","Merchant Type":"Restaurant","Last SN message":"Liked: Mary Jane is going to <i>The Nutcracker opera<\/i>",
+     "Transaction Amount":"$ 79.61","Merchant Type":"Restaurant",
+     "Last SN message":"Liked: Mary Jane is going to <i>The Nutcracker opera<\/i>",
+     "Last SN message source":"facebook",
      "Last SN activity time":"3:50 PM","Upcomming event":null,"Event time":"-","Current Location lng":-73.9720554739,"Current Location lat":40.7627931175,
      "Previous Location lng":49.0096906,"Previous Location lat":2.5479245,"Map Zoom":14,"Event Location lng":-73.9855873,"Event Location lat":40.7724407,
      "Home Location lng":-73.9826006,"Home Location lat":40.7659873,"Latest SMS":"Hey, if you need a taxi just answer to this text back to this message with your final distanation.",
      "Opportunity Message":"Opportunity detected<br><br><i>System detect an opportunity to offer taxi service<\/i>", "Icon":null, "Event Type": "Offer"},
     {"Current Date":"23-10-2015", "Current Time":"10:05 PM","Last Action":"Facebook activity","Weather":"Raining","Transaction Amount":"$ 79.61","Merchant Type":"Restaurant",
-     "Last SN message":"I made it! I made her a proposal and she said YES! I am the happiest man alive! #engaged","Last SN activity time":"10:55 PM",
+     "Last SN message":"I made it! I made her a proposal and she said YES! I am the happiest man alive! #engaged",
+     "Last SN message source":"facebook",
+     "Last SN activity time":"10:55 PM",
      "Upcomming event":null,"Event time":"-","Current Location lng":-73.9826006,"Current Location lat":40.7659873,"Previous Location lng":49.0096906,
      "Previous Location lat":2.5479245,"Map Zoom":14,"Event Location lng":-73.9855873,"Event Location lat":40.7724407,"Home Location lng":-73.9826006,
      "Home Location lat":40.7659873,"Latest SMS":null,"Opportunity Message":null, "Icon": "fa-facebook", "Event Type": "Activity"},
     {"Current Date":"24-10-2015","Current Time":"08:05 AM",
      "Last Action":"Facebook activity","Weather":"Raining","Transaction Amount":"$ 79.61","Merchant Type":"Restaurant",
      "Last SN message":"I made it! I made her a proposal and she said YES! I am the happiest man alive! #engaged",
+     "Last SN message source":"facebook",
      "Last SN activity time":"10:56 PM","Upcomming event":null,"Event time":"-","Current Location lng":-73.9826006,"Current Location lat":40.7659873,
      "Previous Location lng":49.0096906,"Previous Location lat":2.5479245,"Map Zoom":14,"Event Location lng":-73.9855873,"Event Location lat":40.7724407,
      "Home Location lng":-73.9826006,"Home Location lat":40.7659873,"Latest SMS":"If you are planning a travel now is the best time to join our Loyal Traveler and get your amazing discounts.",
@@ -236,13 +316,37 @@ L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: o
 
   for (i = 0; i < data.length; i++) {
     var row = [];
+    var icon = '';
+    var icon_bg ='#aaa';
     row['id'] = i;
-    row['content'] =  "" + (i+1) + ": " + data[i]['Event Type'];
+    if(data[i]['Icon']) {
+        icon = '<i class="fa fa-fw ' + data[i]['Icon'] + '" style="color:white"></i>';
+    }
+    if(data[i]['Event Type'] == "Offer") { 
+        row['style'] = "border-color: orange;"; 
+        icon = '<i class="fa fa-fw fa-cog" style="color:white"></i>';
+        icon_bg = 'rgb(340,115,30)';
+    } else if(data[i]['Icon'] == "fa-facebook") {
+        icon_bg = '#3b5998';
+    } else if(data[i]['Icon'] == "fa-dollar") {
+        icon_bg = 'green';
+    } else if(data[i]['Icon'] == "fa-twitter") {
+        icon_bg = "#00aced";
+    }
+    if(data[i]['Last SN message source'] == 'twitter'){
+        data[i]['Last SN message source'] = '<i class="fa fa-twitter" style="font-size:20px;"></i>';
+    } else if (data[i]['Last SN message source'] == 'facebook') {
+        data[i]['Last SN message source'] = '<i class="fa fa-facebook-square" style="font-size:20px;"></i>';
+    }
+      
+    
+    //row['content'] =  "" + (i+1) + ": " + data[i]['Event Type'];
+    row['content'] =  '<table style="margin:-5px;"><tr><td style="background:'+icon_bg+';padding:5px;">'+icon+'</td><td style="padding:5px;">'+data[i]['Event Type']+'</td><td style="padding:5px;background:#eee">'+'#'+i+'</td></tr></table>';
     row['start'] = data[i]['Current Date'].split('-').reverse().join('-') + 'T' + am_pm_to_hours(data[i]['Current Time'].replace('<hl>', '').replace('</hl>', ''));
-	if(data[i]['Event Type'] == "Offer") { row['style'] = "border-color: orange;"; }
-	if(data[i]['Icon']) {
-		row['content'] = '<i class="fa fa-fw ' + data[i]['Icon'] + '" style="color:black"></i>' + row['content']
-	}
+	
+	//if(data[i]['Icon']) {
+	//	row['content'] = '<i class="fa fa-fw ' + data[i]['Icon'] + '" style="color:black"></i>' + row['content']
+	//}
     dataset.push(row);
   }
   // Create a DataSet (allows two way data-binding)
@@ -294,6 +398,7 @@ L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: o
     updateData($('#tranAmount'), row['Transaction Amount']);
     updateData($('#merType'), row['Merchant Type']);
     updateData($('#lastSNMessage'), row['Last SN message']);
+    updateData($('#lastSNMessageSource'), row['Last SN message source']);
     //$('#').html(row['Last SN activity time']);
     updateData($('#upcEvent'), row['Upcomming event']);
     updateData($('#eventTime'), row['Event time']);
