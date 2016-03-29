@@ -411,7 +411,10 @@ L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: o
             fi2 = row['Event Location lat'] * Math.PI / 180,
             delta = (row['Event Location lng']-row['Current Location lng']) * Math.PI / 180, 
             R = 6371; 
-        var d = Math.acos( Math.sin(fi1)*Math.sin(fi2) + Math.cos(fi1)*Math.cos(fi2) * Math.cos(delta) ) * R; // gives d in kilometres
+        sum = Math.sin(fi1)*Math.sin(fi2) + Math.cos(fi1)*Math.cos(fi2) * Math.cos(delta);
+        if(sum > 1) sum = 1; // check for floating point-errors
+        if(sum < -1) sum = -1;
+        var d = Math.acos( sum ) * R; // gives d in kilometres
         var dist = Math.round(d * 10)/ 10;
         updateData($('#distEvent'), " " + dist + " km");
     } else { updateData($('#distEvent'), "-"); };
@@ -421,8 +424,11 @@ L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: o
         var fi1 = row['Current Location lat'] * Math.PI / 180, 
             fi2 = row['Home Location lat'] * Math.PI / 180,
             delta = (row['Home Location lng']-row['Current Location lng']) * Math.PI / 180, 
-            R = 6371; 
-        var d = Math.acos( Math.sin(fi1)*Math.sin(fi2) + Math.cos(fi1)*Math.cos(fi2) * Math.cos(delta) ) * R; // gives d in kilometres
+            R = 6371;
+        sum = Math.sin(fi1)*Math.sin(fi2) + Math.cos(fi1)*Math.cos(fi2) * Math.cos(delta);
+        if(sum > 1) sum = 1; // check for floating point-errors
+        if(sum < -1) sum = -1;
+        var d = Math.acos( sum ) * R; // gives d in kilometres
         var dist = Math.round(d * 10)/ 10;
         updateData($('#distHome'), " " + dist + " km");
     };
