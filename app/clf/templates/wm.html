@@ -1,0 +1,333 @@
+{% extends 'index.html' %}
+{% block head %}
+{{ super() }}
+    <title>Wealth Management</title>
+    <link rel="stylesheet" href="http://visjs.org/dist/vis.css">
+    <style>
+        .panel-body {
+            padding: 1px;
+        }
+        .box {
+          margin: 0px 2px 0px 2px;
+        }
+        .vis-item,
+        .vis-time-axis {
+            font-size: 12px;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+{{ super() }}
+        <div id="wealth_management" class="container-fluid" >
+            <div class="row box" style="width: 95%">
+                <div class="col-sm-3 ">
+                    <h3>Wealth Management</h3>
+                </div>
+                <div class="col-sm-9 "> <!-- Time line -->
+                    <div id="wm_timeline"></div>
+                </div>
+            </div>
+            <hr style="margin:2px"/>
+            <div class="row box" style="width: 95%">
+                <div class="col-sm-3 ">
+                    <div class="row"> <!-- Client info -->
+                        <div class="panel panel-default">
+                            <div class="panel-heading text-center"><h4>Deborah Winshel</h4></div>
+                            <div class="panel-body">
+                                <img class="img-responsive center-block" src="/static/images/customer_w.png" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row"> <!-- Client news -->
+                        <div class="panel panel-default">
+                            <!-- <div class="panel-heading text-center">Client news</div> -->
+                            <div class="panel-body box">
+                                <h4>Client News</h4>
+                                <div id="clientNews" class="shiny-html-output shiny-bound-output"><div style="background-color:#eee; margin-bottom:5px">
+                                      <span style="color:#888">2015-10-06</span>
+                                      <a href="?client=Kevin%20Arrix">Kevin Arrix</a>
+                                      <br>
+                                      <strong>New Appointment</strong>
+                                      <br>
+                                      <span style="font-size:9pt;">
+                                        Verve Names Kevin Arrix Chief Revenue Officer Verve, the leader in location-based mobile advertising, today announced th
+                                        ...
+                                      </span>
+                                    </div>
+                                    <div style="background-color:#eee; margin-bottom:5px">
+                                      <span style="color:#888">2015-10-06</span>
+                                      <a href="?client=Lisa%20Speransky">Lisa Speransky</a>
+                                      <br>
+                                      <strong>New Appointment</strong>
+                                      <br>
+                                      <span style="font-size:9pt;">
+                                        BEABA USA Announces New CEO BEABA, internationally known juvenile product company, and creator of first steam cooker and
+                                        ...
+                                      </span>
+                                    </div>
+                                </div>
+                                <hr style="margin:0px">
+                                <h4>Client Company M&amp;A News</h4>
+                                <div id="corpNews" class="shiny-html-output shiny-bound-output"><div style="background-color:#eee; margin-bottom:5px">
+                                  <span style="color:#888">2015-10-12</span>
+                                  <br>
+                                  <strong>Merger/Acquisition</strong>
+                                  <br>
+                                  <span style="font-size:9pt;">BlackRock Closes Acquisition of Infraestructura Institucional BlackRock, Inc. (NYSE:BLK) has closed the acquisition of I</span>
+                                  ...
+                                </div>
+                                <div style="background-color:#eee; margin-bottom:5px">
+                                  <span style="color:#888">2015-09-22</span>
+                                  <br>
+                                  <span style="font-size:9pt;">Company Medallion Financial considers going private, following recent approaches and ?misunderstanding? over Uber Medall</span>
+                                  ...
+                                </div>
+                                <div style="background-color:#eee; margin-bottom:5px">
+                                  <span style="color:#888">2015-08-26</span>
+                                  <br>
+                                  <strong>Merger/Acquisition</strong>
+                                  <br>
+                                  <span style="font-size:9pt;">BlackRock to Acquire FutureAdvisor BlackRock, Inc. (NYSE:BLK) has entered into a definitive agreement to acquire FutureA</span>
+                                  ...
+                                </div></div>
+                                <h4>SocialNews Social Media Insights</h4>
+                                <hr style="margin:0px">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-9 ">
+                    <div class="row"> 
+                        <div class="col-sm-4 "> <!-- Column chart -->
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <div id="columnChart"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 "> <!-- Assets info -->
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <table style="background-color:rgba(190,190,256,0.5); font-size:100%;width:100%">
+                                        <style>td,th{padding:5px} table,th,td{border: 1px solid white;}</style>
+                                        <tbody>
+                                            <tr><td>Investment Assets</td><td id="IAssets"></td></tr>
+                                            <tr><td>Other Assets</td><td id="OAssets"></td></tr>
+                                            <tr><td>Total Assets</td><td id="TAssets"></td></tr>
+                                            <tr><td>Liabilities</td><td id="liabilities"></td></tr>
+                                            <tr style="border-top: medium solid;"><td>Net Worth</td><td id="netWorth"></td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 text-center"> <!-- Property info, "Network" button -->
+                            <div class="panel panel-default">
+                                <div class="panel-body" style="max-height: 160px; overflow-y: auto;">
+                                    <!-- Properties Table -->
+                                    <table style="background-color:rgba(190,190,256,0.5);font-size:80%;width:100%">
+                                        <style>td,th{padding:5px} table,th,td{border: 1px solid white;}</style>
+                                        <tbody>
+                                            <tr><td colspan="2" style="background-color:#aaaafa;">Property #1</td></tr>
+                                            <tr><td width="60%">County  State</td><td>Queens, NY</td></tr>
+                                            <tr><td width="60%">Purchase Date</td><td> 18.04.2013</td></tr>
+                                            <tr><td width="60%">Purchase Amount</td><td> $ 461,000</td></tr>
+                                            <tr><td width="60%">Equity Value</td><td> $ 149,066</td></tr>
+                                            <tr><td width="60%">Equity Percentage Opportunity</td><td> </td></tr>
+                                            <tr><td colspan="2" style="background-color:#aaaafa;">Property #2</td></tr>
+                                            <tr><td width="60%">County  State</td><td>Westchester, NY</td></tr>
+                                            <tr><td width="60%">Purchase Date</td><td> 29.12.1976</td></tr>
+                                            <tr><td width="60%">Purchase Amount</td><td> $ 65,000</td></tr>
+                                            <tr><td width="60%">Equity Value</td><td> $ 620,786</td></tr>
+                                            <tr><td width="60%">Equity Percentage Opportunity</td><td> High equity</td></tr>
+                                            <tr><td colspan="2" style="background-color:#aaaafa;">Property #3</td></tr>
+                                            <tr><td width="60%">County  State</td><td>Nassau, NY</td></tr>
+                                            <tr><td width="60%">Purchase Date</td><td> 03.09.1997</td></tr>
+                                            <tr><td width="60%">Purchase Amount</td><td> $ 420,000</td></tr>
+                                            <tr><td width="60%">Equity Value</td><td> $ 787,101</td></tr>
+                                            <tr><td width="60%">Equity Percentage Opportunity</td><td> High equity</td></tr>
+                                            <tr><td colspan="2" style="background-color:#aaaafa;">Property #4</td></tr>
+                                            <tr><td width="60%">County  State</td><td>Nassau, NY</td></tr>
+                                            <tr><td width="60%">Purchase Date</td><td>  - </td></tr>
+                                            <tr><td width="60%">Purchase Amount</td><td>  - </td></tr>
+                                            <tr><td width="60%">Equity Value</td><td> $ 2,071,709</td></tr>
+                                            <tr><td width="60%">Equity Percentage Opportunity</td><td> High equity</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <input class="btn btn-primary btn-block" type="button" value="Show Network">
+                        </div>
+                    </div>
+                    <div class="row box"> <!-- Events -->
+                        <div class="panel panel-default" >
+                            <div class="panel-heading text-center" style="background-color: #ffb446;">Events</div>
+                            <div class="panel-body">
+                                <table style="background-color:#dadafa;font-size:100%;width:100%">
+                                <style>td,th{padding:5px} table,th,td{border: 1px solid white;}</style>
+                                <thead><tr><th><div style="width:100px">Event</div></th><th>Date</th><th>Source</th><th>Category</th><th>Sales Insights</th></tr></thead>
+                                <tbody>
+                                <tr class="st_5" style="background-color:rgba(190,190,256,0.5); display:none;"><td>Wealth Creation</td><td>2016-04-11</td><td>Paid Source</td><td>Westchester Property on sale - US$ 700k</td><td>Tax planning, Retirement Products</td></tr>
+                                <tr class="st_4" style="background-color:rgba(190,190,256,0.5); display:none;"><td>Wealth Creation</td><td>2016-03-11</td><td>Paid Source</td><td>Sold .6 mn worth BlackRock</td><td>Tax planning, Retirement Products</td></tr>
+                                <tr class="st_3" style="background-color:rgba(190,190,256,0.5); display:none;"><td>Deborah Winshel is now a client</td><td>2015-11-11</td><td>FA Name</td><td>New Client</td><td>Tax planning (TP12)</td></tr>
+                                <tr class="st_2" style="background-color:rgba(190,190,256,0.5); display:none;"><td>Deval Patrick attending SOCAP 15</td><td>2015-08-25</td><td>Paid Source</td><td>Introduction Opportunity</td><td>Tax Planning, Retirement Products</td></tr>
+                                <tr class="st_1" style="background-color:rgba(190,190,256,0.5); display:none;"><td>MS Client – circle of influence enhanced</td><td>2015-05-15</td><td>Paid Source</td><td>Introduction Opportunity</td><td>Tax Planning, Retirement Products</td></tr>
+                                <tr class="st_0" style="background-color:rgba(190,190,256,0.5); display:none;"><td>New Appointment</td><td>2015-02-09</td><td>Paid Source</td><td>Job Event</td><td>Tax Planning, Retirement Products</td></tr>
+                                </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row box"> <!-- Relevant news -->
+                        <div class="panel panel-default" >
+                            <div class="panel-heading text-center" style="background-color: #ffb446;">Relevant news</div>
+                            <div class="panel-body">
+                                <table style="background-color:#dadafa;font-size:100%;width:100%">
+                                <style>td,th{padding:5px} table,th,td{border: 1px solid white;}</style>
+                                <thead><tr><th><div style="width:100px">Relevant News</div></th><th>Date</th><th>Source</th></tr></thead>
+                                <tbody>
+                                    <tr class="st_2" style="background-color:rgba(190,190,256,0.5); display:none;"><td>Attending a Conference</td><td>2015-08-25</td><td><a href="http://www.streetinsider.com/Press+Releases/Framing+the+Future+of+Impact+Investing,+Social+Capital+Markets+Conference+(SOCAP)+Announces+Main+Stage+Speakers,+New+SOCAPTV+and+SOCAP+365+Programs,+and+Sponsors+for+SOCAP15/10840351.html">http://www.streetinsider.com/Press+Releases...</a></td></tr>
+                                    <tr class="st_0" style="background-color:rgba(190,190,256,0.5); display:none;"><td>Political Contributions</td><td>2014-08-25</td><td>Paid Source</td></tr>
+                                </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row box"> <!-- Compensation -->
+                        <div class="panel panel-default" >
+                            <div class="panel-heading text-center" style="background-color: #ffb446;">Compensation</div>
+                            <div class="panel-body">
+                                <table style="background-color:#dadafa;font-size:100%;width:100%">
+                                <style>td,th{padding:5px} table,th,td{border: 1px solid white;}</style>
+                                <thead><tr><th>Name</th><th><div style="width:100px">Position</div></th><th>Compensation</th></tr></thead>
+                                <tbody><tr><td>Frank S. Hermance    Chairman</td><td>Chief Executive Officer and Chairman of Executive Committee in Ametek Inc.</td><td>$1.7M</td></tr>
+                                    <tr><td>Jen-Hsun Huang  Co-Founder</td><td>Chief Executive Officer, President, Director and Member of Compensation Committee in NVIDIA Corporation</td><td>$998.4K</td></tr>
+                                    <tr><td>Moshe N. Gavrielov</td><td>Chief Executive Officer, President and Director in Xilinx Inc.</td><td>$787.5K</td></tr>
+                                    <tr><td>Carlo Bozotti</td><td>Chairman of Management Board, Chief Executive Officer, President and Chairman of Corporate Strategic Committee in STMicroelectronics NV</td><td>$1.8M</td></tr>
+                                </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+<!--                     <div class="row box">
+                        <div class="panel panel-default" >
+                            <div id="wm_timeline2"></div>
+                        </div>
+                    </div> -->
+				</div>
+            </div>
+            <hr />
+        </div> <!-- id="wealth_management" class="container" -->
+{% endblock %}
+
+{% block bottom %}
+{{ super() }}
+
+<script src="/static/js/highcharts.js"></script>
+<script src="http://visjs.org/dist/vis.js"></script>
+
+<script>
+  var assets = [
+            {"IAssets": 0, "OAssets": 2071709, "liabilities": 0},
+            {"IAssets": 0, "OAssets": 2071709, "liabilities": 0},
+            {"IAssets": 0, "OAssets": 2071709, "liabilities": 0},
+            {"IAssets": 3000000, "OAssets": 2071709, "liabilities": 0},
+            {"IAssets": 3000000, "OAssets": 2071709, "liabilities": 0},
+            {"IAssets": 3000000, "OAssets": 2071709, "liabilities": 0},
+            ];
+  // DOM element where the Timeline will be attached
+  var container = document.getElementById('wm_timeline');
+ 
+  // Create a DataSet (allows two way data-binding)
+  var dataset = [
+    {id: 0, content: 'New Appointment', start: '2015-02-09', },
+    {id: 1, content: 'MS Client – circle of influence enhanced', start: '2015-05-15', },
+    {id: 2, content: 'Deval Patrick attending SOCAP', start: '2015-08-25', },
+    {id: 3, content: 'Deborah Winshel is now a client', start: '2015-11-11', },
+    {id: 4, content: 'Wealth Creation', start: '2016-03-11', },
+    {id: 5, content: 'Wealth Creation', start: '2016-04-11', },
+  ];
+  var items = new vis.DataSet(dataset);
+
+  // Configuration for the Timeline
+  var options = {
+    width: '100%',
+    height: '90px',
+    zoomable: false,
+    selectable: true,
+    moveable: false,
+    showCurrentTime: false,
+    margin: {
+      item: 2
+    },
+    showMajorLabels: false,
+    orientation: {
+        axis: 'none'
+    },
+    timeAxis: {scale: 'month', step: 1}
+  };
+
+  // Create a Timeline
+  var timeline = new vis.Timeline(container, items, options);
+
+  var lastSelection = [5];
+  var chart = null;
+
+  // Select first event
+  timeline.setSelection(lastSelection);
+  eventSelected( { "items": lastSelection } );
+
+  timeline.on('select', eventSelected);
+
+  function eventSelected(properties) {
+    if(properties.items.length < 1) { timeline.setSelection(lastSelection); return; }
+    lastSelection = properties.items;
+
+    // Update chart if it is shown
+    if(chart) {
+//        chart.series[0].update({ data: [assets[lastSelection[0]]['IAssets'],assets[lastSelection[0]]['OAssets'], assets[lastSelection[0]]['liabilities'] ] });
+        chart.destroy();
+        chart = new Highcharts.Chart({chart: {type: 'column', height: 200, renderTo: "columnChart"}, 
+                       title: {text: '', verticalAlign: 'bottom', style: { "color": "rgb(112, 112, 112)", "fill": "rgb(112, 112, 112)", "fontSize": "12px" },}, 
+                       legend:{enabled:false},
+                       xAxis: {categories: ['Investment Assets', 'Other Assets', 'Liabilities']},
+                       yAxis: {title: {text: ''}, gridLineDashStyle: "Dash", allowDecimals: true},
+                       series: [{name: 'Money',data: [assets[lastSelection[0]]['IAssets'],assets[lastSelection[0]]['OAssets'], assets[lastSelection[0]]['liabilities'] ], colorByPoint: true}],
+                       credits:{enabled:false},
+          });
+    }
+
+    // Update assets table
+    var row = assets[lastSelection[0]];
+    $("#IAssets").html("$ " + parseInt(row['IAssets']).toLocaleString());
+    $("#OAssets").html("$ " + parseInt(row['OAssets']).toLocaleString());
+    $("#liabilities").html("$ " + parseInt(row['liabilities']).toLocaleString());
+    $("#TAssets").html("$ " + parseInt(row['IAssets'] + row['OAssets']).toLocaleString());
+    $("#netWorth").html("$ " + parseInt(row['IAssets'] + row['OAssets'] - row['liabilities']).toLocaleString());
+	
+	// Show info
+	for(i=0; i<=lastSelection[0]; i++) {
+		$(".st_"+i).show();
+	}
+	// Hide info
+	for(i=lastSelection[0]+1; i<dataset.length; i++) {
+		$(".st_"+i).hide();
+	}
+  }
+
+  $(function() {
+    Highcharts.setOptions({
+        colors: ['#7fb005', '#54a0ed', '#ed020b', '#ffb446'], 
+    });
+    chart = new Highcharts.Chart({chart: {type: 'column', height: 200, renderTo: "columnChart"}, 
+                       title: {text: '', verticalAlign: 'bottom', style: { "color": "rgb(112, 112, 112)", "fill": "rgb(112, 112, 112)", "fontSize": "12px" },}, 
+                       legend:{enabled:false},
+                       xAxis: {categories: ['Investment Assets', 'Other Assets', 'Liabilities']},
+                       yAxis: {title: {text: ''}, gridLineDashStyle: "Dash", allowDecimals: true},
+                       series: [{name: 'Money',data: [assets[lastSelection[0]]['IAssets'],assets[lastSelection[0]]['OAssets'], assets[lastSelection[0]]['liabilities'] ], colorByPoint: true}],
+                       credits:{enabled:false},
+          });
+  });
+
+</script>
+{% endblock %}
