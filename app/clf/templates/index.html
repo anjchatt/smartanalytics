@@ -53,6 +53,7 @@
 
 <body style="font-family: 'Merriweather', serif;">
 <div id="wrapper"> <!-- wrap all content to align footer at bottom -->
+{% block nav %}
 <nav class="navbar navbar-inverse navbar-fixed-top" style="z-index:1">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -70,7 +71,7 @@
                 <li><a href="/loopfeedback">Closed Loop Service<span class="sr-only">(current)</span></a></li>
                 <li><a href="/cluster">Cluster Analysis</a></li>
                 <li><a href="/map">Next Best Offer</a></li>
-                <li><a href="/720view/test#">720 Customer View</a></li>
+                <li><a href="/720page/test#">720 Customer View</a></li>
                 <li><a href="#">Wealth Management</a></li>
                 <li><a href="/loyalty">Loyalty Management</a></li>
                 <li><a href="#">Voice of Customer</a></li>
@@ -81,16 +82,15 @@
         </div>
     </div>
 </nav>
+{% endblock %}
 <div id="content"> <!-- wrap content (except for footer) -->
     {% block body %}
 
+    <script type = "text/javascript" src="/static/js/bootstrap.min.js"></script>
     {% endblock %}
 
 
 {% block bottom %}
-<script type = "text/javascript" src="/static/js/bootstrap.min.js"></script>
-{% endblock %}
-
 </div> <!-- id="content" -->
 
     <div id="footer">
@@ -101,5 +101,6 @@
         </div>
     </div>
 </div> <!-- id="wrapper" -->
+{% endblock %}
 </body>
 </html>
