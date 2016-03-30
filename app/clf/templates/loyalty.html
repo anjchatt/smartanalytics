@@ -12,11 +12,11 @@
                 color:rgb(340,115,30);
             }
             .vis-item.vis-selected {
-                background-color: #7EFF73;
+                background-color: rgba(340,115,30,0.2);
             }
              
             .newData {
-                background: #7EFF73;
+                background: rgba(340,115,30,0.2);
             }
             .icon_h{
                 font-size: 26px;
@@ -34,7 +34,7 @@
             .main-box table{
                 width:100%;
             }
-            .main-box td{
+            .text-box td{
                 padding: 5 15 5 15px;
                 /*width:50%;*/
             }
@@ -53,7 +53,7 @@
             
             .first-col {
                 text-align: right;
-                width: 40%;
+                width: 50%;
             }
             .first_td{
                 width:25px;
@@ -71,73 +71,66 @@
             .fa-facebook-square{
                 color: #3b5998;
             }
+            #transaction-table .first-col{
+                width: 50%;
+            }
+            
+            .row{
+                overflow: hidden; 
+            }
+
+            [class*="col-"]{
+                margin-bottom: -99999px;
+                padding-bottom: 99999px;
+                padding-right: 7px;
+                padding-left: 7px;
+            }
         </style>
 
         <br>
-        <div id="Loyalty" class="container">
+        <div id="Loyalty" class="container-fluid" style='margin-left:20px;margin-rigth:20px;'>
             <div class="row">
-                <div class="col-md-3 text-center">
-                    <div class="row">
-                        <div class='name-box' style="display:inline-block; width:100%">
-                            <table style='width:100%'><tr>
-                                <td style='width:100px'>
-                                    <img src="/static/images/customer_m_cut.png" style="margin-left: 0px; left: 0">
-                                </td>
-                                <td>
-                                    <h3 style="text-align: center; margin-top: 0px;">John Smith</h3>
-                                </td>
-                                </tr>
-                            </table>
-                        </div>
+                <div class="col-md-3">
+                    <div class='name-box' style="display:inline-block; width:100%;">
+                        <table style='width:100%'><tr>
+                            <td style='width:100px'>
+                                <img src="/static/images/photo_male.png" style="margin-left: 0px; left: 0">
+                            </td>
+                            <td>
+                                <h3 style="text-align: center; margin-top: 0px;">John Smith</h3>
+                            </td>
+                            </tr>
+                        </table>
                     </div>
-                    <div class="row">
-                        <div class="text-box main-box">
-                            <table>
-                                <tr>
-                                    <td rowspan="3" style="width:26px"><h4><img src="/static/images/icons/people.png" height=24px></h4></td>
-                                    <td class='first-col'>Customer Age</td><td>32</td></tr>
-                                <tr><td class='first-col'>Status</td><td>Single</td></tr>
-                                <tr><td class='first-col'>Number of children in Home</td><td>-</td></tr>
-                            </table>
-                            <hr>
-                            <!-- Social networks panel -->
-                            <div class="text-left">
-                                <h4>Last message <i class="icon_h fa fa-share-alt"></i></h4>
-                                <table>
-                                    <tr>
-                                        <td style="text-align:right;"><div id="lastSNMessageSource"></div></td>
-                                        <td><div id="lastSNMessage"></div></td>
-                                    </tr>
-                                </table>
-                                <h4>Upcomming Event <i class="fa fa-calendar"></i></h4>
-                                <table>
-                                    <tr><td class='first-col'><i class="fa fa-clock-o"></i></td><td><span class="text-muted" id="eventTime"></span></td></tr>
-                                    <tr><td class='first-col'>Description</td><td><div id="upcEvent"></div></td></tr>
-                                    <tr><td class='first-col'>Distance to event place</td><td><span id="distEvent"></span></td></tr>
-                                </table>
-                            </div>
-                        </div>
+                    <div class="text-box main-box" style="height:225px;">
+                        <h4><img src="/static/images/icons/people.png" height=24px></h4>
+                        <table>
+                            <tr>
+                                <td class='first-col'>Customer Age</td><td>32</td></tr>
+                            <tr><td class='first-col'>Status</td><td>Single</td></tr>
+                            <tr><td class='first-col'>Number of Children</td><td>-</td></tr>
+                        </table>
                     </div>
                 </div>
-                <div class="col-md-3 text-center">
-                    <div class="text-box main-box">
+                <div class="col-md-3">
+                    <div class="col-cont text-box">
                         <h4>Current status <i class="fa fa-user"></i></h4>
                         <table cellpadding="10" cellspacing="10" width="100%">
                             <tr><td class="first-col">Current Date</td>
-                                <td class="first-col" id="curDate"></td></tr>
+                                <td id="curDate"></td></tr>
                             <tr><td class="first-col">Current Time</td>
-                                <td class="first-col" id="curTime"></td></tr>
+                                <td id="curTime"></td></tr>
                             <tr><td class="first-col">Last Activity</td>
-                                <td class="first-col" id="lastAct"></td></tr>
+                                <td id="lastAct"></td></tr>
                             <tr><td class="first-col">Distance to home</td>
-                                <td class="first-col" id="distHome"></td></tr>
+                                <td id="distHome"></td></tr>
                             <tr><td class="first-col">Weather</td>
-                                <td class="first-col" id="weather"></td></tr>
+                                <td id="weather"></td></tr>
                         </table>
                         <hr>
                         <h4>Last transactions <span class="glyphicon glyphicon-usd" aria-hidden="true"></span></h4>
                         <div class="text-left">
-                            <table cellpadding="10" cellspacing="10" width="100%"><tbody>
+                            <table id="transaction-table" cellpadding="10" cellspacing="10" width="100%"><tbody>
                                 <tr><td class='first-col'>Last transaction date</td><td id="tranDate">23-10-2015</td></tr>
                                 <tr><td class='first-col'>Transaction Amount</td><td id="tranAmount"></td></tr>
                                 <tr><td class='first-col'>Merchant Type</td><td id="merType"></td></tr>
@@ -146,14 +139,38 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="row">
-                        <!-- Map will be here-->
-                        <div style=" margin: 0px 0px 15px 0px; border: 0px solid #FFA500; border-top: 0px solid #FFA500; padding: 15px 10px 10px 10px; background: #fff; width: 100%; border-radius: 5px;">
-                            <div id="prediction_map" style="width:100%; height:350px" class="leaflet"></div>
-                        </div>
+                <div class="col-md-6" style="padding:0 7 0 7px;">
+                    <!-- Map will be here-->
+                    <div style=" margin: 0px 0px 15px 0px; border: 0px solid #FFA500; border-top: 0px solid #FFA500; padding: 15px 10px 10px 10px; background: #fff; width: 100%; border-radius: 5px;">
+                        <div id="prediction_map" style="width:100%; height:350px" class="leaflet"></div>
                     </div>
-                    <div class="text-box main-box">
+                </div>
+            </div> <!-- class="row" -->
+            <br>
+            <div class='row'>
+                <div class="col-md-3">
+                    <div class="col-cont text-box main-box">
+                        <h4>Last message <i class="icon_h fa fa-share-alt"></i></h4>
+                        <table>
+                            <tr>
+                                <td style="text-align:right;"><div id="lastSNMessageSource"></div></td>
+                                <td><div id="lastSNMessage"></div></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="col-cont text-box">
+                        <h4>Upcomming Event <i class="icon_h fa fa-calendar"></i></h4>
+                        <table>
+                            <tr><td class='first-col'><i class="fa fa-clock-o"></i></td><td><span class="text-muted" id="eventTime"></span></td></tr>
+                            <tr><td class='first-col'>Description</td><td><div id="upcEvent"></div></td></tr>
+                            <tr><td class='first-col'>Distance to event place</td><td><span id="distEvent"></span></td></tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="col-cont text-box">
                         <h4 style="margin:0;padding:0;">System actions <i class="fa fa-cogs"></i></h4>
                         <table width="100%"><tbody>
                             <tr>
@@ -168,7 +185,7 @@
                         </table>
                     </div>
                 </div>
-            </div> <!-- class="row" -->
+            </div>
             <br>
             <div class="row">
                 <div class="col-md-12"> 
