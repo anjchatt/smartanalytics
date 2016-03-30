@@ -18,6 +18,10 @@
 {% endblock %}
 {% block body %}
 {{ super() }}
+        <div class="overlay boxclose" id="overlay" style="display:none;"></div>
+        <div class="popup-box-right" id="popup-box-right">
+            <div id="user_graph"></div>
+        </div>
         <div id="wealth_management" class="container-fluid" >
             <div class="row box" style="width: 95%">
                 <div class="col-sm-3 ">
@@ -34,7 +38,7 @@
                         <div class="panel panel-default">
                             <div class="panel-heading text-center"><h4>Deborah Winshel</h4></div>
                             <div class="panel-body">
-                                <img class="img-responsive center-block" src="/static/images/customer_w.png" />
+                                <img class="img-responsive center-block" style="max-height: 222" src="/static/images/deborah.png" />
                             </div>
                         </div>
                     </div>
@@ -156,7 +160,7 @@
                                     </table>
                                 </div>
                             </div>
-                            <input class="btn btn-primary btn-block" type="button" value="Show Network">
+                            <input class="btn btn-primary btn-block activator" type="button" value="Show Network">
                         </div>
                     </div>
                     <div class="row box"> <!-- Events -->
@@ -214,7 +218,7 @@
                             <div id="wm_timeline2"></div>
                         </div>
                     </div> -->
-				</div>
+                </div>
             </div>
             <hr />
         </div> <!-- id="wealth_management" class="container" -->
@@ -227,7 +231,93 @@
 <script src="http://visjs.org/dist/vis.js"></script>
 
 <script>
-  var assets = [
+    var network = null, 
+        nodeIds, shadowState, nodesArray, nodes, edgesArray, edges;
+
+    var c_conf = 'yellow',
+        c_person = '#aa0000',
+        c_school = '#0000aa',
+        c_company = "#00aa00";
+
+    // create an array with nodes
+    nodesArray = [
+        {id: 1, label: "Stephen Thomas", color: {background: c_person}, timeslot: 4, x: -350, y: -190},
+        {id: 2, label: "Jordan Bettman", color: {background: c_person}, timeslot: 2, x: 200, y: 200},
+        {id: 3, label: "Michael Rapport", color: {background: c_person}, timeslot: 4, x: 250, y: 20},
+        {id: 4, label: "Deborah Winshel", title: "She is our client", color: {background: c_person}, 
+            group: "family", shape: "circularImage", image: "/static/images/deborah_sm.png", size: 30, timeslot: 1, mass: 5, level: 1, x: 0, y: 0},
+        {id: 5, label: "Michael Dal Bello", color: {background: c_person}, timeslot: 1, x: 0, y: 200},
+        {id: 6, label: "Amit Dixit", color: {background: c_person}, timeslot: 4, x: -240, y: -10},
+        {id: 7, label: "BLACKROCK GROUP", color: {background: c_company}, timeslot: 1, x: -100, y: 120},
+        {id: 8, label: "Harvard Business School", color: {background: c_school}, timeslot: 1, x: 100, y: 120},
+        {id: 9, label: "The Robin Hood Foundation", color: {background: c_company}, timeslot: 4, x: 90, y: -230},
+        {id: 10,label: "Metropolitan Museum of Art", color: {background: c_company}, timeslot: 4, x: 450, y: -180},
+        {id: 11,label: "Winsheel S", color: {background: c_person}, group: "family", timeslot: 3, level: 2, x: 110, y: -90},
+        {id: 12,label: "BAIN CAPITAL LLC", color: {background: c_company}, timeslot: 4, x: -250, y: -310},
+        {id: 13,label: "BAIN CAPITAL VENTURES", color: {background: c_company}, timeslot: 4, x: 300, y: 100},
+        {id: 14,label: "BEHRMAN CAPITAL LP", color: {background: c_company}, timeslot: 4, x: 350, y: -70},
+        {id: 15,label: "SOCAP15", color: {background: c_conf}, timeslot: 2, x: -80, y:-100},
+        {id: 16,label: "Patrick Deval", color: {background: c_person}, timeslot: 2, x:-110, y: -200},
+        {id: 17,label: "John Winsheel", color: {background: c_person}, group: "family", timeslot: 3, level: 2, x: 150 , y: -20},
+        {id: 18,label: "Person", color: {background: c_person}, timeslot: 1, x: -150 , y: 300},
+        {id: 19,label: "Company", color: {background: c_company}, timeslot: 1, x: -75, y: 300},
+        {id: 20,label: "School", color: {background: c_school}, timeslot: 1, x: 0, y: 300},
+        {id: 21,label: "Conference", color: {background: c_conf}, timeslot: 2, x: 75, y: 300},
+    ];
+
+    // create an array with edges
+    edgesArray = [
+        {from: 1, to: 12, date: "20150101", label: "Principal",},
+        {from: 2, to: 13, date: "20150515", label: "Senior Principal",},
+        {from: 3, to: 14, date: "20150101", label: "Principal",},
+        {from: 4, to: 7, date: "20150209", label: "Managing Director",},
+        {from: 5, to: 7, date: "20150101", label: "Managing Director-\nPrivate Equity",},
+        {from: 6, to: 7, date: "20150515", label: "Senior Managing Director-\nPrivate Equity",},
+        {from: 2, to: 8, date: "20150101", label: "Alumni",},
+        {from: 3, to: 8, date: "20150101", label: "Alumni",},
+        {from: 4, to: 8, date: "20150209", label: "Alumni",},
+        {from: 5, to: 8, date: "20150101", label: "Alumni",},
+        {from: 4, to: 9, date: "20150209", label: "chief operating officer - 2011",},
+        {from: 4, to: 10, date: "20150209", label: "chief financial and administrative\nofficer - previous",},
+        {from: 4, to: 11, date: "20151111", label: "Spouse",},
+        {from: 4, to: 17, date: "20151111", label: "Son",},
+        {from: 4, to: 15, date: "20151006", label: "Conference Attended",},
+        {from: 16, to: 15, date: "20151006", label: "Conference Attended",},
+        {from: 16, to: 12, date: "20151006", label: "Managing Director",},
+        {from: 17, to: 8, date: "20160101", label: "Student",},
+    ];
+
+    function startNetwork(n) {
+        // create a network
+        var container = document.getElementById('user_graph');
+        var activeNodes = [];
+        for (i in nodesArray) {
+            if (nodesArray[i]['timeslot'] <= lastSelection[0]+1 )
+                activeNodes.push(nodesArray[i]);
+        }
+
+        nodes = new vis.DataSet(activeNodes);
+        edges= new vis.DataSet(edgesArray);
+
+        var data = {
+            nodes: nodes,
+            edges: edges
+        };
+        var options = { 
+                nodes: {physics: false, shape: "dot", size: 10},
+                groups: { family: { borderWidth:3, color: {border: "orange"} } },
+                edges: { font: {size: 10}, color: {color: "#848484"} },
+                };
+
+        if(network !== null) {
+            network.destroy();
+            network = null;
+        }
+        network = new vis.Network(container, data, options);
+        network.stabilize();
+    }
+
+    var assets = [
             {"IAssets": 0, "OAssets": 2071709, "liabilities": 0},
             {"IAssets": 0, "OAssets": 2071709, "liabilities": 0},
             {"IAssets": 0, "OAssets": 2071709, "liabilities": 0},
@@ -236,83 +326,86 @@
             {"IAssets": 3000000, "OAssets": 2071709, "liabilities": 0},
             ];
   // DOM element where the Timeline will be attached
-  var container = document.getElementById('wm_timeline');
- 
+    var container = document.getElementById('wm_timeline');
+
   // Create a DataSet (allows two way data-binding)
-  var dataset = [
-    {id: 0, content: 'New Appointment', start: '2015-02-09', },
-    {id: 1, content: 'MS Client – circle of influence enhanced', start: '2015-05-15', },
-    {id: 2, content: 'Deval Patrick attending SOCAP', start: '2015-08-25', },
-    {id: 3, content: 'Deborah Winshel is now a client', start: '2015-11-11', },
-    {id: 4, content: 'Wealth Creation', start: '2016-03-11', },
-    {id: 5, content: 'Wealth Creation', start: '2016-04-11', },
-  ];
-  var items = new vis.DataSet(dataset);
+    var dataset = [
+        {id: 0, content: 'New Appointment', start: '2015-02-09', },
+        {id: 1, content: 'MS Client – circle of influence enhanced', start: '2015-05-15', },
+        {id: 2, content: 'Deval Patrick attending SOCAP', start: '2015-08-25', },
+        {id: 3, content: 'Deborah Winshel is now a client', start: '2015-11-11', },
+        {id: 4, content: 'Wealth Creation', start: '2016-03-11', },
+        {id: 5, content: 'Wealth Creation', start: '2016-04-11', },
+        ];
+    var items = new vis.DataSet(dataset);
 
   // Configuration for the Timeline
-  var options = {
-    width: '100%',
-    height: '90px',
-    zoomable: false,
-    selectable: true,
-    moveable: false,
-    showCurrentTime: false,
-    margin: {
-      item: 2
-    },
-    showMajorLabels: false,
-    orientation: {
-        axis: 'none'
-    },
-    timeAxis: {scale: 'month', step: 1}
-  };
+    var options = {
+        width: '100%',
+        height: '90px',
+        zoomable: false,
+        selectable: true,
+        moveable: false,
+        showCurrentTime: false,
+        margin: {
+          item: 2
+        },
+        showMajorLabels: false,
+        orientation: {
+            axis: 'none'
+        },
+        timeAxis: {scale: 'month', step: 1}
+    };
 
-  // Create a Timeline
-  var timeline = new vis.Timeline(container, items, options);
+    // Create a Timeline
+    var timeline = new vis.Timeline(container, items, options);
 
-  var lastSelection = [5];
-  var chart = null;
+    var lastSelection = [5];
+    var chart = null;
 
-  // Select first event
-  timeline.setSelection(lastSelection);
-  eventSelected( { "items": lastSelection } );
+    // Select first event
+    timeline.setSelection(lastSelection);
+    eventSelected( { "items": lastSelection } );
 
-  timeline.on('select', eventSelected);
+    timeline.on('select', eventSelected);
 
-  function eventSelected(properties) {
-    if(properties.items.length < 1) { timeline.setSelection(lastSelection); return; }
-    lastSelection = properties.items;
+    function eventSelected(properties) {
+        if(properties.items.length < 1) { timeline.setSelection(lastSelection); return; }
+        lastSelection = properties.items;
 
-    // Update chart if it is shown
-    if(chart) {
-//        chart.series[0].update({ data: [assets[lastSelection[0]]['IAssets'],assets[lastSelection[0]]['OAssets'], assets[lastSelection[0]]['liabilities'] ] });
-        chart.destroy();
-        chart = new Highcharts.Chart({chart: {type: 'column', height: 200, renderTo: "columnChart"}, 
+        // Update chart if it is shown
+        if(chart) {
+//          chart.series[0].update({ data: [assets[lastSelection[0]]['IAssets'],assets[lastSelection[0]]['OAssets'], assets[lastSelection[0]]['liabilities'] ] });
+            chart.destroy();
+            chart = new Highcharts.Chart({chart: {type: 'column', height: 200, renderTo: "columnChart"}, 
                        title: {text: '', verticalAlign: 'bottom', style: { "color": "rgb(112, 112, 112)", "fill": "rgb(112, 112, 112)", "fontSize": "12px" },}, 
                        legend:{enabled:false},
                        xAxis: {categories: ['Investment Assets', 'Other Assets', 'Liabilities']},
                        yAxis: {title: {text: ''}, gridLineDashStyle: "Dash", allowDecimals: true},
                        series: [{name: 'Money',data: [assets[lastSelection[0]]['IAssets'],assets[lastSelection[0]]['OAssets'], assets[lastSelection[0]]['liabilities'] ], colorByPoint: true}],
                        credits:{enabled:false},
-          });
-    }
+            });
+        }
 
-    // Update assets table
-    var row = assets[lastSelection[0]];
-    $("#IAssets").html("$ " + parseInt(row['IAssets']).toLocaleString());
-    $("#OAssets").html("$ " + parseInt(row['OAssets']).toLocaleString());
-    $("#liabilities").html("$ " + parseInt(row['liabilities']).toLocaleString());
-    $("#TAssets").html("$ " + parseInt(row['IAssets'] + row['OAssets']).toLocaleString());
-    $("#netWorth").html("$ " + parseInt(row['IAssets'] + row['OAssets'] - row['liabilities']).toLocaleString());
-	
-	// Show info
-	for(i=0; i<=lastSelection[0]; i++) {
-		$(".st_"+i).show();
-	}
-	// Hide info
-	for(i=lastSelection[0]+1; i<dataset.length; i++) {
-		$(".st_"+i).hide();
-	}
+        // Update assets table
+        var row = assets[lastSelection[0]];
+        $("#IAssets").html("$ " + parseInt(row['IAssets']).toLocaleString());
+        $("#OAssets").html("$ " + parseInt(row['OAssets']).toLocaleString());
+        $("#liabilities").html("$ " + parseInt(row['liabilities']).toLocaleString());
+        $("#TAssets").html("$ " + parseInt(row['IAssets'] + row['OAssets']).toLocaleString());
+        $("#netWorth").html("$ " + parseInt(row['IAssets'] + row['OAssets'] - row['liabilities']).toLocaleString());
+        
+        // Show info
+        for(i=0; i<=lastSelection[0]; i++) {
+            $(".st_"+i).show();
+        }
+        // Hide info
+        for(i=lastSelection[0]+1; i<dataset.length; i++) {
+            $(".st_"+i).hide();
+        }
+    
+    if(lastSelection[0] > 2) { startNetwork(1); }
+    else { startNetwork(0); }
   }
 
   $(function() {
@@ -330,4 +423,15 @@
   });
 
 </script>
+<script type = "text/javascript" src="/static/js/popup-box-right.js"></script>
+<script>
+    window.onload = function(){
+        $('.activator').click(function(){
+            $('#overlay').fadeIn('fast',function(){
+                $('#popup-box-right').animate({'right':'0', 'left':'10%'},1000);
+            });
+        });
+    }
+</script>
+
 {% endblock %}
