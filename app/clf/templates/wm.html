@@ -98,6 +98,48 @@
         .vis-time-axis {
             font-size: 12px;
         }
+        
+        .myButton {
+            -moz-box-shadow:inset 0px 1px 0px 0px #fff6af;
+            -webkit-box-shadow:inset 0px 1px 0px 0px #fff6af;
+            box-shadow:inset 0px 1px 0px 0px #fff6af;
+            background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ffb546), color-stop(1, #ff741e));
+            background:-moz-linear-gradient(top, #ffb546 5%, #ff741e 100%);
+            background:-webkit-linear-gradient(top, #ffb546 5%, #ff741e 100%);
+            background:-o-linear-gradient(top, #ffb546 5%, #ff741e 100%);
+            background:-ms-linear-gradient(top, #ffb546 5%, #ff741e 100%);
+            background:linear-gradient(to bottom, #ffb546 5%, #ff741e 100%);
+            filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffb546', endColorstr='#ff741e',GradientType=0);
+            background-color:#ffb546;
+            -moz-border-radius:6px;
+            -webkit-border-radius:6px;
+            border-radius:6px;
+            border:1px solid #ffaa22;
+            display:inline-block;
+            cursor:pointer;
+            color:#ffffff;
+            font-family:Arial;
+            font-size:15px;
+            font-weight:bold;
+            padding:6px 24px;
+            text-decoration:none;
+            text-shadow:0px 1px 0px #9e9029;
+        }
+        .myButton:hover {
+            background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ff741e), color-stop(1, #ffb546));
+            background:-moz-linear-gradient(top, #ff741e 5%, #ffb546 100%);
+            background:-webkit-linear-gradient(top, #ff741e 5%, #ffb546 100%);
+            background:-o-linear-gradient(top, #ff741e 5%, #ffb546 100%);
+            background:-ms-linear-gradient(top, #ff741e 5%, #ffb546 100%);
+            background:linear-gradient(to bottom, #ff741e 5%, #ffb546 100%);
+            filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff741e', endColorstr='#ffb546',GradientType=0);
+            background-color:#ff741e;
+        }
+        .myButton:active {
+            position:relative;
+            top:1px;
+        }
+
     </style>
 {% endblock %}
 {% block body %}
@@ -183,7 +225,7 @@
                                 <tr><td>Liabilities</td><td id="liabilities"></td></tr>
                                 <tr style="border-top: medium solid;"><td>Net Worth</td><td id="netWorth"></td></tr>
                             </table>
-                            <input class="btn btn-primary btn-block activator" type="button" value="Show Network">
+                            <input class="btn btn-primary myButton activator btn-block" type="button" value="Show Network">
                         </div>
                     </div>
                 </div>
@@ -336,7 +378,7 @@
                             <label for="usr">State:</label>
                             <input type="text" class="form-control" id="istate">
                         </div>
-                        <button id="search_btn" type="button" class="btn btn-warning">Warning</button>
+                        <button id="search_btn" type="button" class="btn myButton">Search</button>
                     </div>
                 </div>
             </div>
