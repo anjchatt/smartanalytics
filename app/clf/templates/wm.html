@@ -4,12 +4,96 @@
     <title>Wealth Management</title>
     <link rel="stylesheet" href="http://visjs.org/dist/vis.css">
     <style>
-        .panel-body {
-            padding: 1px;
+        h4{
+            
+            color:rgb(340,115,30);
+            font-weight:500;
+            
+            /*
+            color:#fff;
+            background-color:#ffb446;
+            margin: 0 0 10 0px;
+            padding: 10px;
+            font-weight:500;
+            */
         }
-        .box {
-          margin: 0px 2px 0px 2px;
+        
+        .name-box{
+            background:#54a0ed;
         }
+        .name-box td{
+            color: #fff;
+        }
+        
+        .main-box .glyphicon{
+            color:rgb(340,115,30);
+        }
+        .main-box hr{
+            margin: 10 0 10 0px;
+        }
+        
+        .text-box td, th{
+            padding: 5 15 5 15px;
+            /*width:50%;*/
+        }
+        .text-box table{
+            width:100%;
+        }
+        .text-box{
+            background:#fff;
+            margin: 0;
+            padding: 15 0 15 0px;
+        }
+        .text-box h4{
+            text-align: center;
+        }
+        
+        .icon_h{
+            font-size: 26px;
+        }
+        .first-col {
+            text-align: right;
+            width: 50%;
+        }
+        .icon_td{
+            width:25px;
+        }
+        .alerts td {
+            padding:10px;
+        }
+        
+        .glyphicon-exclamation-sign{
+            color:rgb(255, 27, 36);
+        }
+        .glyphicon-ok-sign{
+            color: green;
+        }
+        .fa-twitter{
+            color: #00aced;
+        }
+        
+        #visualization1{
+            font-size: 14px;
+        }
+        #interaction_table {
+            width: 100%;
+        }
+        #interaction_table td{
+            padding: 0 10 10 10px;
+        }
+        
+        .row{
+            overflow: hidden;
+            padding-bottom: 10px;
+        }
+
+        [class*="col-"]{
+            margin-bottom: -99999px;
+            padding-bottom: 99999px;
+            padding-right: 7px;
+            padding-left: 7px;
+        }
+        
         .vis-item,
         .vis-time-axis {
             font-size: 12px;
@@ -18,214 +102,262 @@
 {% endblock %}
 {% block body %}
 {{ super() }}
-        <div class="overlay boxclose" id="overlay" style="display:none;"></div>
-        <div class="popup-box-right" id="popup-box-right">
-            <div id="user_graph"></div>
-        </div>
-        <div id="wealth_management" class="container-fluid" >
-            <div class="row box" style="width: 95%">
-                <div class="col-sm-3 ">
-                    <h3>Wealth Management</h3>
-                </div>
-                <div class="col-sm-9 "> <!-- Time line -->
-                    <div id="wm_timeline"></div>
+<div class="overlay boxclose" id="overlay" style="display:none;"></div>
+<div class="popup-box-right" id="popup-box-right" style="z-index:7000;">
+    <div id="user_graph"></div>
+</div>
+
+<div id="wealth_management" class="container-fluid">
+    <h3>Wealth Management</h3>
+
+    {% if status == 'ok' %}
+    <div class="row">
+        <div class='col-md-3'>
+            <div class='name-box' style="display:inline-block; width:100%">
+                <table style='width:100%'><tr>
+                    <td style='width:100px'>
+                        <img src="/static/images/deborah_cut.png" style="margin-left: 0px; left: 0">
+                    </td>
+                    <td>
+                        <h3 style="text-align: center; margin-top: 0px;">{{ name }}</h3>
+                    </td>
+                    </tr></table>
+            </div>
+
+            <div style="padding-right: 15px;padding-left: 15px;">
+                <div class="row" style="margin-bottom: 15px;">
+                    <div class="col-cont text-box">
+                        <h4>Client News</h4>
+                        <div class="list-group">
+                            <a href="?client=Kevin%20Arrix" class="list-group-item">
+                                <h4 class="list-group-item-heading">New Appointment<br>Kevin Arrix</h4>
+                                <p class="list-group-item-text"><span class="text-muted">2015-10-06</span><br>Verve Names Kevin Arrix Chief Revenue Officer Verve, the leader in location-based mobile advertising, today announced th...</p>
+                            </a>
+                            <a href="?client=client=Lisa%20Speransky" class="list-group-item">
+                                <h4 class="list-group-item-heading">New Appointment<br>Lisa Speransky</h4>
+                                <p class="list-group-item-text"><span class="text-muted">2015-10-06</span><br>BEABA USA Announces New CEO BEABA, internationally known juvenile product company, and creator of first steam cooker and...</p>
+                            </a>
+                        </div>
+                        <h4>Client Company M&amp;A News</h4>
+                        <div class="list-group">
+                            <a href="#" class="list-group-item">
+                                <h4 class="list-group-item-heading">Merger/Acquisition</h4>
+                                <p class="list-group-item-text"><span class="text-muted">2015-10-12</span><br>BlackRock Closes Acquisition of Infraestructura Institucional BlackRock, Inc. (NYSE:BLK) has closed the acquisition of I...</p>
+                            </a>
+                            <a href="#" class="list-group-item">
+                                <h4 class="list-group-item-heading"></h4>
+                                <p class="list-group-item-text"><span class="text-muted">2015-09-22</span><br>Company Medallion Financial considers going private, following recent approaches and ?misunderstanding? over Uber Medall...</p>
+                            </a>
+                            <a href="#" class="list-group-item">
+                                <h4 class="list-group-item-heading">Merger/Acquisition</h4>
+                                <p class="list-group-item-text"><span class="text-muted">2015-08-26</span><br>BlackRock to Acquire FutureAdvisor BlackRock, Inc. (NYSE:BLK) has entered into a definitive agreement to acquire FutureA...</p>
+                            </a>
+                        </div>
+                        <h4>SocialNews Social Media Insights</h4>
+                        <hr style="margin:15px">
+                    </div>
                 </div>
             </div>
-            <hr style="margin:2px"/>
-            <div class="row box" style="width: 95%">
-                <div class="col-sm-3 ">
-                    <div class="row"> <!-- Client info -->
-                        <div class="panel panel-default">
-                            <div class="panel-heading text-center"><h4>Deborah Winshel</h4></div>
-                            <div class="panel-body">
-                                <img class="img-responsive center-block" style="max-height: 222" src="/static/images/deborah.png" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row"> <!-- Client news -->
-                        <div class="panel panel-default">
-                            <!-- <div class="panel-heading text-center">Client news</div> -->
-                            <div class="panel-body box">
-                                <h4>Client News</h4>
-                                <div id="clientNews" class="shiny-html-output shiny-bound-output"><div style="background-color:#eee; margin-bottom:5px">
-                                      <span style="color:#888">2015-10-06</span>
-                                      <a href="?client=Kevin%20Arrix">Kevin Arrix</a>
-                                      <br>
-                                      <strong>New Appointment</strong>
-                                      <br>
-                                      <span style="font-size:9pt;">
-                                        Verve Names Kevin Arrix Chief Revenue Officer Verve, the leader in location-based mobile advertising, today announced th
-                                        ...
-                                      </span>
-                                    </div>
-                                    <div style="background-color:#eee; margin-bottom:5px">
-                                      <span style="color:#888">2015-10-06</span>
-                                      <a href="?client=Lisa%20Speransky">Lisa Speransky</a>
-                                      <br>
-                                      <strong>New Appointment</strong>
-                                      <br>
-                                      <span style="font-size:9pt;">
-                                        BEABA USA Announces New CEO BEABA, internationally known juvenile product company, and creator of first steam cooker and
-                                        ...
-                                      </span>
-                                    </div>
-                                </div>
-                                <hr style="margin:0px">
-                                <h4>Client Company M&amp;A News</h4>
-                                <div id="corpNews" class="shiny-html-output shiny-bound-output"><div style="background-color:#eee; margin-bottom:5px">
-                                  <span style="color:#888">2015-10-12</span>
-                                  <br>
-                                  <strong>Merger/Acquisition</strong>
-                                  <br>
-                                  <span style="font-size:9pt;">BlackRock Closes Acquisition of Infraestructura Institucional BlackRock, Inc. (NYSE:BLK) has closed the acquisition of I</span>
-                                  ...
-                                </div>
-                                <div style="background-color:#eee; margin-bottom:5px">
-                                  <span style="color:#888">2015-09-22</span>
-                                  <br>
-                                  <span style="font-size:9pt;">Company Medallion Financial considers going private, following recent approaches and ?misunderstanding? over Uber Medall</span>
-                                  ...
-                                </div>
-                                <div style="background-color:#eee; margin-bottom:5px">
-                                  <span style="color:#888">2015-08-26</span>
-                                  <br>
-                                  <strong>Merger/Acquisition</strong>
-                                  <br>
-                                  <span style="font-size:9pt;">BlackRock to Acquire FutureAdvisor BlackRock, Inc. (NYSE:BLK) has entered into a definitive agreement to acquire FutureA</span>
-                                  ...
-                                </div></div>
-                                <h4>SocialNews Social Media Insights</h4>
-                                <hr style="margin:0px">
-                            </div>
-                        </div>
+        </div>
+
+        <div class="col-md-9" style="padding-left:21px;padding-right:21px;">
+            <div class="row" style="margin-bottom: 15px; height: 150px;">
+                <div class="col-md-12">
+                    <div class="col-cont text-box">
+                        <div id="wm_timeline" style="padding:10px;"></div>
                     </div>
                 </div>
-                <div class="col-sm-9 ">
-                    <div class="row"> 
-                        <div class="col-sm-4 "> <!-- Column chart -->
-                            <div class="panel panel-default">
-                                <div class="panel-body">
-                                    <div id="columnChart"></div>
-                                </div>
-                            </div>
+            </div>
+            <div class="row" style="margin-bottom: 15px;">
+                <div class="col-sm-8">
+                    <div class="col-cont text-box"> <!-- Column chart -->
+                        <h4>Assets</h4>
+                        <div class="col-sm-6">
+                            <div id="columnChart" style="margin-bottom:7px;"></div>
                         </div>
-                        <div class="col-sm-4 "> <!-- Assets info -->
-                            <div class="panel panel-default">
-                                <div class="panel-body">
-                                    <table style="background-color:rgba(190,190,256,0.5); font-size:100%;width:100%">
-                                        <style>td,th{padding:5px} table,th,td{border: 1px solid white;}</style>
-                                        <tbody>
-                                            <tr><td>Investment Assets</td><td id="IAssets"></td></tr>
-                                            <tr><td>Other Assets</td><td id="OAssets"></td></tr>
-                                            <tr><td>Total Assets</td><td id="TAssets"></td></tr>
-                                            <tr><td>Liabilities</td><td id="liabilities"></td></tr>
-                                            <tr style="border-top: medium solid;"><td>Net Worth</td><td id="netWorth"></td></tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-4 text-center"> <!-- Property info, "Network" button -->
-                            <div class="panel panel-default">
-                                <div class="panel-body" style="max-height: 160px; overflow-y: auto;">
-                                    <!-- Properties Table -->
-                                    <table style="background-color:rgba(190,190,256,0.5);font-size:80%;width:100%">
-                                        <style>td,th{padding:5px} table,th,td{border: 1px solid white;}</style>
-                                        <tbody>
-                                            <tr><td colspan="2" style="background-color:#aaaafa;">Property #1</td></tr>
-                                            <tr><td width="60%">County  State</td><td>Queens, NY</td></tr>
-                                            <tr><td width="60%">Purchase Date</td><td> 18.04.2013</td></tr>
-                                            <tr><td width="60%">Purchase Amount</td><td> $ 461,000</td></tr>
-                                            <tr><td width="60%">Equity Value</td><td> $ 149,066</td></tr>
-                                            <tr><td width="60%">Equity Percentage Opportunity</td><td> </td></tr>
-                                            <tr><td colspan="2" style="background-color:#aaaafa;">Property #2</td></tr>
-                                            <tr><td width="60%">County  State</td><td>Westchester, NY</td></tr>
-                                            <tr><td width="60%">Purchase Date</td><td> 29.12.1976</td></tr>
-                                            <tr><td width="60%">Purchase Amount</td><td> $ 65,000</td></tr>
-                                            <tr><td width="60%">Equity Value</td><td> $ 620,786</td></tr>
-                                            <tr><td width="60%">Equity Percentage Opportunity</td><td> High equity</td></tr>
-                                            <tr><td colspan="2" style="background-color:#aaaafa;">Property #3</td></tr>
-                                            <tr><td width="60%">County  State</td><td>Nassau, NY</td></tr>
-                                            <tr><td width="60%">Purchase Date</td><td> 03.09.1997</td></tr>
-                                            <tr><td width="60%">Purchase Amount</td><td> $ 420,000</td></tr>
-                                            <tr><td width="60%">Equity Value</td><td> $ 787,101</td></tr>
-                                            <tr><td width="60%">Equity Percentage Opportunity</td><td> High equity</td></tr>
-                                            <tr><td colspan="2" style="background-color:#aaaafa;">Property #4</td></tr>
-                                            <tr><td width="60%">County  State</td><td>Nassau, NY</td></tr>
-                                            <tr><td width="60%">Purchase Date</td><td>  - </td></tr>
-                                            <tr><td width="60%">Purchase Amount</td><td>  - </td></tr>
-                                            <tr><td width="60%">Equity Value</td><td> $ 2,071,709</td></tr>
-                                            <tr><td width="60%">Equity Percentage Opportunity</td><td> High equity</td></tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+                        <div class="col-sm-6">
+                            <table>
+                                <tr><td>Investment Assets</td><td id="IAssets"></td></tr>
+                                <tr><td>Other Assets</td><td id="OAssets"></td></tr>
+                                <tr><td>Total Assets</td><td id="TAssets"></td></tr>
+                                <tr><td>Liabilities</td><td id="liabilities"></td></tr>
+                                <tr style="border-top: medium solid;"><td>Net Worth</td><td id="netWorth"></td></tr>
+                            </table>
                             <input class="btn btn-primary btn-block activator" type="button" value="Show Network">
                         </div>
                     </div>
-                    <div class="row box"> <!-- Events -->
-                        <div class="panel panel-default" >
-                            <div class="panel-heading text-center" style="background-color: #ffb446;">Events</div>
-                            <div class="panel-body">
-                                <table style="background-color:#dadafa;font-size:100%;width:100%">
-                                <style>td,th{padding:5px} table,th,td{border: 1px solid white;}</style>
-                                <thead><tr><th><div style="width:100px">Event</div></th><th>Date</th><th>Source</th><th>Category</th><th>Sales Insights</th></tr></thead>
+                </div>
+                <div class="col-sm-4"> <!-- Property info, "Network" button -->
+                    <div class="col-cont text-box">
+                        <h4>Properties</h4>
+                        <div style="max-height: 180px; overflow-y: auto;  margin-bottom:7px;">
+                            <!-- Properties Table -->
+                            <table style="font-size:80%;width:100%">
                                 <tbody>
-                                <tr class="st_5" style="background-color:rgba(190,190,256,0.5); display:none;"><td>Wealth Creation</td><td>2016-04-11</td><td>Paid Source</td><td>Westchester Property on sale - US$ 700k</td><td>Tax planning, Retirement Products</td></tr>
-                                <tr class="st_4" style="background-color:rgba(190,190,256,0.5); display:none;"><td>Wealth Creation</td><td>2016-03-11</td><td>Paid Source</td><td>Sold .6 mn worth BlackRock</td><td>Tax planning, Retirement Products</td></tr>
-                                <tr class="st_3" style="background-color:rgba(190,190,256,0.5); display:none;"><td>Deborah Winshel is now a client</td><td>2015-11-11</td><td>FA Name</td><td>New Client</td><td>Tax planning (TP12)</td></tr>
-                                <tr class="st_2" style="background-color:rgba(190,190,256,0.5); display:none;"><td>Deval Patrick attending SOCAP 15</td><td>2015-08-25</td><td>Paid Source</td><td>Introduction Opportunity</td><td>Tax Planning, Retirement Products</td></tr>
-                                <tr class="st_1" style="background-color:rgba(190,190,256,0.5); display:none;"><td>MS Client – circle of influence enhanced</td><td>2015-05-15</td><td>Paid Source</td><td>Introduction Opportunity</td><td>Tax Planning, Retirement Products</td></tr>
-                                <tr class="st_0" style="background-color:rgba(190,190,256,0.5); display:none;"><td>New Appointment</td><td>2015-02-09</td><td>Paid Source</td><td>Job Event</td><td>Tax Planning, Retirement Products</td></tr>
+                                    <tr><td colspan="2" style="background-color:#aaaafa;">Property #1</td></tr>
+                                    <tr><td>County  State</td><td>Queens, NY</td></tr>
+                                    <tr><td>Purchase Date</td><td> 18.04.2013</td></tr>
+                                    <tr><td>Purchase Amount</td><td> $ 461,000</td></tr>
+                                    <tr><td>Equity Value</td><td> $ 149,066</td></tr>
+                                    <tr><td>Equity Percentage Opportunity</td><td> </td></tr>
+                                    <tr><td colspan="2" style="background-color:#aaaafa;">Property #2</td></tr>
+                                    <tr><td>County  State</td><td>Westchester, NY</td></tr>
+                                    <tr><td>Purchase Date</td><td> 29.12.1976</td></tr>
+                                    <tr><td>Purchase Amount</td><td> $ 65,000</td></tr>
+                                    <tr><td>Equity Value</td><td> $ 620,786</td></tr>
+                                    <tr><td>Equity Percentage Opportunity</td><td> High equity</td></tr>
+                                    <tr><td colspan="2" style="background-color:#aaaafa;">Property #3</td></tr>
+                                    <tr><td>County  State</td><td>Nassau, NY</td></tr>
+                                    <tr><td>Purchase Date</td><td> 03.09.1997</td></tr>
+                                    <tr><td>Purchase Amount</td><td> $ 420,000</td></tr>
+                                    <tr><td>Equity Value</td><td> $ 787,101</td></tr>
+                                    <tr><td>Equity Percentage Opportunity</td><td> High equity</td></tr>
+                                    <tr><td colspan="2" style="background-color:#aaaafa;">Property #4</td></tr>
+                                    <tr><td>County  State</td><td>Nassau, NY</td></tr>
+                                    <tr><td>Purchase Date</td><td>  - </td></tr>
+                                    <tr><td>Purchase Amount</td><td>  - </td></tr>
+                                    <tr><td>Equity Value</td><td> $ 2,071,709</td></tr>
+                                    <tr><td>Equity Percentage Opportunity</td><td> High equity</td></tr>
                                 </tbody>
-                                </table>
-                            </div>
+                            </table>
                         </div>
                     </div>
-                    <div class="row box"> <!-- Relevant news -->
-                        <div class="panel panel-default" >
-                            <div class="panel-heading text-center" style="background-color: #ffb446;">Relevant news</div>
-                            <div class="panel-body">
-                                <table style="background-color:#dadafa;font-size:100%;width:100%">
-                                <style>td,th{padding:5px} table,th,td{border: 1px solid white;}</style>
-                                <thead><tr><th><div style="width:100px">Relevant News</div></th><th>Date</th><th>Source</th></tr></thead>
-                                <tbody>
-                                    <tr class="st_2" style="background-color:rgba(190,190,256,0.5); display:none;"><td>Attending a Conference</td><td>2015-08-25</td><td><a href="http://www.streetinsider.com/Press+Releases/Framing+the+Future+of+Impact+Investing,+Social+Capital+Markets+Conference+(SOCAP)+Announces+Main+Stage+Speakers,+New+SOCAPTV+and+SOCAP+365+Programs,+and+Sponsors+for+SOCAP15/10840351.html">http://www.streetinsider.com/Press+Releases...</a></td></tr>
-                                    <tr class="st_0" style="background-color:rgba(190,190,256,0.5); display:none;"><td>Political Contributions</td><td>2014-08-25</td><td>Paid Source</td></tr>
-                                </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row box"> <!-- Compensation -->
-                        <div class="panel panel-default" >
-                            <div class="panel-heading text-center" style="background-color: #ffb446;">Compensation</div>
-                            <div class="panel-body">
-                                <table style="background-color:#dadafa;font-size:100%;width:100%">
-                                <style>td,th{padding:5px} table,th,td{border: 1px solid white;}</style>
-                                <thead><tr><th>Name</th><th><div style="width:100px">Position</div></th><th>Compensation</th></tr></thead>
-                                <tbody><tr><td>Frank S. Hermance    Chairman</td><td>Chief Executive Officer and Chairman of Executive Committee in Ametek Inc.</td><td>$1.7M</td></tr>
-                                    <tr><td>Jen-Hsun Huang  Co-Founder</td><td>Chief Executive Officer, President, Director and Member of Compensation Committee in NVIDIA Corporation</td><td>$998.4K</td></tr>
-                                    <tr><td>Moshe N. Gavrielov</td><td>Chief Executive Officer, President and Director in Xilinx Inc.</td><td>$787.5K</td></tr>
-                                    <tr><td>Carlo Bozotti</td><td>Chairman of Management Board, Chief Executive Officer, President and Chairman of Corporate Strategic Committee in STMicroelectronics NV</td><td>$1.8M</td></tr>
-                                </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-<!--                     <div class="row box">
-                        <div class="panel panel-default" >
-                            <div id="wm_timeline2"></div>
-                        </div>
-                    </div> -->
                 </div>
             </div>
-            <hr />
-        </div> <!-- id="wealth_management" class="container" -->
+            <div class="row" style="margin-bottom: 15px;">
+                <div class="col-md-12">
+                    <div class="col-cont text-box">
+                        <h4>Events</h4>
+                        <table style="width:100%">
+                            <thead><tr><th style="width:25%;"><div style="width:100px">Event</div></th><th>Date</th><th>Source</th><th>Category</th><th>Sales Insights</th></tr></thead>
+                            <tbody>
+                                <tr class="st_5" style="display:none;"><td>Wealth Creation</td><td>2016-04-11</td><td>Paid Source</td><td>Westchester Property on sale - US$ 700k</td><td>Tax planning, Retirement Products</td></tr>
+                                <tr class="st_4" style="display:none;"><td>Wealth Creation</td><td>2016-03-11</td><td>Paid Source</td><td>Sold .6 mn worth BlackRock</td><td>Tax planning, Retirement Products</td></tr>
+                                <tr class="st_3" style="display:none;"><td>Deborah Winshel is now a client</td><td>2015-11-11</td><td>FA Name</td><td>New Client</td><td>Tax planning (TP12)</td></tr>
+                                <tr class="st_2" style="display:none;"><td>Deval Patrick attending SOCAP 15</td><td>2015-08-25</td><td>Paid Source</td><td>Introduction Opportunity</td><td>Tax Planning, Retirement Products</td></tr>
+                                <tr class="st_1" style="display:none;"><td>MS Client – circle of influence enhanced</td><td>2015-05-15</td><td>Paid Source</td><td>Introduction Opportunity</td><td>Tax Planning, Retirement Products</td></tr>
+                                <tr class="st_0" style="display:none;"><td>New Appointment</td><td>2015-02-09</td><td>Paid Source</td><td>Job Event</td><td>Tax Planning, Retirement Products</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-bottom: 15px;">
+                <div class="col-md-12">
+                    <div class="col-cont text-box">
+                        <h4>Relevant news</h4>
+                        <table style="width:100%">
+                            <thead><tr><th style="width:33%;">Relevant News</th><th style="width:33%;text-align:center;">Date</th><th>Source</th></tr></thead>
+                            <tbody>
+                                <tr class="st_2" style="display:none;"><td >Attending a Conference</td><td style="text-align:center;">2015-08-25</td><td><a href="http://www.streetinsider.com/Press+Releases/Framing+the+Future+of+Impact+Investing,+Social+Capital+Markets+Conference+(SOCAP)+Announces+Main+Stage+Speakers,+New+SOCAPTV+and+SOCAP+365+Programs,+and+Sponsors+for+SOCAP15/10840351.html">http://www.streetinsider.com/Press+Releases...</a></td></tr>
+                                <tr class="st_0" style="display:none;"><td>Political Contributions</td><td style="text-align:center;">2014-08-25</td><td>Paid Source</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-bottom: 15px;">
+                <div class="col-md-12">
+                    <div class="col-cont text-box">
+                        <h4>Compensation</h4>
+                        <table style="width:100%">
+                            <thead><tr><th style="width:30%;">Name</th><th>Position</th><th>Compensation</th></tr></thead>
+                            <tbody><tr><td>Frank S. Hermance    Chairman</td><td>Chief Executive Officer and Chairman of Executive Committee in Ametek Inc.</td><td>$1.7M</td></tr>
+                                <tr><td>Jen-Hsun Huang  Co-Founder</td><td>Chief Executive Officer, President, Director and Member of Compensation Committee in NVIDIA Corporation</td><td>$998.4K</td></tr>
+                                <tr><td>Moshe N. Gavrielov</td><td>Chief Executive Officer, President and Director in Xilinx Inc.</td><td>$787.5K</td></tr>
+                                <tr><td>Carlo Bozotti</td><td>Chairman of Management Board, Chief Executive Officer, President and Chairman of Corporate Strategic Committee in STMicroelectronics NV</td><td>$1.8M</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    
+    {% if status != 'ok' %}
+    {% if status == 'Not found' %}
+    <h1><span class='text-muted'>{{ name }}</span> was not found</h1>
+    {% endif %}
+    
+    <div class="row">
+        <div class='col-md-4'>
+            <div style="padding-right: 15px;padding-left: 15px;">
+                <div class="row" style="margin-bottom: 15px;">
+                    <div class="col-cont text-box">
+                        <h4>Client News</h4>
+                        <div class="list-group" style="background-color:#FFAAAA;">
+                            <a href="?name=deborah%20winshel" class="list-group-item" style="background-color:rgba(0,0,0,0);">
+                                <h4 class="list-group-item-heading">New Appointment<br><br>Deborah Winshel</h4>
+                            </a>
+                        </div>
+                        <h4>Client News</h4>
+                        <div class="list-group">
+                            <a href="?name=Kevin%20Arrix" class="list-group-item">
+                                <h4 class="list-group-item-heading">New Appointment<br>Kevin Arrix</h4>
+                                <p class="list-group-item-text"><span class="text-muted">2015-10-06</span><br>Verve Names Kevin Arrix Chief Revenue Officer Verve, the leader in location-based mobile advertising, today announced th...</p>
+                            </a>
+                            <a href="?name=Lisa%20Speransky" class="list-group-item">
+                                <h4 class="list-group-item-heading">New Appointment<br>Lisa Speransky</h4>
+                                <p class="list-group-item-text"><span class="text-muted">2015-10-06</span><br>BEABA USA Announces New CEO BEABA, internationally known juvenile product company, and creator of first steam cooker and...</p>
+                            </a>
+                        </div>
+                        <h4>Client Company M&amp;A News</h4>
+                        <div class="list-group">
+                            <a href="#" class="list-group-item">
+                                <h4 class="list-group-item-heading">Merger/Acquisition</h4>
+                                <p class="list-group-item-text"><span class="text-muted">2015-10-12</span><br>BlackRock Closes Acquisition of Infraestructura Institucional BlackRock, Inc. (NYSE:BLK) has closed the acquisition of I...</p>
+                            </a>
+                            <a href="#" class="list-group-item">
+                                <h4 class="list-group-item-heading"></h4>
+                                <p class="list-group-item-text"><span class="text-muted">2015-09-22</span><br>Company Medallion Financial considers going private, following recent approaches and ?misunderstanding? over Uber Medall...</p>
+                            </a>
+                            <a href="#" class="list-group-item">
+                                <h4 class="list-group-item-heading">Merger/Acquisition</h4>
+                                <p class="list-group-item-text"><span class="text-muted">2015-08-26</span><br>BlackRock to Acquire FutureAdvisor BlackRock, Inc. (NYSE:BLK) has entered into a definitive agreement to acquire FutureA...</p>
+                            </a>
+                        </div>
+                        <h4>SocialNews Social Media Insights</h4>
+                        <hr style="margin:15px">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class='col-md-8'>
+            <div style="padding-right: 15px;padding-left: 15px;">
+                <div class="row" style="margin-bottom: 15px;">
+                    <div class="col-cont text-box">
+                        <h4>Search</h4>
+                        <div class="form-group">
+                            <label for="usr">Name:</label>
+                            <input type="text" class="form-control" id="iname">
+                        </div>
+                        <div class="form-group">
+                            <label for="usr">State:</label>
+                            <input type="text" class="form-control" id="istate">
+                        </div>
+                        <button id="search_btn" type="button" class="btn btn-warning">Warning</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $('#search_btn').on('click', function (e) {
+            debugger;
+            window.location.href = encodeURI('?name='+$('#iname').val());
+        })
+    </script>
+    {% endif %}
+    
+</div> <!-- id="wealth_management" class="container" -->
 {% endblock %}
 
 {% block bottom %}
 {{ super() }}
+
+{% if status == 'ok' %}
 
 <script src="/static/js/highcharts.js"></script>
 <script src="http://visjs.org/dist/vis.js"></script>
@@ -267,27 +399,27 @@
 
     // create an array with edges
     edgesArray = [
-        {from: 1, to: 12, date: "20150101", label: "Principal",},
-        {from: 2, to: 13, date: "20150515", label: "Senior Principal",},
-        {from: 3, to: 14, date: "20150101", label: "Principal",},
-        {from: 4, to: 7, date: "20150209", label: "Managing Director",},
-        {from: 5, to: 7, date: "20150101", label: "Managing Director-\nPrivate Equity",},
-        {from: 6, to: 7, date: "20150515", label: "Senior Managing Director-\nPrivate Equity",},
-        {from: 2, to: 8, date: "20150101", label: "Alumni",},
-        {from: 3, to: 8, date: "20150101", label: "Alumni",},
-        {from: 4, to: 8, date: "20150209", label: "Alumni",},
-        {from: 5, to: 8, date: "20150101", label: "Alumni",},
-        {from: 4, to: 9, date: "20150209", label: "chief operating officer - 2011",},
-        {from: 4, to: 10, date: "20150209", label: "chief financial and administrative\nofficer - previous",},
-        {from: 4, to: 11, date: "20151111", label: "Spouse",},
-        {from: 4, to: 17, date: "20151111", label: "Son",},
-        {from: 4, to: 15, date: "20151006", label: "Conference Attended",},
-        {from: 16, to: 15, date: "20151006", label: "Conference Attended",},
-        {from: 16, to: 12, date: "20151006", label: "Managing Director",},
-        {from: 17, to: 8, date: "20160101", label: "Student",},
+        {from: 1, to: 12, label: "Principal",},
+        {from: 2, to: 13, label: "Senior Principal",},
+        {from: 3, to: 14, label: "Principal",},
+        {from: 4, to: 7,  label: "Managing Director",},
+        {from: 5, to: 7,  label: "Managing Director-\nPrivate Equity",},
+        {from: 6, to: 7,  label: "Senior Managing Director-\nPrivate Equity",},
+        {from: 2, to: 8,  label: "Alumni",},
+        {from: 3, to: 8,  label: "Alumni",},
+        {from: 4, to: 8,  label: "Alumni",},
+        {from: 5, to: 8,  label: "Alumni",},
+        {from: 4, to: 9,  label: "chief operating officer - 2011",},
+        {from: 4, to: 10, label: "chief financial and administrative\nofficer - previous",},
+        {from: 4, to: 11, label: "Spouse",},
+        {from: 4, to: 17, label: "Son",},
+        {from: 4, to: 15, label: "Conference Attended",},
+        {from: 16, to: 15,label: "Conference Attended",},
+        {from: 16, to: 12,label: "Managing Director",},
+        {from: 17, to: 8, label: "Student",},
     ];
 
-    function startNetwork(n) {
+    function startNetwork() {
         // create a network
         var container = document.getElementById('user_graph');
         var activeNodes = [];
@@ -331,7 +463,7 @@
   // Create a DataSet (allows two way data-binding)
     var dataset = [
         {id: 0, content: 'New Appointment', start: '2015-02-09', },
-        {id: 1, content: 'MS Client – circle of influence enhanced', start: '2015-05-15', },
+        {id: 1, content: 'MS Client – circle of<br> influence enhanced', start: '2015-05-15', },
         {id: 2, content: 'Deval Patrick attending SOCAP', start: '2015-08-25', },
         {id: 3, content: 'Deborah Winshel is now a client', start: '2015-11-11', },
         {id: 4, content: 'Wealth Creation', start: '2016-03-11', },
@@ -342,7 +474,7 @@
   // Configuration for the Timeline
     var options = {
         width: '100%',
-        height: '90px',
+        height: '100px',
         zoomable: false,
         selectable: true,
         moveable: false,
@@ -360,7 +492,7 @@
     // Create a Timeline
     var timeline = new vis.Timeline(container, items, options);
 
-    var lastSelection = [5];
+    var lastSelection = [0];
     var chart = null;
 
     // Select first event
@@ -404,8 +536,7 @@
             $(".st_"+i).hide();
         }
     
-    if(lastSelection[0] > 2) { startNetwork(1); }
-    else { startNetwork(0); }
+        startNetwork();
   }
 
   $(function() {
@@ -433,5 +564,6 @@
         });
     }
 </script>
+{% endif %}
 
 {% endblock %}
