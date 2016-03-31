@@ -6,4 +6,4 @@
 "neo4j" : "http://neo4j:neo4j@localhost:7474/db/data/",
 "gmail_user": "capgbank@gmail.com",
 "gmail_pass": "my!Smart",
-"gmail_recipient": ["timofei.chernousov@ecotomsk.com", "georgiy.trofimov@ecotomsk.com"]}
+"gmail_recipient": ["timofei.chernousov@ecotomsk.com", "gunjan.aggarwal@capgemini.com"]}
