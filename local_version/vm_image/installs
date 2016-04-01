@@ -49,7 +49,15 @@ sudo -u postgres python local_version/init_tables.py
 sudo -u postgres python local_version/data_preparation.py
 
 rpm --import http://debian.neo4j.org/neotechnology.gpg.key
-vi /etc/yum.repos.d/neo4j.repo
+
+cat <<EOF >/etc/yum.repos.d/neo4j.repo
+[neo4j]
+name=Neo4j Yum Repo
+baseurl=http://yum.neo4j.org
+enabled=1
+gpgcheck=1
+EOF
+
 yum install neo4j-2.3.2
 # copy neo4j database to /var/lib/neo4j
 
