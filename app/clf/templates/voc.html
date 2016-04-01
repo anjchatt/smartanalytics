@@ -80,26 +80,39 @@
             </div>
             <div class='row'>
                 <div class='col-md-6'>
-                    <!-- <iframe class='highcharts-iframe' src='//cloud.highcharts.com/embed/awenum/7' style='border: 0; width: 100%; height: 500px'></iframe> -->
-                    <div id="highcharts-awenum" style='border: 0; width: 100%; height: 500px'></div>
+                    <div id="highcharts-total" style='border: 0; width: 100%; height: 500px'></div>
                 </div>
                 <div class='col-md-6'>
-                    <!-- <iframe class='highcharts-iframe' src='//cloud.highcharts.com/embed/ojewuf/1' style='border: 0; width: 100%; height: 500px'></iframe> -->
-                    <div id="highcharts-ojewuf" style='border: 0; width: 100%; height: 500px'></div>
+                    <div id="highcharts-segments" style='border: 0; width: 100%; height: 500px'></div>
                 </div>
             </div>
             <div class='row'>
                 <div class='col-md-6'>
-                    <!-- <iframe class='highcharts-iframe' src='//cloud.highcharts.com/embed/ozigur' style='border: 0; width: 100%; height: 500px'></iframe> -->
-                    <div id="highcharts-ozigur" style='border: 0; width: 100%; height: 500px'></div>
+                    <div id="highcharts-gender" style='border: 0; width: 100%; height: 500px'></div>
                 </div>
                 <div class='col-md-6'>
-                    <!-- <iframe class='highcharts-iframe' src='//cloud.highcharts.com/embed/akaniz/1' style='border: 0; width: 100%; height: 500px'></iframe> -->
-                    <div id="highcharts-akaniz" style='border: 0; width: 100%; height: 500px'></div>
+                    <div id="highcharts-sentiments" style='border: 0; width: 100%; height: 500px'></div>
                 </div>
             </div>
-            <!-- <iframe class='highcharts-iframe' src='//cloud.highcharts.com/embed/uvetic/1' style='border: 0; width: 100%; height: 500px'></iframe> -->
-            <div id="highcharts-uvetic" style='border: 0; width: 100%; height: 500px'></div>
+            <div class='row'>
+                <div id="highcharts-daily-sentiment" style='border: 0; width: 100%; height: 500px'></div>
+            </div>
+            <div class='row'>
+                <div class='col-md-6'>
+                    <div id="highcharts-ret-pie" style='border: 0; width: 100%; height: 500px'></div>
+                </div>
+                <div class='col-md-6'>
+                    <div id="highcharts-attr-pie" style='border: 0; width: 100%; height: 500px'></div>
+                </div>
+            </div>
+            <div class='row'>
+                <div class='col-md-6'>
+                    <div id="highcharts-ret-bar" style='border: 0; width: 100%; height: 500px'></div>
+                </div>
+                <div class='col-md-6'>
+                    <div id="highcharts-attr-bar" style='border: 0; width: 100%; height: 500px'></div>
+                </div>
+            </div>
 
             
         </div>
@@ -203,22 +216,12 @@
 <script src="/static/js/highcharts.js"></script>
 <script src="/static/js/highcharts-3d.js"></script>
 <script>
-Array.prototype.contains = function(v) {
-    for(var i = 0; i < this.length; i++) {
-        if(this[i] === v) return true;
+contains = function(arr, v) {
+    for(var i = 0; i < arr.length; i++) {
+        if(arr[i] === v) return true;
     }
     return false;
 };
-
-Array.prototype.unique = function() {
-    var arr = [];
-    for(var i = 0; i < this.length; i++) {
-        if(!arr.contains(this[i])) {
-            arr.push(this[i]);
-        }
-    }
-    return arr; 
-}
 </script>
 <script>
     var messages_loyalty = {
@@ -419,29 +422,34 @@ var dates = [],
     ages = [],
     genders = [],
     states = [],
-    countries = [];
+    countries = [], 
+    total_neg_and_pos = 0;
 
+// gather distinctive values from categories
 for (i in filtered_data) {
         if(typeof filtered_data[i]['Twit date'] == "undefined") { continue; }
         
-        if(!dates.contains(filtered_data[i]['Twit date'])) {
+        if(!contains(dates, filtered_data[i]['Twit date'])) {
             dates.push(filtered_data[i]['Twit date']); };
-        if(!main_categories.contains(filtered_data[i]['Main Category'])) {
+        if(!contains(main_categories, filtered_data[i]['Main Category'])) {
             main_categories.push(filtered_data[i]['Main Category']); 
             sub_categories.push([]);
         };
         mc_index = main_categories.indexOf(filtered_data[i]['Main Category']);
-        if(filtered_data[i]['Sub category'] && !sub_categories[mc_index].contains(filtered_data[i]['Sub category'])) {
+        if(filtered_data[i]['Sub category'] && !contains(sub_categories[mc_index], filtered_data[i]['Sub category'])) {
             sub_categories[mc_index].push(filtered_data[i]['Sub category']); };
-        if(!sentiments.contains(filtered_data[i]['Sentiments'])) {
+        if(!contains(sentiments, filtered_data[i]['Sentiments'])) {
             sentiments.push(filtered_data[i]['Sentiments']); };
-        if(filtered_data[i]['Mentions by age'] && !ages.contains(filtered_data[i]['Mentions by age'])) {
+        if(filtered_data[i]['Sentiments'] == "Positive" || filtered_data[i]['Sentiments'] == "Negative")
+            total_neg_and_pos++;
+
+        if(filtered_data[i]['Mentions by age'] && !contains(ages, filtered_data[i]['Mentions by age'])) {
             ages.push(filtered_data[i]['Mentions by age']); };
-        if(!genders.contains(filtered_data[i]['Gender'])) {
+        if(!contains(genders, filtered_data[i]['Gender'])) {
             genders.push(filtered_data[i]['Gender']); };
-        if(!states.contains(filtered_data[i]['State'])) {
+        if(!contains(states, filtered_data[i]['State'])) {
             states.push(filtered_data[i]['State']); };
-        if(!countries.contains(filtered_data[i]['Country'])) {
+        if(!contains(countries, filtered_data[i]['Country'])) {
             countries.push(filtered_data[i]['Country']); };
 }
 
@@ -450,15 +458,7 @@ var chart1Options = {
   "yAxis": {"title": { "text": "Count" },"labels": { "format": null }, allowDecimals: false},
   "xAxis": {"title": { "text": "Date" },"labels": { "format": null }, "categories": dates },
   "credits": { "enabled": false },
-  "series": [
-    {
-      "marker": { "enabled": true },
-      "tooltip": { "valuePrefix": null },
-      "index": 0,
-      "type": "line",
-      "data": [ ]
-    }
-  ],
+  "series": [{"marker": { "enabled": true },"tooltip": { "valuePrefix": null },"index": 0,"type": "line","data": [ ]}],
   "tooltip": { "borderWidth": 2 },
   "title": { "text": "Total Mentions" },
   "chart": { "zoomType": "xy","type": "line" },
@@ -484,17 +484,10 @@ var chart3Options = {
 };
 var chart4Options = {
   "plotOptions": {
-    "pie": {
-      "cursor": "pointer","dataLabels": {"enabled": false},
-      "depth": 35,
-      "allowPointSelect": true,
-      "showInLegend": true
-    }
+    "pie": {"cursor": "pointer","dataLabels": {"enabled": false},"depth": 35,"allowPointSelect": true,"showInLegend": true}
   },
   "credits": { "enabled": false},
-  "series": [{"index": 0,"colors": ["#3270d6","#f4321b","#62d14d","#f7a35c","#8085e9","#f15c80","#e4d354","#2b908f","#f45b5b","#91e8e1"], 
-        data: [{name: "a", y:5}, {name: 'b', y: 20}],
-        }],
+  "series": [{"index": 0,"colors": ["#3270d6","#f4321b","#62d14d","#f7a35c","#8085e9","#f15c80","#e4d354","#2b908f","#f45b5b","#91e8e1"] }],
   "title": { "text": "Mention By Sentiment" },
   "chart": {"options3d": {"alpha": 45,"enabled": true,"beta": 0},"type": "pie"}
 };
@@ -503,23 +496,74 @@ var chart5Options = {
   "plotOptions": {"series": {"stacking": "normal"}},
   "credits": {"enabled": false},
   "series": [{"index": 0, data: [1,2,3,4,5] }, {"index": 1, data: [1,2,3,4,5]}, {"index": 2, data: [1,2,3,4,5]}],
+  "title": { "text": "Sentiment Trend" },
   "chart": {"type": "column"},
   "colors": ["#1c84ea","#20da34","#f12317","#f7a35c","#8085e9","#f15c80","#e4d354","#2b908f","#f45b5b","#91e8e1"],
   "xAxis": { categories: dates },
 };
-
+var chartRetentionPieOptions = {
+  "plotOptions": {"series": {"dataLabels": {"enabled": true} },
+    "pie": {"cursor": "pointer","depth": 35,"allowPointSelect": true}
+  },
+  "credits": {"enabled": false},
+  "series": [{"index": 0} ],
+  "title": { "text": "Retention Driver" },
+  "tooltip": {formatter: function () {return '<span style="color:'+this.color+'">\u25CF</span> '+this.key+': <b>' + Math.round(this.y/total_neg_and_pos*1000)/10.0 +' %</b><br/>';} },
+  "chart": { "options3d": { "alpha": 45,"enabled": true, "beta": 0}, "type": "pie"}
+};
+var chartAttritionPieOptions = {
+  "plotOptions": {"series": {"dataLabels": {"enabled": true}},
+    "pie": {"cursor": "pointer","depth": 35,"allowPointSelect": true}
+  },
+  "credits": {"enabled": false},
+  "series": [{"index": 0}],
+  "title": {"text": "Attrition Drivers"},
+  "tooltip": {formatter: function () {return '<span style="color:'+this.color+'">\u25CF</span> '+this.key+': <b>' + Math.round(this.y/total_neg_and_pos*1000)/10.0 +' %</b><br/>';} },
+  "chart": {"options3d": {"alpha": 45,"enabled": true,"beta": 0},"type": "pie"}
+};
+var chartRetentionBarOptions = {
+  "yAxis": {allowDecimals: false,
+              labels: {formatter:function() {var pcnt = (this.value / total_neg_and_pos) * 100;return Highcharts.numberFormat(pcnt,0,',') + '%';} }
+			},
+  "plotOptions": {"series": {"stacking": "normal"}},
+  "credits": {"enabled": false},
+  "series": [],
+  "title": { "text": "Retention Breakdown" },
+  "tooltip": {formatter: function () {return ''+this.key+'<br /><span style="color:'+this.color+'">\u25CF</span> '+this.series.name+': <b>' + Math.round(this.y/total_neg_and_pos*1000)/10.0 +' %</b><br/>';} },
+  "chart": {"type": "bar"},
+  "colors": ["#1c84ea","#20da34","#f12317","#f7a35c","#8085e9","#f15c80","#e4d354","#2b908f","#f45b5b","#91e8e1"],
+  "xAxis": { },
+};
+var chartAttritionBarOptions = {
+  "yAxis": {allowDecimals: false, 
+            labels: {formatter:function() {var pcnt = (this.value / total_neg_and_pos) * 100;return Highcharts.numberFormat(pcnt,0,',') + '%';} }
+			},
+  "plotOptions": {"series": {"stacking": "normal"}},
+  "credits": {"enabled": false},
+  "series": [ ],
+  "title": { "text": "Attrition Breakdown" },
+  "tooltip": {formatter: function () {return ''+this.key+'<br /><span style="color:'+this.color+'">\u25CF</span> '+this.series.name+': <b>' + Math.round(this.y/total_neg_and_pos*1000)/10.0 +' %</b><br/>';} },
+  "chart": {"type": "bar"},
+  "colors": ["#1c84ea","#20da34","#f12317","#f7a35c","#8085e9","#f15c80","#e4d354","#2b908f","#f45b5b","#91e8e1"],
+  "xAxis": { },
+};
 updateChart1(filtered_data);
 updateChart2(filtered_data);
 updateChart3(filtered_data);
 updateChart4(filtered_data);
 updateChart5(filtered_data);
+updateAttrAndRetCharts(filtered_data);
 
-$(function () {
-    $('#highcharts-awenum').highcharts(chart1Options);
-    $('#highcharts-ojewuf').highcharts(chart2Options);
-    $('#highcharts-ozigur').highcharts(chart3Options);
-    $('#highcharts-akaniz').highcharts(chart4Options);
-    $('#highcharts-uvetic').highcharts(chart5Options);
+$(function () { // first initialization of charts
+    $('#highcharts-total').highcharts(chart1Options);
+    $('#highcharts-segments').highcharts(chart2Options);
+    $('#highcharts-gender').highcharts(chart3Options);
+    $('#highcharts-sentiments').highcharts(chart4Options);
+    $('#highcharts-daily-sentiment').highcharts(chart5Options);
+    $('#highcharts-ret-pie').highcharts(chartRetentionPieOptions);
+    $('#highcharts-attr-pie').highcharts(chartAttritionPieOptions);
+    $('#highcharts-ret-bar').highcharts(chartRetentionBarOptions);
+    $('#highcharts-attr-bar').highcharts(chartAttritionBarOptions);
 });
 
 function updateChart1(data) {
@@ -584,6 +628,118 @@ function updateChart5(data) {
     chart5Options.series[1] = {"index": 1, "name": "Positive", data: arr_positive};
     chart5Options.series[2] = {"index": 2, "name": "Negative", data: arr_negative};
 }
+function updateAttrAndRetCharts(data) {
+    // create zero-filled arrays
+    var arr_retention = Array.apply(null, Array(main_categories.length)).map(Number.prototype.valueOf,0),
+        arr_attrition = Array.apply(null, Array(main_categories.length)).map(Number.prototype.valueOf,0),
+        arr_sub_ret = [],
+        arr_sub_attr = [];
+    
+    for (var i=0; i<main_categories.length; i++) {
+        arr_sub_ret.push(Array.apply(null, Array(sub_categories[i].length)).map(Number.prototype.valueOf,0) );
+        arr_sub_attr.push(Array.apply(null, Array(sub_categories[i].length)).map(Number.prototype.valueOf,0) );
+    }
+
+    for (i in data) {
+        if(data[i]['Main Category'] && data[i]['Sentiments'] == "Positive") {
+            var mc_index = main_categories.indexOf(data[i]['Main Category']);
+            arr_retention[mc_index]++;
+            if(data[i]['Sub category']) {
+                sc_index = sub_categories[mc_index].indexOf(data[i]['Sub category']);
+                arr_sub_ret[mc_index][sc_index]++;
+            }
+        }
+        if(data[i]['Main Category'] && data[i]['Sentiments'] == "Negative") {
+            var mc_index = main_categories.indexOf(data[i]['Main Category']);
+            arr_attrition[mc_index]++;
+            if(data[i]['Sub category']) {
+                sc_index = sub_categories[mc_index].indexOf(data[i]['Sub category']);
+                arr_sub_attr[mc_index][sc_index]++;
+            }
+        }
+    }
+
+    var retention_data = [],
+        attriction_data = [],
+        shown_ret,
+        shown_attr;
+
+    for (i in arr_retention) {
+        retention_data.push({name: main_categories[i], y: arr_retention[i], cat_index: i});
+        attriction_data.push({name: main_categories[i], y: arr_attrition[i], cat_index: i});
+    }
+    retention_data.sort(function (a,b) { return b['y']-a['y']}); // reverse sort
+    attriction_data.sort(function (a,b) { return b['y']-a['y']}); // reverse sort
+
+    shown_ret = retention_data.slice(0, Math.floor(retention_data.length)).filter(function(val) { return val['y'] !== 0 } );
+    shown_attr = attriction_data.slice(0, Math.floor(attriction_data.length)).filter(function(val) { return val['y'] !== 0 } );
+
+    chartRetentionPieOptions.series[0] = {"index": 0,"colors": ["#7cece9","#28ae2f","#4421a1","#f7a35c","#b82a49","#f15c80","#e4d354","#2b908f","#f45b5b","#91e8e1"], 
+            data: shown_ret,
+            point:{ events:{ click: function (event) { setFilter("#selectMainCat", this.name); } } }
+    }
+
+    chartAttritionPieOptions.series[0] = {"index": 0,"colors": ["#5f57e4","#b1ec44","#ed5d28","#5cf7f3","#914211","#f15c80","#e4d354","#2b908f","#f45b5b","#91e8e1"], 
+            data: shown_attr,
+            point:{ events:{ click: function (event) { setFilter("#selectMainCat", this.name); } } }
+    }
+
+    var ret_subcategories = [],
+        ret_maincategories = [],
+        attr_subcategories = [],
+        attr_maincategories =[];
+
+    // fill subcategories for retention breakdown chart
+    for (i in shown_ret) {
+        var arr_with_nulls = [];
+        for (var k = 0; k<i; k++) arr_with_nulls.push(null);
+
+        mc_index = shown_ret[i]['cat_index'];
+        ret_maincategories.push(main_categories[ mc_index ]);
+        for(k in arr_sub_ret[mc_index]) {
+            ret_subcategories.push({
+                                    name: sub_categories[mc_index][k],
+                                    data: arr_with_nulls.concat( arr_sub_ret[mc_index][k] ),
+                                    point: { events:{ 
+                                        click: function (name) {return function (event) { setSubCatFilter(this.category, name); }; }(sub_categories[mc_index][k]),
+                                    } }
+                                    });
+        }
+    }
+    chartRetentionBarOptions.series = ret_subcategories;
+    chartRetentionBarOptions.xAxis = {categories: ret_maincategories};
+
+    // fill subcategories for attrition breakdown chart
+    for (i in shown_attr) {
+        var arr_with_nulls = [];
+        for (var k = 0; k<i; k++) arr_with_nulls.push(null);
+        
+        mc_index = shown_attr[i]['cat_index'];
+        attr_maincategories.push(main_categories[ mc_index ]);
+        for(k in arr_sub_attr[mc_index]) {
+            attr_subcategories.push({ 
+                                    name: sub_categories[mc_index][k], 
+                                    data: arr_with_nulls.concat( arr_sub_attr[mc_index][k] ), 
+                                    point: { events:{ 
+                                        click: function (name) {return function (event) { setSubCatFilter(this.category, name); }; }(sub_categories[mc_index][k]),
+                                    } }
+                                    });
+        }
+    }
+    chartAttritionBarOptions.series = attr_subcategories;
+    chartAttritionBarOptions.xAxis = {categories: attr_maincategories};
+//  "series": [{ name: "V1", data: [2] },
+//          { name: "V2", data: [3] },
+//          { name: "V3", data: [null, 4] },
+//          { name: "V4", data: [null, 5] },
+//          { name: "V5", data: [null, null, 6] },
+//          { name: "V6", data: [null, null, 7] },
+//          { name: "V7", data: [null, null, 8] },
+//          { name: "V8", data: [null, null, null, 9] },
+//  ],
+//  "xAxis": { categories: ['M1', 'M2', 'M3', 'M4' ] },
+
+}
 
 // populate "select" options
 function populateOptions(elemID, arr) {
@@ -596,6 +752,7 @@ function populateOptions(elemID, arr) {
     });
     $(elemID).append(frag.cloneNode(true));
 }
+
 // Programmatically select filter
 function setFilter(elemID, value) {
     if($(elemID).val() == value) {
@@ -608,6 +765,33 @@ function setFilter(elemID, value) {
             if(value == opts[i].text) {
                 opts[i].selected=true;
                  $(elemID).change();
+                break;
+            }
+        }
+    }
+}
+// Programmatically select main category and sub category
+function setSubCatFilter(main, sub) {
+    if($("#selectSubCat").val() == sub) {
+        // de-select current option
+        $("#selectSubCat").children()[0].selected=true;
+        $("#selectMainCat").children()[0].selected=true;
+        $("#selectSubCat").change();
+    } else {
+        var opts = $("#selectMainCat").children(); 
+        for (var i = 0; i < opts.length; i++) {
+            if(main == opts[i].text) {
+                opts[i].selected=true;
+                //$("selectMainCat").change(); //we will fire corresponding event in "for" loop below
+                filterMainCatChange(fireFilterChange=false);
+                break;
+            }
+        }
+        var opts = $("#selectSubCat").children(); 
+        for (var i = 0; i < opts.length; i++) {
+            if(sub == opts[i].text) {
+                opts[i].selected=true;
+                 $("#selectSubCat").change();
                 break;
             }
         }
@@ -628,7 +812,7 @@ $( function() {
     
 });
 
-function filterMainCatChange() {
+function filterMainCatChange(fireFilterChange=true) {
     $('#selectSubCat').val(0).trigger("change");
     var subcategory = document.getElementById('selectSubCat');
     while (subcategory.childNodes.length > 2) {
@@ -637,7 +821,7 @@ function filterMainCatChange() {
     var value = $('#selectMainCat').val();
     if (value) populateOptions('#selectSubCat', sub_categories[main_categories.indexOf(value)]);
     // fire usual filter change
-    filterChange();
+    if(fireFilterChange) filterChange();
 }
 function filterChange() {
     var fGender = $('#selectGender').val(),
@@ -651,6 +835,8 @@ function filterChange() {
     else if(fGender == "Male") fGender = "M";
     // Re-filtering data
     filtered_data = [];
+    total_neg_and_pos = 0;
+
     for(i in chart_data) {
         if(typeof chart_data[i]['Twit date'] == "undefined") { continue; }
         
@@ -661,6 +847,9 @@ function filterChange() {
         if(fSubCat && chart_data[i]['Sub category'] !== fSubCat) continue;
         if(fSentiments && chart_data[i]['Sentiments'] !== fSentiments) continue;
         
+        if(chart_data[i]['Sentiments'] == "Positive" || chart_data[i]['Sentiments'] == "Negative")
+            total_neg_and_pos++;
+
         filtered_data.push(chart_data[i]);
     }
     
@@ -670,11 +859,17 @@ function filterChange() {
     updateChart3(filtered_data);
     updateChart4(filtered_data);
     updateChart5(filtered_data);
-    $('#highcharts-awenum').highcharts(chart1Options);
-    $('#highcharts-ojewuf').highcharts(chart2Options);
-    $('#highcharts-ozigur').highcharts(chart3Options);
-    $('#highcharts-akaniz').highcharts(chart4Options);
-    $('#highcharts-uvetic').highcharts(chart5Options);
+    updateAttrAndRetCharts(filtered_data);
+    $('#highcharts-total').highcharts(chart1Options);
+    $('#highcharts-segments').highcharts(chart2Options);
+    $('#highcharts-gender').highcharts(chart3Options);
+    $('#highcharts-sentiments').highcharts(chart4Options);
+    $('#highcharts-daily-sentiment').highcharts(chart5Options);
+    $('#highcharts-ret-pie').highcharts(chartRetentionPieOptions);
+    $('#highcharts-attr-pie').highcharts(chartAttritionPieOptions);
+    $('#highcharts-ret-bar').highcharts(chartRetentionBarOptions);
+    $('#highcharts-attr-bar').highcharts(chartAttritionBarOptions);
+
 };
 </script>
 
