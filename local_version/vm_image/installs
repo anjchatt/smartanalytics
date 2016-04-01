@@ -68,6 +68,10 @@ chkconfig --add neo4j
 chkconfig neo4j --level 345 on
 systemctl start neo4j
 
+#change neo4j password from default and back to it
+curl -H "Content-Type: application/json" -X POST -d '{"password":"my_neo4j"}' -u neo4j:neo4j http://localhost:7474/user/neo4j/password
+curl -H "Content-Type: application/json" -X POST -d {"password":"neo4j"}' -u neo4j:my_neo4j http://localhost:7474/user/neo4j/password
+
 sudo yum install supervisor
 
 cat << EOF > /etc/supervisord.d/clf_web.ini
