@@ -49,13 +49,28 @@ sudo -u postgres python local_version/init_tables.py
 sudo -u postgres python local_version/data_preparation.py
 
 rpm --import http://debian.neo4j.org/neotechnology.gpg.key
-vi /etc/yum.repos.d/neo4j.repo
+
+cat <<EOF >/etc/yum.repos.d/neo4j.repo
+[neo4j]
+name=Neo4j Yum Repo
+baseurl=http://yum.neo4j.org
+enabled=1
+gpgcheck=1
+EOF
+
 yum install neo4j-2.3.2
+
 # copy neo4j database to /var/lib/neo4j
+
+chown -R neo4j:neo4j /var/lib/neo4j
 
 chkconfig --add neo4j
 chkconfig neo4j --level 345 on
 systemctl start neo4j
+
+#change neo4j password from default and back to it
+curl -H "Content-Type: application/json" -X POST -d '{"password":"my_neo4j"}' -u neo4j:neo4j http://localhost:7474/user/neo4j/password
+curl -H "Content-Type: application/json" -X POST -d {"password":"neo4j"}' -u neo4j:my_neo4j http://localhost:7474/user/neo4j/password
 
 sudo yum install supervisor
 
