@@ -59,7 +59,10 @@ gpgcheck=1
 EOF
 
 yum install neo4j-2.3.2
+
 # copy neo4j database to /var/lib/neo4j
+
+chown -R neo4j:neo4j /var/lib/neo4j
 
 chkconfig --add neo4j
 chkconfig neo4j --level 345 on
