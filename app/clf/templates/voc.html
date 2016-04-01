@@ -528,7 +528,7 @@ function updateChart1(data) {
     for (i in data) {
         arr[dates.indexOf(data[i]['Twit date'])]++;
     }
-    chart1Options.series[0] = { "marker": { "enabled": true }, "tooltip": { "valuePrefix": null }, "index": 0, "type": "line", "data": arr , "name": "Total tweets"};
+    chart1Options.series[0] = { "marker": { "enabled": true }, "tooltip": { "valuePrefix": null }, "index": 0, "type": "line", "data": arr , "name": "Total tweets", "lineWidth": 5 };
 }
 function updateChart2(data) {
     var arr = Array.apply(null, Array(ages.length)).map(Number.prototype.valueOf,0);
