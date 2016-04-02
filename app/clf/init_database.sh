@@ -1,6 +1,6 @@
 cd ../../data_marts/customer_data/
-python generate_mongo_data.py
+python2.7 generate_mongo_data.py
 cd ../../local_version
 sh init.sh
-python data_preparation.py
+python2.7 data_preparation.py
 
