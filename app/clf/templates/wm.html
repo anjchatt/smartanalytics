@@ -44,7 +44,7 @@
             margin: 0;
             padding: 15 0 15 0px;
         }
-        .text-box h4{
+        .text-box h4, h5{
             text-align: center;
         }
         
@@ -85,6 +85,10 @@
         .row{
             overflow: hidden;
             padding-bottom: 10px;
+        }
+        
+        .alert-hidden{
+            display:none;
         }
 
         [class*="col-"]{
@@ -166,17 +170,32 @@
                     </tr></table>
             </div>
 
+            
+            
+            
+            
+            
+            
+            
+            
+            
             <div style="padding-right: 15px;padding-left: 15px;">
                 <div class="row" style="margin-bottom: 15px;">
                     <div class="col-cont text-box">
                         <h4>Client News</h4>
                         <div class="list-group">
-                            <a href="?client=Kevin%20Arrix" class="list-group-item">
-                                <h4 class="list-group-item-heading">New Appointment<br>Kevin Arrix</h4>
+                            <a href="?name=Kevin%20Arrix" class="list-group-item">
+                                <div class="list-group-item-heading">
+                                    <h4 class="list-group-item-heading">New Appointment</h4>
+                                    <h5 class="list-group-item-heading">Kevin Arrix</h5>
+                                </div>
                                 <p class="list-group-item-text"><span class="text-muted">2015-10-06</span><br>Verve Names Kevin Arrix Chief Revenue Officer Verve, the leader in location-based mobile advertising, today announced th...</p>
                             </a>
-                            <a href="?client=client=Lisa%20Speransky" class="list-group-item">
-                                <h4 class="list-group-item-heading">New Appointment<br>Lisa Speransky</h4>
+                            <a href="?name=Lisa%20Speransky" class="list-group-item">
+                                <div class="list-group-item-heading">
+                                    <h4 class="list-group-item-heading">New Appointment</h4>
+                                    <h5 class="list-group-item-heading">Lisa Speransky</h5>
+                                </div>
                                 <p class="list-group-item-text"><span class="text-muted">2015-10-06</span><br>BEABA USA Announces New CEO BEABA, internationally known juvenile product company, and creator of first steam cooker and...</p>
                             </a>
                         </div>
@@ -321,26 +340,43 @@
     {% if status == 'Not found' %}
     <h1><span class='text-muted'>{{ name }}</span> was not found</h1>
     {% endif %}
+    <a class="next-btn" style="position: absolute; right:5px; top: 5px;font-size:70%;">next</a>
+    <script>
+        $('.next-btn').click(function() {
+            $('.alert-hidden').removeClass('alert-hidden');
+        });
+    </script>
     
     <div class="row">
         <div class='col-md-4'>
             <div style="padding-right: 15px;padding-left: 15px;">
                 <div class="row" style="margin-bottom: 15px;">
                     <div class="col-cont text-box">
-                        <h4>Client News</h4>
-                        <div class="list-group" style="background-color:#FFAAAA;">
-                            <a href="?name=deborah%20winshel" class="list-group-item" style="background-color:rgba(0,0,0,0);">
-                                <h4 class="list-group-item-heading">New Appointment<br><br>Deborah Winshel</h4>
-                            </a>
+                        <div class="alert-hidden">
+                            <h4>Alerts</h4>
+                            <div class="list-group" style="background-color:#FFAAAA;">
+                                <a href="?name=deborah%20winshel" class="list-group-item" style="background-color:rgba(0,0,0,0);">
+                                    <div class="list-group-item-heading">
+                                        <h4 class="list-group-item-heading">New Appointment</h4>
+                                        <h5 class="list-group-item-heading">Deborah Winshel</h5>
+                                    </div>
+                                </a>
+                            </div>
                         </div>
                         <h4>Client News</h4>
                         <div class="list-group">
                             <a href="?name=Kevin%20Arrix" class="list-group-item">
-                                <h4 class="list-group-item-heading">New Appointment<br>Kevin Arrix</h4>
+                                <div class="list-group-item-heading">
+                                    <h4 class="list-group-item-heading">New Appointment</h4>
+                                    <h5 class="list-group-item-heading">Kevin Arrix</h5>
+                                </div>
                                 <p class="list-group-item-text"><span class="text-muted">2015-10-06</span><br>Verve Names Kevin Arrix Chief Revenue Officer Verve, the leader in location-based mobile advertising, today announced th...</p>
                             </a>
                             <a href="?name=Lisa%20Speransky" class="list-group-item">
-                                <h4 class="list-group-item-heading">New Appointment<br>Lisa Speransky</h4>
+                                <div class="list-group-item-heading">
+                                    <h4 class="list-group-item-heading">New Appointment</h4>
+                                    <h5 class="list-group-item-heading">Lisa Speransky</h5>
+                                </div>
                                 <p class="list-group-item-text"><span class="text-muted">2015-10-06</span><br>BEABA USA Announces New CEO BEABA, internationally known juvenile product company, and creator of first steam cooker and...</p>
                             </a>
                         </div>
@@ -387,7 +423,6 @@
 
     <script>
         $('#search_btn').on('click', function (e) {
-            debugger;
             window.location.href = encodeURI('?name='+$('#iname').val());
         })
     </script>
