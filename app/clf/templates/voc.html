@@ -812,7 +812,10 @@ $( function() {
     
 });
 
-function filterMainCatChange(fireFilterChange=true) {
+function filterMainCatChange(fireFilterChange) {
+	if(fireFilterChange === undefined) {
+		fireFilterChange = true;
+	}
     $('#selectSubCat').val(0).trigger("change");
     var subcategory = document.getElementById('selectSubCat');
     while (subcategory.childNodes.length > 2) {
