@@ -78,6 +78,7 @@
                                 </td>
                                 <td>
                                     <h3 style="text-align: center; margin-top: 0px;">{{ customer['name'] }}</h3>
+                                    <h5 style="text-align: center;"><a class="activator" style='text-align: center; color:#fff;'>Customer 720 View</a></h5>
                                 </td>
                                 </tr>
                             </table>
@@ -92,11 +93,11 @@
 
                         <!-- Customer info Table -->
                         <table class="table table-bordered" id="CustomerTable" style="/*font-size: 14px;*/">
-                            <tr bgcolor='#aaaaaa'><td>State</td><td> {{ customer['state'] }} </td></tr>
+                            <tr bgcolor='#aaaaaa'><td>State</td><td> {{ customer['state'].title() }} </td></tr>
                             <tr bgcolor='#aaaaaa'><td>E-Mail</td><td>{{ customer['email'] }}</td></tr>
-                            <tr bgcolor='#ffa135'><td>Marital Status</td><td>{{ customer['maritalStatus'] }}</td></tr>
-                            <tr bgcolor='#ffa135'><td># of Children in home</td><td>{{ customer['numberOfChildren']|int }}</td></tr>
-                            <tr bgcolor='#009e47'><td>Predicted life event</td><td>{{ customer['predictedLifeEvent'] }}</td></tr>
+                            <tr bgcolor='#ffa135'><td>Marital Status</td><td>{{ customer['maritalStatus'].title() }}</td></tr>
+                            <tr bgcolor='#ffa135'><td>Number of Children</td><td>{{ customer['numberOfChildren']|int }}</td></tr>
+                            <tr bgcolor='#009e47'><td>Predicted life event</td><td>{{ customer['predictedLifeEvent'].title() }}</td></tr>
                             <tr bgcolor='#06a9fc'><td>Credit Score - FICO</td><td>{{ customer['creditScoreFICO']|int }}</td></tr>
                             <tr bgcolor='#06a9fc'><td>Investable Asset Estimate</td><td>{{ customer['investableAssetEstimate'] }}</td></tr>
                             <tr bgcolor='#06a9fc'><td>Zillow Home Value Estimation</td><td>{{ customer['zillowHomeValueEstimation'] }}</td></tr>
