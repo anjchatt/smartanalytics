@@ -342,6 +342,6 @@ function buildHierarchy(csv) {
     }
   }
   // point to some segment of diagram
-  highlighted = root.children[1].children[5].children[3].children[5].children[3].children[5];
+  highlighted = root.children[1].children[1].children[3].children[5].children[3].children[5];
   return root;
 };
