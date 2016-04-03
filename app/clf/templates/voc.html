@@ -29,17 +29,13 @@
 
 <div class="container"><h3>Voice of Customer</h3></div>
 <div id="exTab1" class="container"> 
-    <ul  class="nav nav-pills">
-        <li class="active">
-            <a href="#General" data-toggle="tab">General</a>
-        </li>
-        <li>
-            <a href="#ProductDashboard" data-toggle="tab">Product Dashboard</a>
-        </li>
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#General" aria-controls="general" role="tab" data-toggle="tab">General</a></li>
+        <li role="presentation"><a href="#ProductDashboard" aria-controls="ProductDashboard" role="tab" data-toggle="tab">Product Dashboard</a></li>
     </ul>
 
     <div class="tab-content clearfix">
-        <div class="tab-pane active" id="General">
+        <div role="tabpanel" class="tab-pane active" id="General">
             <br>
             <div class='row'>
                 <div class='col-md-2'>
@@ -116,7 +112,7 @@
 
             
         </div>
-        <div class="tab-pane" id="ProductDashboard">
+        <div role="tabpanel" class="tab-pane" id="ProductDashboard">
             <h3>Loyalty Programs</h3>
             <div class="row">
                 <div class="col-sm-3">
@@ -127,12 +123,12 @@
                             <br>
                         </div>
                         <div class="row box"> <!-- Bar chart -->
-                            <h4>Complaint topic</h4>
+                            <h4>Main Categories</h4>
                             <div id="Col1Bar"></div>
                             <br>
                         </div>
-                        <div class="row box"> <!-- Feedback samples -->
-                            <h4>Feedback samples</h4>
+                        <div class="row box"> <!-- Sample Mentions -->
+                            <h4>Sample Mentions</h4>
                             <table class="table table-bordered" id="col1Table">
                                 <tr><th></th></tr>
                                 <tr><td></td></tr>
@@ -148,12 +144,12 @@
                             <br>
                         </div>
                         <div class="row box"> <!-- Bar chart -->
-                            <h4>Complaint topic</h4>
+                            <h4>Main Categories</h4>
                             <div id="Col2Bar"></div>
                             <br>
                         </div>
-                        <div class="row box"> <!-- Feedback samples -->
-                            <h4>Feedback samples</h4>
+                        <div class="row box"> <!-- Sample Mentions -->
+                            <h4>Sample Mentions</h4>
                             <table class="table table-bordered" id="col2Table">
                                 <tr><th></th></tr>
                                 <tr><td></td></tr>
@@ -169,12 +165,12 @@
                             <br>
                         </div>
                         <div class="row box"> <!-- Bar chart -->
-                            <h4>Complaint topic</h4>
+                            <h4>Main Categories</h4>
                             <div id="Col3Bar"></div>
                             <br>
                         </div>
-                        <div class="row box"> <!-- Feedback samples -->
-                            <h4>Feedback samples</h4>
+                        <div class="row box"> <!-- Sample Mentions -->
+                            <h4>Sample Mentions</h4>
                             <table class="table table-bordered" id="col3Table">
                                 <tr><th></th></tr>
                                 <tr><td></td></tr>
@@ -190,12 +186,12 @@
                             <br>
                         </div>
                         <div class="row box"> <!-- Bar chart -->
-                            <h4>Complaint topic</h4>
+                            <h4>Main Categories</h4>
                             <div id="Col4Bar"></div>
                             <br>
                         </div>
-                        <div class="row box"> <!-- Feedback samples -->
-                            <h4>Feedback samples</h4>
+                        <div class="row box"> <!-- Sample Mentions -->
+                            <h4>Sample Mentions</h4>
                             <table class="table table-bordered" id="col4Table">
                                 <tr><th></th></tr>
                                 <tr><td></td></tr>
@@ -343,6 +339,7 @@ contains = function(arr, v) {
         });
         $('#Col1Pie')
             .highcharts({chart: {type: 'pie',  height: 200}, 
+                plotOptions: { pie: { startAngle: 0,} },
                 title: {text: '', verticalAlign: 'bottom', style: { "color": "rgb(112, 112, 112)", "fill": "rgb(112, 112, 112)", "fontSize": "12px" }, }, 
                 series: [{name: 'Feedback',data: [{name:'positive: 91%', y:91}, {name:'negative: 9%', y:9}]}],
                 credits:{enabled:false},
@@ -359,6 +356,7 @@ contains = function(arr, v) {
 
         $('#Col2Pie')
             .highcharts({chart: {type: 'pie',  height: 200}, 
+                plotOptions: { pie: { startAngle: 55,} },
                 title: {text: '', verticalAlign: 'bottom', style: { "color": "rgb(112, 112, 112)", "fill": "rgb(112, 112, 112)", "fontSize": "12px" }, }, 
                 series: [{name: 'Feedback',data: [{name:'positive: 57%', y:57}, {name:'negative: 43%', y:43}]}],
                 credits:{enabled:false},
@@ -375,6 +373,7 @@ contains = function(arr, v) {
 
         $('#Col3Pie')
             .highcharts({chart: {type: 'pie',  height: 200}, 
+                plotOptions: { pie: { startAngle: 33,} },
                 title: {text: '', verticalAlign: 'bottom', style: { "color": "rgb(112, 112, 112)", "fill": "rgb(112, 112, 112)", "fontSize": "12px" }, }, 
                 series: [{name: 'Feedback',data: [{name:'positive: 74%', y:74}, {name:'negative: 26%', y:26}]}],
                 credits:{enabled:false},
@@ -391,6 +390,7 @@ contains = function(arr, v) {
 
         $('#Col4Pie')
             .highcharts({chart: {type: 'pie', height: 200}, 
+                plotOptions: { pie: { startAngle: 123,} },
                 title: {text: '', verticalAlign: 'bottom', style: { "color": "rgb(112, 112, 112)", "fill": "rgb(112, 112, 112)", "fontSize": "12px" }, }, 
                 series: [{name: 'Feedback',data: [{name:'positive: 21%', y:21}, {name:'negative: 79%', y:79}]}],
                 credits:{enabled:false},
@@ -524,7 +524,7 @@ var chartAttritionPieOptions = {
 var chartRetentionBarOptions = {
   "yAxis": {allowDecimals: false,
               labels: {formatter:function() {var pcnt = (this.value / total_neg_and_pos) * 100;return Highcharts.numberFormat(pcnt,0,',') + '%';} }
-			},
+            },
   "plotOptions": {"series": {"stacking": "normal"}},
   "credits": {"enabled": false},
   "series": [],
@@ -537,7 +537,7 @@ var chartRetentionBarOptions = {
 var chartAttritionBarOptions = {
   "yAxis": {allowDecimals: false, 
             labels: {formatter:function() {var pcnt = (this.value / total_neg_and_pos) * 100;return Highcharts.numberFormat(pcnt,0,',') + '%';} }
-			},
+            },
   "plotOptions": {"series": {"stacking": "normal"}},
   "credits": {"enabled": false},
   "series": [ ],
@@ -813,9 +813,9 @@ $( function() {
 });
 
 function filterMainCatChange(fireFilterChange) {
-	if(fireFilterChange === undefined) {
-		fireFilterChange = true;
-	}
+    if(fireFilterChange === undefined) {
+        fireFilterChange = true;
+    }
     $('#selectSubCat').val(0).trigger("change");
     var subcategory = document.getElementById('selectSubCat');
     while (subcategory.childNodes.length > 2) {
