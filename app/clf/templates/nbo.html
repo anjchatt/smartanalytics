@@ -12,7 +12,7 @@
         }
         
         .name-box{
-            background:#54a0ed;
+            background:#0079E7;
         }
         .name-box td{
             color: #fff;
@@ -383,7 +383,7 @@
             });
             $(function() {
                 Highcharts.setOptions({
-                    colors: ['#54a0ed', '#ed020b', '#7fb005'],
+                    colors: ['#0079E7', '#D82735', '#009E47'],
                     tooltip: { pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}<br/>' },
                 });
             });
@@ -394,9 +394,9 @@
                              xAxis: {categories: {{ customer['profitability_months']|safe }} },
                              yAxis: {title: {text: 'Monthly Profit'}, gridLineDashStyle: "Dash", labels: {enabled: false}},
                              series: [{name: 'This year', data: {{ customer['profitability_this_year'] }}, 
-                                       color: '#54a0ed', connectNulls:true }, 
+                                       color: '#0079E7', connectNulls:true }, 
                                       {name: 'Last year', data: {{ customer['profitability_last_year'] }}, 
-                                       color: '#ed020b', connectNulls:true }],
+                                       color: '#D82735', connectNulls:true }],
                              credits:{enabled:false},
                             });});
             $(function () {$('#sentiment')
@@ -406,9 +406,9 @@
                              xAxis: {categories: {{ customer['last4months']|safe }} },
                              yAxis: [{title: {text: '# of Activities'}, gridLineDashStyle: "Dash", allowDecimals: false , labels: {enabled: false}},
                                      {title: {text: 'Sentiment'}, gridLineDashStyle: "Dash", opposite: true, min: -5, max: 5, labels: {enabled: false}, visible: false}],
-                             series: [{name: 'Direct',data: [2, 5, 0, 2], color: '#54a0ed', type: 'column', yAxis: 0,}, 
-                                      {name: 'Social activity',data: [5, 7, 4, 8], color: '#ed020b', type: 'column', yAxis: 0,},
-                                      {name: 'Sentiment',data: [-4, 0, 4, 3], color: '#7fb005', yAxis: 1,},],
+                             series: [{name: 'Direct',data: [2, 5, 0, 2], color: '#0079E7', type: 'column', yAxis: 0,}, 
+                                      {name: 'Social activity',data: [5, 7, 4, 8], color: '#D82735', type: 'column', yAxis: 0,},
+                                      {name: 'Sentiment',data: [-4, 0, 4, 3], color: '#009E47', yAxis: 1,},],
                              credits:{enabled:false},
                             });});
             $(function () {$('#deposit_mix')
@@ -429,7 +429,7 @@
                              legend:{enabled:false},
                              xAxis: {categories: {{ customer['last4months']|safe }} },
                              yAxis: {title: {text: 'Call center contacts'}, gridLineDashStyle: "Dash", allowDecimals: false, labels: {enabled: false}},
-                             series: [{name: '# of calls',data: [7, 3, 1, 6], color: '#54a0ed',}],
+                             series: [{name: '# of calls',data: [7, 3, 1, 6], color: '#0079E7',}],
                              credits:{enabled:false},
                             });});
             $(function () {$('#survey')
@@ -445,7 +445,7 @@
                              yAxis: {title: {text: 'Survey'}, gridLineDashStyle: "Dash", labels: {enabled: false}},
                              series: [{name: 'Result',
                                        data: {{ customer['surveys_data'] }},
-                                       color: '#54a0ed',}],
+                                       color: '#0079E7',}],
                              credits:{enabled:false},
                             });});
 

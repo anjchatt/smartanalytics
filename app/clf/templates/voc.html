@@ -87,6 +87,7 @@
                     </select>
                 </div>
             </div>
+			<br />
             <div class='row'>
                 <div class='col-md-6'>
                     <div id="highcharts-total" style='border: 0; width: 100%; height: 300px'></div>
@@ -348,7 +349,7 @@ contains = function(arr, v) {
     });
     $(function() {
         Highcharts.setOptions({
-            colors: ['#7fb005', '#ed020b', '#54a0ed', '#ffb446'], 
+            colors: ['#009E47', '#D82735', '#0079E7', '#ffb446'], 
         });
         $('#Col1Pie')
             .highcharts({chart: {type: 'pie',  height: 200}, 
@@ -466,7 +467,7 @@ for (i in filtered_data) {
             countries.push(filtered_data[i]['Country']); };
 }
 
-
+// R, G, B colors: '#D82735' '#009E47' '#0079E7'
 var chart1Options = {
   "legend": { "enabled": false },
   "yAxis": {"title": { "text": "Count" },"labels": { "format": null }, allowDecimals: false},
@@ -476,7 +477,7 @@ var chart1Options = {
   "tooltip": { "borderWidth": 2 },
   "title": { "text": "Total Mentions" },
   "chart": { "zoomType": "xy","type": "line" },
-  "colors": [ "#258bed","#434348","#90ed7d","#f7a35c","#8085e9","#f15c80","#e4d354","#2b908f","#f45b5b","#91e8e1" ],
+  "colors": [ "#0079E7","#434348","#90ed7d","#f7a35c","#8085e9","#f15c80","#e4d354","#2b908f","#f45b5b","#91e8e1" ],
 };
 var chart2Options = {
   "legend": { "enabled": false },
@@ -488,7 +489,7 @@ var chart2Options = {
   "series": [{"index": 0}],
   "title": {"text": "Mention by Segment"},
   "chart": {"borderColor": "#0f4380","zoomType": "xy","type": "column"},
-  "colors": ["#3737d1", "#7cb5ec","#434348","#90ed7d","#f7a35c","#8085e9","#f15c80","#e4d354","#2b908f","#f45b5b","#2f27b8"],
+  "colors": ["#0079E7", "#7cb5ec","#434348","#90ed7d","#f7a35c","#8085e9","#f15c80","#e4d354","#2b908f","#f45b5b","#2f27b8"],
   "xAxis": { categories: ages },
   "tooltip": {formatter: function () {return '<span style="color:'+this.color+'">\u25CF</span> '+this.key+': <b>' 
                 + Math.round(this.y/filtered_data.length*1000)/10.0 +' %</b><br/>';} },
@@ -498,7 +499,7 @@ var chart3Options = {
     "pie": {"cursor": true,"dataLabels": {"enabled": false},"allowPointSelect": true,"showInLegend": true}
   },
   "credits": {"enabled": false},
-  "series": [ { "index": 0, "colors": ["#6bdc27","#3737d1","#90ed7d","#f7a35c","#8085e9","#f15c80","#e4d354","#2b908f","#f45b5b","#91e8e1"]}],
+  "series": [ { "index": 0, "colors": ["#009E47","#0079E7","#90ed7d","#f7a35c","#8085e9","#f15c80","#e4d354","#2b908f","#f45b5b","#91e8e1"]}],
   "title": {"text": "Mention By Gender"},
   "chart": {"type": "pie"},
   "tooltip": {formatter: function () {return '<span style="color:'+this.color+'">\u25CF</span> '+this.key+': <b>' + Math.round(this.y/filtered_data.length*1000)/10.0 +' %</b><br/>';} },
@@ -509,7 +510,7 @@ var chart4Options = {
     "pie": {"cursor": "pointer","dataLabels": {"enabled": false},"depth": 35,"allowPointSelect": true,"showInLegend": true}
   },
   "credits": { "enabled": false},
-  "series": [{"index": 0,"colors": ["#3270d6","#f4321b","#62d14d","#f7a35c","#8085e9","#f15c80","#e4d354","#2b908f","#f45b5b","#91e8e1"] }],
+  "series": [{"index": 0,"colors": ["#0079E7","#009E47","#62d14d","#f7a35c","#8085e9","#f15c80","#e4d354","#2b908f","#f45b5b","#91e8e1"] }],
   "title": { "text": "Mention By Sentiment" },
   "chart": {"options3d": {"alpha": 45,"enabled": true,"beta": 0},"type": "pie"},
   "tooltip": {formatter: function () {return '<span style="color:'+this.color+'">\u25CF</span> '+this.key+': <b>' + Math.round(this.y/filtered_data.length*1000)/10.0 +' %</b><br/>';} },
@@ -520,7 +521,7 @@ var chart5Options = {
   "series": [{"index": 0, data: [1,2,3,4,5] }, {"index": 1, data: [1,2,3,4,5]}, {"index": 2, data: [1,2,3,4,5]}],
   "title": { "text": "Sentiment Trend" },
   "chart": {"type": "column"},
-  "colors": ["#1c84ea","#20da34","#f12317","#f7a35c","#8085e9","#f15c80","#e4d354","#2b908f","#f45b5b","#91e8e1"],
+  "colors": ["#0079E7","#009E47","#D82735","#f7a35c","#8085e9","#f15c80","#e4d354","#2b908f","#f45b5b","#91e8e1"],
   "xAxis": { categories: dates },
   "yAxis": {allowDecimals: false, 
             labels: {formatter:function() {var pcnt = (this.value / filtered_data.length) * 100;return Highcharts.numberFormat(pcnt,0,',') + '%';} }
@@ -559,7 +560,7 @@ var chartRetentionBarOptions = {
   "title": { "text": "Retention Breakdown" },
   "tooltip": {formatter: function () {return ''+this.key+'<br /><span style="color:'+this.color+'">\u25CF</span> '+this.series.name+': <b>' + Math.round(this.y/total_neg_and_pos*1000)/10.0 +' %</b><br/>';} },
   "chart": {"type": "bar"},
-  "colors": ["#3270d6","#f4321b","#62d14d","#f7a35c","#8085e9","#f15c80","#e4d354","#2b908f","#f45b5b","#91e8e1"],
+  "colors": ["#0079E7","#D82735","#009E47","#f7a35c","#8085e9","#f15c80","#e4d354","#2b908f","#f45b5b","#91e8e1", "#7032d6","#32f41b","#d1624d","#a3f75c","#f580e9","#5cf180","#d3e454","#902b8f","#5ba45b","#e891e1"],
   "xAxis": { },
 };
 var chartAttritionBarOptions = {
@@ -573,7 +574,7 @@ var chartAttritionBarOptions = {
   "title": { "text": "Attrition Breakdown" },
   "tooltip": {formatter: function () {return ''+this.key+'<br /><span style="color:'+this.color+'">\u25CF</span> '+this.series.name+': <b>' + Math.round(this.y/total_neg_and_pos*1000)/10.0 +' %</b><br/>';} },
   "chart": {"type": "bar"},
-  "colors": ["#3270d6","#f4321b","#62d14d","#f7a35c","#8085e9","#f15c80","#e4d354","#2b908f","#f45b5b","#91e8e1"],
+  "colors": ["#0079E7","#D82735","#009E47","#f7a35c","#8085e9","#f15c80","#e4d354","#2b908f","#f45b5b","#91e8e1", "#7032d6","#32f41b","#d1624d","#a3075c","#f5e0e9","#5c5180","#d3e454","#902b8f","#5ba45b","#e891e1"],
   "xAxis": { },
 };
 updateChart1(filtered_data);
@@ -620,7 +621,7 @@ function updateChart3(data) {
         if(data[i]['Gender'] == "M") male++;
     }
 
-    chart3Options.series[0] = {"index": 0,"colors": ["#6bdc27","#3737d1"], 
+    chart3Options.series[0] = {"index": 0,"colors": ["#009E47","#0079E7"], 
             data: [{name: "Female", y: female}, {name: 'Male', y: male}],
             point:{ events:{ click: function (event) { setFilter("#selectGender", this.name); } } }
     }
@@ -635,7 +636,7 @@ function updateChart4(data) {
         if(data[i]['Sentiments'] == "Positive") positive++;
     }
 
-    chart4Options.series[0] = {"index": 0,"colors": ["#3270d6","#f4321b","#62d14d"], 
+    chart4Options.series[0] = {"index": 0,"colors": ["#0079E7","#D82735","#009E47"], 
             data: [{name: "Neutral", y: neutral}, {name: 'Negative', y: negative}, {name: 'Positive', y: positive}],
             point:{ events:{ click: function (event) { setFilter("#selectSentiments", this.name); } } }
     }
@@ -703,12 +704,12 @@ function updateAttrAndRetCharts(data) {
     shown_ret = retention_data.slice(0, 5).filter(function(val) { return val['y'] !== 0 } );
     shown_attr = attriction_data.slice(0, 5).filter(function(val) { return val['y'] !== 0 } );
 
-    chartRetentionPieOptions.series[0] = {"index": 0,"colors": ["#7cece9","#3270d6","#f4321b","#62d14d","#b82a49","#f15c80","#e4d354","#2b908f","#f45b5b","#91e8e1"], 
+    chartRetentionPieOptions.series[0] = {"index": 0,"colors": ["#009E47","#0079E7","#D82735","#62d14d","#b82a49","#f15c80","#e4d354","#2b908f","#f45b5b","#91e8e1"], 
             data: shown_ret,
             point:{ events:{ click: function (event) { setFilter("#selectMainCat", this.name); } } }
     }
 
-    chartAttritionPieOptions.series[0] = {"index": 0,"colors": ["#5f57e4","#3270d6","#f4321b","#62d14d","#914211","#f15c80","#e4d354","#2b908f","#f45b5b","#91e8e1"], 
+    chartAttritionPieOptions.series[0] = {"index": 0,"colors": ["#009E47","#0079E7","#D82735","#62d14d","#914211","#f15c80","#e4d354","#2b908f","#f45b5b","#91e8e1"], 
             data: shown_attr,
             point:{ events:{ click: function (event) { setFilter("#selectMainCat", this.name); } } }
     }

@@ -3,10 +3,10 @@
 {{ super() }}
     <title>Customer 720 degree view</title>
     <style>
-		h3 {
-			margin-top: 10px;
-			margin-bottom: 5px;
-		}
+        h3 {
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
         h4{
             color:rgb(340,115,30);
             font-weight:500;
@@ -196,10 +196,10 @@
                 <h4><i class="icon_h fa fa-comments-o"></i> Last Conversations</h4>
                 <table id="interaction_table">
                     <tr>
-                        <td class="icon_td">
+                        <td class="icon_td" style='width:20px'>
                             <span class="glyphicon glyphicon-earphone" aria-hidden="true" style="color:black"></span>
                         </td>
-                        <td style='width:20px'>
+                        <td>
                             02-15-16
                         </td>
                         <td>
@@ -210,10 +210,10 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="icon_td">
+                        <td class="icon_td" style='width:20px'>
                             <i class="fa fa-twitter"></i>
                         </td>
-                        <td style='width:20px'>
+                        <td>
                             03-24-16
                         </td>
                         <td>
@@ -279,6 +279,10 @@
 
 <script>
     $(function () {
+
+    Highcharts.setOptions({
+        "colors": ["#0079E7","#D82735","#009E47","#f7a35c","#8085e9","#f15c80","#e4d354","#2b908f","#f45b5b","#91e8e1", "#7032d6","#32f41b","#d1624d","#a3075c","#f5e0e9","#5c5180","#d3e454"],
+    });
     $('#communication_chart').highcharts({
         chart: {
             type: 'column'
@@ -457,7 +461,7 @@ $(function () {
             data: [
                 {
                     name: 'Churn',
-                    color: '#54a0ed',
+                    color: '#0079E7', //'#54a0ed',
                     y: 71,
                     dataLabels: {
                         format: '{point.percentage:.0f} %',
@@ -519,7 +523,7 @@ $(function () {
             data: [
                 {
                     name: 'Score',
-                    color: '#54a0ed',
+                    color: '#0079E7', //'#54a0ed',
                     y: 35,
                     dataLabels: {
                         format: '{point.y}',
