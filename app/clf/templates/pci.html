@@ -1,0 +1,36 @@
+{% extends 'index.html' %}
+{% block head %}
+{{ super() }}
+    <title>Predictive Customer Intelligence</title>
+{% endblock %}
+{% block body %}
+{{ super() }}
+        <div id="pci" class="container" >
+                        <h3>Predictive Customer Intelligence</h3>
+                <hr />
+            <div class="row">
+                <div id="Col1Pie"></div>
+            </div>
+            <hr />
+        </div> <!-- id="pci" class="container" -->
+{% endblock %}
+
+{% block bottom %}
+{{ super() }}
+
+<script src="/static/js/highcharts.js"></script>
+
+<script>
+    $(function() {
+        Highcharts.setOptions({
+            colors: ['#7fb005', '#ed020b', '#54a0ed', '#ffb446'], 
+        });
+        $('#Col1Pie')
+            .highcharts({chart: {type: 'pie',  height: 200}, 
+                title: {text: '', verticalAlign: 'bottom', style: { "color": "rgb(112, 112, 112)", "fill": "rgb(112, 112, 112)", "fontSize": "12px" }, }, 
+                series: [{name: 'Feedback',data: [{name:'positive: 91%', y:91}, {name:'negative: 9%', y:9}]}],
+                credits:{enabled:false},
+            });
+    });
+</script>
+{% endblock %}
