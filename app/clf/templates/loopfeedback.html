@@ -134,8 +134,8 @@
 {{ super() }}
 <script>
     function updateData(){
+        $("#stream").html('');
         $.getJSON('/data', function(data){
-            $("#stream").html('');
             $.each(data['data'], function (block_i,tweet){
                 if (block_i == 0){
                     var t = '<div class="row first tweet">';
