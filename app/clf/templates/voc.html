@@ -87,7 +87,7 @@
                     </select>
                 </div>
             </div>
-			<br />
+            <br />
             <div class='row'>
                 <div class='col-md-6'>
                     <div id="highcharts-total" style='border: 0; width: 100%; height: 300px'></div>
@@ -359,12 +359,19 @@ contains = function(arr, v) {
                 credits:{enabled:false},
             });
         $('#Col1Bar')
-                .highcharts({chart: {type: 'column', height: 200}, 
+                .highcharts({chart: {type: 'column', height: 230}, 
                              title: {text: '', verticalAlign: 'bottom', style: { "color": "rgb(112, 112, 112)", "fill": "rgb(112, 112, 112)", "fontSize": "12px" },}, 
                              legend:{enabled:false},
-                             xAxis: {categories: ['1. Terms', '2. Technical', '3. Not actual', '4. Other']},
-                             yAxis: {title: {text: ''}, gridLineDashStyle: "Dash", allowDecimals: true},
-                             series: [{name: 'complaints',data: [0.16,0.094,0.458,0.29], colorByPoint: true}],
+                             xAxis: {categories: ['Fees and Rates', 'Billing and<br />Payment Process', 'Card Benefits<br />and Features', 'Rewards Program'], 
+                                        labels: {rotation: -90}
+                                    },
+                             yAxis: {title: {text: ''}, gridLineDashStyle: "Dash", allowDecimals: true, 
+                                    labels: {formatter:function() {var pcnt = (this.value) * 100;return Highcharts.numberFormat(pcnt,0,',') + '%';} }
+                                    },
+                             "tooltip": {formatter: function () {return '<span style="color:'+this.color+'">\u25CF</span> '+this.key+': <b>' 
+                                            + Math.round(this.y*100) +' %</b><br/>';}
+                                        },
+                             series: [{name: 'complaints',data: [0.16,0.10,0.45,0.29], colorByPoint: true}],
                              credits:{enabled:false},
                 });
 
@@ -376,11 +383,18 @@ contains = function(arr, v) {
                 credits:{enabled:false},
             });
         $('#Col2Bar')
-                .highcharts({chart: {type: 'column', height: 200}, 
+                .highcharts({chart: {type: 'column', height: 230}, 
                              title: {text: '', verticalAlign: 'bottom', style: { "color": "rgb(112, 112, 112)", "fill": "rgb(112, 112, 112)", "fontSize": "12px" },}, 
                              legend:{enabled:false},
-                             xAxis: {categories: ['1. Terms', '2. Technical', '3. Not actual', '4. Other']},
-                             yAxis: {title: {text: ''}, gridLineDashStyle: "Dash", allowDecimals: true},
+                             xAxis: {categories: ['Fees and Rates', 'Billing and<br />Payment Process', 'Card Benefits<br />and Features', 'Rewards Program'], 
+                                        labels: {rotation: -90}
+                                    },
+                             yAxis: {title: {text: ''}, gridLineDashStyle: "Dash", allowDecimals: true, 
+                                    labels: {formatter:function() {var pcnt = (this.value) * 100;return Highcharts.numberFormat(pcnt,0,',') + '%';} }
+                                    },
+                             "tooltip": {formatter: function () {return '<span style="color:'+this.color+'">\u25CF</span> '+this.key+': <b>' 
+                                            + Math.round(this.y*100) +' %</b><br/>';}
+                                        },
                              series: [{name: 'complaints',data: [0.36,0.06,0.31,0.27], colorByPoint: true}],
                              credits:{enabled:false},
                 });
@@ -393,11 +407,18 @@ contains = function(arr, v) {
                 credits:{enabled:false},
             });
         $('#Col3Bar')
-                .highcharts({chart: {type: 'column', height: 200}, 
+                .highcharts({chart: {type: 'column', height: 230}, 
                              title: {text: '', verticalAlign: 'bottom', style: { "color": "rgb(112, 112, 112)", "fill": "rgb(112, 112, 112)", "fontSize": "12px" },}, 
                              legend:{enabled:false},
-                             xAxis: {categories: ['1. Terms', '2. Technical', '3. Not actual', '4. Other']},
-                             yAxis: {title: {text: ''}, gridLineDashStyle: "Dash", allowDecimals: true},
+                             xAxis: {categories: ['Fees and Rates', 'Billing and<br />Payment Process', 'Card Benefits<br />and Features', 'Rewards Program'], 
+                                        labels: {rotation: -90}
+                                    },
+                             yAxis: {title: {text: ''}, gridLineDashStyle: "Dash", allowDecimals: true, 
+                                    labels: {formatter:function() {var pcnt = (this.value) * 100;return Highcharts.numberFormat(pcnt,0,',') + '%';} }
+                                    },
+                             "tooltip": {formatter: function () {return '<span style="color:'+this.color+'">\u25CF</span> '+this.key+': <b>' 
+                                            + Math.round(this.y*100) +' %</b><br/>';}
+                                        },
                              series: [{name: 'complaints',data: [0.23,0.1,0.07,0.61], colorByPoint: true}],
                              credits:{enabled:false},
                 });
@@ -410,11 +431,18 @@ contains = function(arr, v) {
                 credits:{enabled:false},
             });
         $('#Col4Bar')
-                .highcharts({chart: {type: 'column', height: 200}, 
+                .highcharts({chart: {type: 'column', height: 230}, 
                              title: {text: '', verticalAlign: 'bottom', style: { "color": "rgb(112, 112, 112)", "fill": "rgb(112, 112, 112)", "fontSize": "12px" },}, 
                              legend:{enabled:false},
-                             xAxis: {categories: ['1. Terms', '2. Technical', '3. Not actual', '4. Other']},
-                             yAxis: {title: {text: ''}, gridLineDashStyle: "Dash", allowDecimals: true},
+                             xAxis: {categories: ['Fees and Rates', 'Billing and<br />Payment Process', 'Card Benefits<br />and Features', 'Rewards Program'], 
+                                        labels: {rotation: -90}
+                                    },
+                             yAxis: {title: {text: ''}, gridLineDashStyle: "Dash", allowDecimals: true, 
+                                    labels: {formatter:function() {var pcnt = (this.value) * 100;return Highcharts.numberFormat(pcnt,0,',') + '%';} }
+                                    },
+                             "tooltip": {formatter: function () {return '<span style="color:'+this.color+'">\u25CF</span> '+this.key+': <b>' 
+                                            + Math.round(this.y*100) +' %</b><br/>';}
+                                        },
                              series: [{name: 'complaints',data: [0.24,0.36,0.13,0.27], colorByPoint: true}],
                              credits:{enabled:false},
                 });
