@@ -44,7 +44,7 @@
             margin: 0;
             padding: 15 0 15 0px;
         }
-        .text-box h4{
+        .text-box h4, h5{
             text-align: center;
         }
         
@@ -85,6 +85,10 @@
         .row{
             overflow: hidden;
             padding-bottom: 10px;
+        }
+        
+        .alert-hidden{
+            display:none;
         }
 
         [class*="col-"]{
@@ -169,18 +173,24 @@
             <div style="padding-right: 15px;padding-left: 15px;">
                 <div class="row" style="margin-bottom: 15px;">
                     <div class="col-cont text-box">
-                        <h4>Client News</h4>
+                        <h4><i class="fa fa-users"></i> Client News</h4>
                         <div class="list-group">
-                            <a href="?client=Kevin%20Arrix" class="list-group-item">
-                                <h4 class="list-group-item-heading">New Appointment<br>Kevin Arrix</h4>
+                            <a href="?name=Kevin%20Arrix" class="list-group-item">
+                                <div class="list-group-item-heading">
+                                    <h5 class="list-group-item-heading">New Appointment</h5>
+                                    <h4 class="list-group-item-heading">Kevin Arrix</h4>
+                                </div>
                                 <p class="list-group-item-text"><span class="text-muted">2015-10-06</span><br>Verve Names Kevin Arrix Chief Revenue Officer Verve, the leader in location-based mobile advertising, today announced th...</p>
                             </a>
-                            <a href="?client=client=Lisa%20Speransky" class="list-group-item">
-                                <h4 class="list-group-item-heading">New Appointment<br>Lisa Speransky</h4>
+                            <a href="?name=Lisa%20Speransky" class="list-group-item">
+                                <div class="list-group-item-heading">
+                                    <h5 class="list-group-item-heading">New Appointment</h5>
+                                    <h4 class="list-group-item-heading">Lisa Speransky</h4>
+                                </div>
                                 <p class="list-group-item-text"><span class="text-muted">2015-10-06</span><br>BEABA USA Announces New CEO BEABA, internationally known juvenile product company, and creator of first steam cooker and...</p>
                             </a>
                         </div>
-                        <h4>Client Company M&amp;A News</h4>
+                        <h4><i class="fa fa-briefcase"></i> Client Company M&amp;A News</h4>
                         <div class="list-group">
                             <a href="#" class="list-group-item">
                                 <h4 class="list-group-item-heading">Merger/Acquisition</h4>
@@ -195,7 +205,7 @@
                                 <p class="list-group-item-text"><span class="text-muted">2015-08-26</span><br>BlackRock to Acquire FutureAdvisor BlackRock, Inc. (NYSE:BLK) has entered into a definitive agreement to acquire FutureA...</p>
                             </a>
                         </div>
-                        <h4>SocialNews Social Media Insights</h4>
+                        <h4><i class="fa fa-share-alt"></i> SocialNews Social Media Insights</h4>
                         <hr style="margin:15px">
                     </div>
                 </div>
@@ -213,7 +223,7 @@
             <div class="row" style="margin-bottom: 15px;">
                 <div class="col-sm-8">
                     <div class="col-cont text-box"> <!-- Column chart -->
-                        <h4>Assets</h4>
+                        <h4><i class="fa fa-usd"></i> Assets</h4>
                         <div class="col-sm-6">
                             <div id="columnChart" style="margin-bottom:7px;"></div>
                         </div>
@@ -231,7 +241,7 @@
                 </div>
                 <div class="col-sm-4"> <!-- Property info, "Network" button -->
                     <div class="col-cont text-box">
-                        <h4>Properties</h4>
+                        <h4><i class="fa fa-home"></i> Properties</h4>
                         <div style="max-height: 180px; overflow-y: auto;  margin-bottom:7px;">
                             <!-- Properties Table -->
                             <table style="font-size:80%;width:100%">
@@ -269,7 +279,7 @@
             <div class="row" style="margin-bottom: 15px;">
                 <div class="col-md-12">
                     <div class="col-cont text-box">
-                        <h4>Events</h4>
+                        <h4><i class="fa fa-calendar"></i> Events</h4>
                         <table style="width:100%">
                             <thead><tr><th style="width:25%;"><div style="width:100px">Event</div></th><th>Date</th><th>Source</th><th>Category</th><th>Sales Insights</th></tr></thead>
                             <tbody>
@@ -287,7 +297,7 @@
             <div class="row" style="margin-bottom: 15px;">
                 <div class="col-md-12">
                     <div class="col-cont text-box">
-                        <h4>Relevant news</h4>
+                        <h4><i class="fa fa-fw fa-newspaper-o"></i> Relevant news</h4>
                         <table style="width:100%">
                             <thead><tr><th style="width:33%;">Relevant News</th><th style="width:33%;text-align:center;">Date</th><th>Source</th></tr></thead>
                             <tbody>
@@ -301,7 +311,7 @@
             <div class="row" style="margin-bottom: 15px;">
                 <div class="col-md-12">
                     <div class="col-cont text-box">
-                        <h4>Compensation</h4>
+                        <h4><i class="fa fa-money"></i> Compensation</h4>
                         <table style="width:100%">
                             <thead><tr><th style="width:30%;">Name</th><th>Position</th><th>Compensation</th></tr></thead>
                             <tbody><tr><td>Frank S. Hermance    Chairman</td><td>Chief Executive Officer and Chairman of Executive Committee in Ametek Inc.</td><td>$1.7M</td></tr>
@@ -321,30 +331,47 @@
     {% if status == 'Not found' %}
     <h1><span class='text-muted'>{{ name }}</span> was not found</h1>
     {% endif %}
+    <a class="next-btn" style="position: absolute; right:5px; top: 5px;font-size:70%;">next</a>
+    <script>
+        $('.next-btn').click(function() {
+            $('.alert-hidden').removeClass('alert-hidden');
+        });
+    </script>
     
     <div class="row">
         <div class='col-md-4'>
             <div style="padding-right: 15px;padding-left: 15px;">
                 <div class="row" style="margin-bottom: 15px;">
                     <div class="col-cont text-box">
-                        <h4>Client News</h4>
-                        <div class="list-group" style="background-color:#FFAAAA;">
-                            <a href="?name=deborah%20winshel" class="list-group-item" style="background-color:rgba(0,0,0,0);">
-                                <h4 class="list-group-item-heading">New Appointment<br><br>Deborah Winshel</h4>
-                            </a>
+                        <div class="alert-hidden">
+                            <h4><i class="fa fa-exclamation-triangle"></i> Alerts</h4>
+                            <div class="list-group" style="background-color:#FFAAAA;">
+                                <a href="?name=deborah%20winshel" class="list-group-item" style="background-color:rgba(0,0,0,0);">
+                                    <div class="list-group-item-heading">
+                                        <h5 class="list-group-item-heading">New Appointment</h5>
+                                        <h4 class="list-group-item-heading">Deborah Winshel</h4>
+                                    </div>
+                                </a>
+                            </div>
                         </div>
-                        <h4>Client News</h4>
+                        <h4><i class="fa fa-users"></i> Client News</h4>
                         <div class="list-group">
                             <a href="?name=Kevin%20Arrix" class="list-group-item">
-                                <h4 class="list-group-item-heading">New Appointment<br>Kevin Arrix</h4>
+                                <div class="list-group-item-heading">
+                                    <h5 class="list-group-item-heading">New Appointment</h5>
+                                    <h4 class="list-group-item-heading">Kevin Arrix</h4>
+                                </div>
                                 <p class="list-group-item-text"><span class="text-muted">2015-10-06</span><br>Verve Names Kevin Arrix Chief Revenue Officer Verve, the leader in location-based mobile advertising, today announced th...</p>
                             </a>
                             <a href="?name=Lisa%20Speransky" class="list-group-item">
-                                <h4 class="list-group-item-heading">New Appointment<br>Lisa Speransky</h4>
+                                <div class="list-group-item-heading">
+                                    <h5 class="list-group-item-heading">New Appointment</h5>
+                                    <h4 class="list-group-item-heading">Lisa Speransky</h4>
+                                </div>
                                 <p class="list-group-item-text"><span class="text-muted">2015-10-06</span><br>BEABA USA Announces New CEO BEABA, internationally known juvenile product company, and creator of first steam cooker and...</p>
                             </a>
                         </div>
-                        <h4>Client Company M&amp;A News</h4>
+                        <h4><i class="fa fa-briefcase"></i> Client Company M&amp;A News</h4>
                         <div class="list-group">
                             <a href="#" class="list-group-item">
                                 <h4 class="list-group-item-heading">Merger/Acquisition</h4>
@@ -359,7 +386,7 @@
                                 <p class="list-group-item-text"><span class="text-muted">2015-08-26</span><br>BlackRock to Acquire FutureAdvisor BlackRock, Inc. (NYSE:BLK) has entered into a definitive agreement to acquire FutureA...</p>
                             </a>
                         </div>
-                        <h4>SocialNews Social Media Insights</h4>
+                        <h4><i class="fa fa-share-alt"></i> SocialNews Social Media Insights</h4>
                         <hr style="margin:15px">
                     </div>
                 </div>
@@ -369,7 +396,7 @@
             <div style="padding-right: 15px;padding-left: 15px;">
                 <div class="row" style="margin-bottom: 15px;">
                     <div class="col-cont text-box">
-                        <h4>Search</h4>
+                        <h4><i class="fa fa-search"></i> Search</h4>
                         <div class="form-group">
                             <label for="usr">Name:</label>
                             <input type="text" class="form-control" id="iname">
@@ -387,7 +414,6 @@
 
     <script>
         $('#search_btn').on('click', function (e) {
-            debugger;
             window.location.href = encodeURI('?name='+$('#iname').val());
         })
     </script>
@@ -583,7 +609,7 @@
 
   $(function() {
     Highcharts.setOptions({
-        colors: ['#7fb005', '#54a0ed', '#ed020b', '#ffb446'], 
+        colors: ['#0079E7'], 
     });
     chart = new Highcharts.Chart({chart: {type: 'column', height: 200, renderTo: "columnChart"}, 
                        title: {text: '', verticalAlign: 'bottom', style: { "color": "rgb(112, 112, 112)", "fill": "rgb(112, 112, 112)", "fontSize": "12px" },}, 

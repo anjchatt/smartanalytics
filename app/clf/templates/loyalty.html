@@ -10,6 +10,8 @@
         <style>
             h4{
                 color:rgb(340,115,30);
+                margin-top: 5px;
+                margin-bottom: 5px;
             }
             .vis-item.vis-selected {
                 background-color: rgba(340,115,30,0.2);
@@ -38,8 +40,8 @@
                 padding: 5 15 5 15px;
                 /*width:50%;*/
             }
-            .main-box hr{
-                margin: 10 0 10 0px;
+            hr{
+                margin: 2.5 0 2.5 0px;
             }
             
             .text-box h4{
@@ -48,7 +50,7 @@
             .text-box{
                 background:#fff;
                 margin: 0;
-                padding: 15 0 15 0px;
+                padding: 5 0 15 0px;
             }
             
             .first-col {
@@ -87,8 +89,7 @@
             }
         </style>
 
-        <br>
-        <div id="Loyalty" class="container-fluid" style='margin-left:20px;margin-rigth:20px;'>
+        <div id="Loyalty" class="container-fluid" style='margin-left:15px;margin-rigth:15px;margin-top:5px;'>
             <div class="row">
                 <div class="col-md-3">
                     <div class='name-box' style="display:inline-block; width:100%;">
@@ -105,10 +106,12 @@
                     <div class="col-cont text-box">
                         <h4><img src="/static/images/icons/people.png" height=24px></h4>
                         <table>
-                            <tr>
-                                <td class='first-col'>Customer Age</td><td>32</td></tr>
+                            <tr><td class='first-col'>Customer Age</td><td>32</td></tr>
                             <tr><td class='first-col'>Status</td><td>Single</td></tr>
                             <tr><td class='first-col'>Number of Children</td><td>-</td></tr>
+                            <tr><td class='first-col'>Address</td><td>235 W 56th St, New York</td></tr>
+                            <tr><td class='first-col'>Phone</td><td>212-2222-245</td></tr>
+                            <tr><td class='first-col'>E-mail</td><td>sms@capgemini.com</td></tr>
                         </table>
                     </div>
                 </div>
@@ -146,7 +149,6 @@
                     </div>
                 </div>
             </div> <!-- class="row" -->
-            <br>
             <div class='row'>
                 <div class="col-md-3">
                     <div class="col-cont text-box main-box">
@@ -186,8 +188,7 @@
                     </div>
                 </div>
             </div>
-            <br>
-            <div class="row">
+            <div class="row" style="margin-top:5px">
                 <div class="col-md-12">
                     <div class="text-box"> 
                     <!-- put timeline here -->
@@ -195,7 +196,6 @@
                     </div>
                 </div>
             </div> <!-- class="row" -->
-            <br>
         </div> <!-- id="Loyalty" class="container" -->
 {% endblock %}
 
@@ -250,7 +250,7 @@ L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: o
      "Upcomming event":"The Nutcracker opera","Event time":"05:30 PM","Current Location lng":-73.7781391,"Current Location lat":40.6413762,
      "Previous Location lng":49.0096906,"Previous Location lat":2.5479245,"Map Zoom":14,"Event Location lng":-73.9855873,"Event Location lat":40.7724407,
      "Home Location lng":-73.9826006,"Home Location lat":40.7659873,
-     "Latest SMS":"Hey! Are you looking for taxi? We have a unique offer for you! Response to this message, get Yellow Cab right to your doors now and get free next trip.",
+     "Latest SMS":"Today’s special offer!!!! If you take Yellow Taxi ride, get 25% cash back, promo code : #Offer1",
      "Opportunity Message":"Opportunity detected<br><br><i>System detect an opportunity to offer taxi service<\/i>", "Icon":null, "Event Type": "Offer"},
     {"Current Date":"23-10-2015","Current Time":"11:30 AM","Last Action":"Twitter feed","Weather":"Sunny","Transaction Amount":"$ 25.00",
      "Merchant Type":"Taxi",
@@ -268,7 +268,7 @@ L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: o
      "Upcomming event":"The Nutcracker opera","Event time":"05:30 PM","Current Location lng":-73.9826006,"Current Location lat":40.7659873,
      "Previous Location lng":49.0096906,"Previous Location lat":2.5479245,"Map Zoom":14,"Event Location lng":-73.9855873,
      "Event Location lat":40.7724407,"Home Location lng":-73.9826006,"Home Location lat":40.7659873,
-     "Latest SMS":"We just thought you might be interested in nearest grocery stores where you can earn additional bonus points. Here is the list...",
+     "Latest SMS":"Here are list of nearest grocery stores where you can earn additional bonus points...",
      "Opportunity Message":"Opportunity detected<br><br><i>System detect an opportunity to offer bonus points in partner's store<\/i>", "Icon":null, "Event Type": "Offer"},
     {"Current Date":"23-10-2015","Current Time":"1:05 PM","Last Action":"Transaction","Weather":"Cloudy","Transaction Amount":"$ 168.31",
      "Merchant Type":"Grocery",
@@ -294,7 +294,7 @@ L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: o
      "Upcomming event":"The Nutcracker opera","Event time":"05:30 PM","Current Location lng":-73.9855873,"Current Location lat":40.7724407,
      "Previous Location lng":49.0096906,"Previous Location lat":2.5479245,"Map Zoom":16,"Event Location lng":-73.9855873,"Event Location lat":40.7724407,
      "Home Location lng":-73.9826006,"Home Location lat":40.7659873,
-     "Latest SMS":"Don't miss a chance to make your beloved happy. Respond to this messgae with address and time, and we will deliver there a bouquet of 13 roses. We will withdraw $10 right from your bank account automatically. 33 Flowers and your bank.",
+     "Latest SMS":"Make your beloved happy! Respond with address and time, and we'll deliver a bouquet of 12 roses just for $10.",
      "Opportunity Message":"Opportunity detected<br><br><i>System detect an opportunity to offer flowers delivery service<\/i>", "Icon":null, "Event Type": "Offer"},
     {"Current Date":"23-10-2015","Current Time":"09:05 PM", "Last Action":"Transaction","Weather":"Cloudy","Transaction Amount":"$ 79.61","Merchant Type":"Restaurant",
      "Last SN message":"Liked: Mary Jane is going to <i>The Nutcracker opera<\/i>",
@@ -309,7 +309,7 @@ L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: o
      "Last SN message source":"facebook",
      "Last SN activity time":"3:50 PM","Upcomming event":null,"Event time":"-","Current Location lng":-73.9720554739,"Current Location lat":40.7627931175,
      "Previous Location lng":49.0096906,"Previous Location lat":2.5479245,"Map Zoom":14,"Event Location lng":-73.9855873,"Event Location lat":40.7724407,
-     "Home Location lng":-73.9826006,"Home Location lat":40.7659873,"Latest SMS":"Hey, if you need a taxi just answer to this text back to this message with your final distanation.",
+     "Home Location lng":-73.9826006,"Home Location lat":40.7659873,"Latest SMS":"Hey, if you need a taxi just answer with your final destination, promo code : #Offer2",
      "Opportunity Message":"Opportunity detected<br><br><i>System detect an opportunity to offer taxi service<\/i>", "Icon":null, "Event Type": "Offer"},
     {"Current Date":"23-10-2015", "Current Time":"10:05 PM","Last Action":"Facebook activity","Weather":"Raining","Transaction Amount":"$ 79.61","Merchant Type":"Restaurant",
      "Last SN message":"I made it! I made her a proposal and she said YES! I am the happiest man alive! #engaged",
@@ -324,7 +324,7 @@ L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: o
      "Last SN message source":"facebook",
      "Last SN activity time":"10:56 PM","Upcomming event":null,"Event time":"-","Current Location lng":-73.9826006,"Current Location lat":40.7659873,
      "Previous Location lng":49.0096906,"Previous Location lat":2.5479245,"Map Zoom":14,"Event Location lng":-73.9855873,"Event Location lat":40.7724407,
-     "Home Location lng":-73.9826006,"Home Location lat":40.7659873,"Latest SMS":"If you are planning a travel now is the best time to join our Loyal Traveler and get your amazing discounts.",
+     "Home Location lng":-73.9826006,"Home Location lat":40.7659873,"Latest SMS":"Join our Loyal Traveler program and get your amazing discounts!",
      "Opportunity Message":"Opportunity detected<br><br><i>System detect an opportunity to offer partner airline service<\/i>", "Icon":null, "Event Type": "Offer"}
     ];
 
@@ -363,10 +363,10 @@ L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: o
     //row['content'] =  "" + (i+1) + ": " + data[i]['Event Type'];
     row['content'] =  '<table style="margin:-5px;"><tr><td style="background:'+icon_bg+';padding:5px;">'+icon+'</td><td style="padding:5px;">'+data[i]['Event Type']+'</td><td style="padding:5px;background:#eee">'+'#'+i+'</td></tr></table>';
     row['start'] = data[i]['Current Date'].split('-').reverse().join('-') + 'T' + am_pm_to_hours(data[i]['Current Time'].replace('<hl>', '').replace('</hl>', ''));
-	
-	//if(data[i]['Icon']) {
-	//	row['content'] = '<i class="fa fa-fw ' + data[i]['Icon'] + '" style="color:black"></i>' + row['content']
-	//}
+    
+    //if(data[i]['Icon']) {
+    //  row['content'] = '<i class="fa fa-fw ' + data[i]['Icon'] + '" style="color:black"></i>' + row['content']
+    //}
     dataset.push(row);
   }
   // Create a DataSet (allows two way data-binding)

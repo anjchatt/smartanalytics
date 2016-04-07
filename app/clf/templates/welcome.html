@@ -3,6 +3,81 @@
 {{ super() }}
     <title>Smart Analytics Platform</title>
 <style>
+    #circle-div {
+        padding: 7em 0px 5em;
+    }
+    #logo_overlay {
+        display: block;
+        position: absolute;
+        top: 330px;
+        left: 50%;
+        margin: -200px -30vw;
+        width: 60vw;
+    }
+
+    @-webkit-keyframes fadein { from { opacity:0; } to { opacity:1; } }
+    @-moz-keyframes fadein { from { opacity:0; } to { opacity:1; } }
+    @-o-keyframes fadein { from { opacity:0; } to { opacity:1; } }
+    @keyframes fadein { from { opacity:0; } to { opacity:1; } }
+
+    @-webkit-keyframes fadeout { from { opacity:1; } to { opacity:0; } }
+    @-moz-keyframes fadeout { from { opacity:1; } to { opacity:0; } }
+    @-o-keyframes fadeout { from { opacity:1; } to { opacity:0; } }
+    @keyframes fadeout { from { opacity:1; } to { opacity:0; } }
+
+    .fadeOut {
+        opacity:1;
+        -webkit-animation:fadeout ease-in 1;
+        -moz-animation:fadeout ease-in 1;
+        -o-animation:fadeout ease-in 1;
+        animation:fadeout ease-in 1;
+        -webkit-animation-fill-mode:forwards;
+        -moz-animation-fill-mode:forwards;
+        -o-animation-fill-mode:forwards;
+        animation-fill-mode:forwards;    
+    }
+    .fadeIn {
+        opacity:0;
+        -webkit-animation:fadein ease 1;
+        -moz-animation:fadein ease 1;
+        -o-animation:fadein ease 1;
+        animation:fadein ease 1;
+        -webkit-animation-fill-mode:forwards;
+        -moz-animation-fill-mode:forwards;
+        -o-animation-fill-mode:forwards;
+        animation-fill-mode:forwards;
+    }
+    .fadeIn-Delay-3s {
+        -webkit-animation-delay:3s;
+        -moz-animation-delay:3s;
+        -o-animation-delay:3s;
+        animation-delay:3s;
+    }
+    .fadeOut-Delay-3s {
+        -webkit-animation-delay:3s;
+        -moz-animation-delay:3s;
+        -o-animation-delay:3s;
+        animation-delay:3s;
+    }
+    .fadeIn-2s {
+        -webkit-animation-duration:2s;
+        -moz-animation-duration:2s;
+        -o-animation-duration:2s;
+        animation-duration:2s;
+    }
+    .fadeIn-3s {
+        -webkit-animation-duration:3s;
+        -moz-animation-duration:3s;
+        -o-animation-duration:3s;
+        animation-duration:3s;
+    }
+    .fadeOut-3s {
+        -webkit-animation-duration:3s;
+        -moz-animation-duration:3s;
+        -o-animation-duration:3s;
+        animation-duration:3s;
+    }
+
     .circle-container {
       position: relative;
       width: 30em;
@@ -10,7 +85,7 @@
       border-radius: 50%;
       padding: 0;
       list-style: none;
-      margin: 10em auto 0;
+      margin: 0px auto 0px;
       border: solid 10px #54a0ed;
       box-shadow: 0 0 30px #54a0ed;
     }
@@ -91,7 +166,7 @@
     }
     html { max-height: 100vh;}
     body {
-		height: 85%; /* fix for footer to be on the bottom of the page */
+        height: 100%; /* fix for footer to be on the bottom of the page */
         /*min-height: 700px;*/
     }
 </style>
@@ -99,17 +174,20 @@
 {% endblock %}
 {% block body %}
 {{ super() }}
-<div style="height: 520">
-	<ul class='circle-container'>
-	  <li><a href='/720page'><div class="crop"><img src='static/images/720.png'></div></a></li>
-	  <li><a href='/loopfeedback'><div class="crop"><img src='static/images/clf.png'></div></a></li>
-	  <li><a href='/wm'><div class="crop"><img src='static/images/wm.png'></div></a></li>
-	  <li><a href='#'><div class="crop"><img src='static/images/pci.png'></div></a></li>
-	  <li><a href='/loyalty'><div class="crop"><img src='static/images/lm.png'></div></a></li>
-	  <li><a href='/voc'><div class="crop"><img src='static/images/voc.png'></div></a></li>
-	  <li><a href='/map'><div class="crop"><img src='static/images/nbo.png'></div></a></li>
-	  <li><a href='#'><img id='center' src='static/images/center.png'></a></li>
-	</ul>
+<div id="circle-div" class="fadeIn fadeIn-2s fadeIn-Delay-3s">
+    <ul class='circle-container'>
+      <li><a href='/720page/test#'><div class="crop"><img src='static/images/720.png'></div></a></li>
+      <li><a href='/loopfeedback'><div class="crop"><img src='static/images/clf.png'></div></a></li>
+      <li><a href='/wm'><div class="crop"><img src='static/images/wm.png'></div></a></li>
+      <li><a href='/pci'><div class="crop"><img src='static/images/pci.png'></div></a></li>
+      <li><a href='/loyalty'><div class="crop"><img src='static/images/lm.png'></div></a></li>
+      <li><a href='/voc'><div class="crop"><img src='static/images/voc.png'></div></a></li>
+      <li><a href='/map'><div class="crop"><img src='static/images/nbo.png'></div></a></li>
+      <li><a href='#'><img id='center' src='static/images/center.png'></a></li>
+    </ul>
+</div>
+<div id="logo_overlay" class="fadeOut fadeOut-3s">
+    <img src="/static/images/logo_large.png" style="width: 90%;"></img>
 </div>
 {% endblock %}
 
@@ -119,6 +197,13 @@
 <script>
     $('.circle-container').children().each(function() {
         $(this).addClass('item'+($(this).index() + 1));
+    });
+    $("#logo_overlay").on("animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd",
+        function(e){
+            // remove event handler
+            $(this).off(e);
+            // remove Logo from DOM
+            $("#logo_overlay").html("")
     });
 </script>
     

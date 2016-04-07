@@ -49,22 +49,24 @@
 {% block body %}
 {{ super() }}
 
-<div class="col-md-9 fixed" style="overflow:hidden; height:100%">
-    <div id="map" style="height:100%; width=60%"></div>
-</div>
-<div class="col-md-3 scrollit" style="background:#fff; overflow-y:scroll; height:100%">
-    <!--h1>TEST</h1-->
-    <table id="example" class="display" cellspacing="0" width="100%">
-        <thead>
-            <tr>
-                <th>Importance</th>
-                <th>ID</th>                
-                <th>Customer</th>
-                <th>Attrition</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-    </table>
+<div class='container-fluid'>
+    <div class="col-md-9 fixed" style="overflow:hidden; height:100%">
+        <div id="map" style="height:100%; width=60%"></div>
+    </div>
+    <div class="col-md-3 scrollit" style="background:#fff; overflow-y:scroll; height:100%">
+        <!--h1>TEST</h1-->
+        <table id="example" class="display" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>Importance</th>
+                    <th>ID</th>                
+                    <th>Customer</th>
+                    <th>Attrition</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
 </div>
 
 {% endblock %}
