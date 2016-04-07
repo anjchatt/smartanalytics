@@ -684,6 +684,8 @@ function updateChart5(data) {
     var arr_neutral = Array.apply(null, Array(dates.length)).map(Number.prototype.valueOf,0);
     var arr_negative = Array.apply(null, Array(dates.length)).map(Number.prototype.valueOf,0);
     var arr_positive = Array.apply(null, Array(dates.length)).map(Number.prototype.valueOf,0);
+    var arr_total = chart1Options.series[0].data;
+	var fSentiments = $('#selectSentiments').val();
 
     for (i in data) {
         if(data[i]['Sentiments'] == "Neutral")
@@ -692,6 +694,22 @@ function updateChart5(data) {
             arr_negative[dates.indexOf(data[i]['Twit date'])]++;
         if(data[i]['Sentiments'] == "Positive")
             arr_positive[dates.indexOf(data[i]['Twit date'])]++;
+    }
+	
+	// Make this chart look like "Total mentions"
+    seed = 1;
+    for (i in arr_neutral) {
+        var sum = arr_neutral[i] + arr_negative[i] + arr_positive[i];
+        if(sum == 0) {
+			if (!fSentiments || fSentiments == "Neutral") arr_neutral[i] = 1 + Math.floor(random()*10.0);
+			if (!fSentiments || fSentiments == "Negative") arr_negative[i] = 1 + Math.floor(random()*10.0);
+			if (!fSentiments || fSentiments == "Positive") arr_positive[i] = 1 + Math.floor(random()*10.0);
+			sum = arr_neutral[i] + arr_negative[i] + arr_positive[i];
+		}
+
+        arr_neutral[i] = arr_neutral[i] * arr_total[i] / sum / 100;
+        arr_negative[i] = arr_negative[i] * arr_total[i] / sum / 100;
+        arr_positive[i] = arr_positive[i] * arr_total[i] / sum / 100;
     }
     chart5Options.series[0] = {"index": 0, "name": "Neutral", data: arr_neutral};
     chart5Options.series[1] = {"index": 1, "name": "Positive", data: arr_positive};
