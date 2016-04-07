@@ -4,6 +4,17 @@
     <title>Predictive Customer Intelligence</title>
     <style>
         .dataset { cursor: pointer; }
+        #loadingDiv {
+            display: block;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin: -50px;
+            width: 100px;
+            height: 100px
+            opacity: 0.5;
+            z-index: 105;
+        }
     </style>
 {% endblock %}
 {% block body %}
@@ -22,15 +33,18 @@
                 </div>
                 <div class='col-md-10'>
                     <div class="row">
-                        <form>
+                        <form id="queryForm">
                             <div class="form-group">
                                 <label for="query">Enter you query</label>
-                                <input type="text" class="form-control" id="query" placeholder="Enter you query and press <<Enter>>">
+                                <input type="text" class="form-control" id="query" name="query" placeholder="Enter you query and press <<Enter>>">
                             </div>
                         </form>
                     </div>
                     <div class="row">
                         <div id="Col1Pie"></div>
+                        <div id="loadingDiv"><i class="fa fa-refresh fa-spin" style="font-size: 100px; font-color: lightgray"></i></div>
+                        <hr />
+                        <div id="send_result"></div>
                     </div>
                 </div>
             </div>
@@ -55,5 +69,35 @@
                 credits:{enabled:false},
             });
     });
+    
+    $(function() {
+        var $loading = $('#loadingDiv').hide();
+        $(document)
+            .ajaxStart(function () {
+            $loading.show();
+        })
+            .ajaxStop(function () {
+            $loading.hide();
+        });
+    });
+    $("#queryForm").submit(function(event){
+        // cancels the form submission
+        event.preventDefault();
+        submitForm();
+    });
+    function submitForm() {
+        $.ajax({ type: "POST",
+            url: "/send_pci_query",
+            data: $('form#queryForm').serialize(),
+            success: function(msg){
+                $("#send_result").html(msg)
+                $('#Col1Pie').highcharts();
+            },
+            error: function(){
+                alert("fail send request to server");
+            }
+        });
+    }
+
 </script>
 {% endblock %}
