@@ -1,0 +1,216 @@
+[{
+	r'name' : r'percentage',
+	r'group' : r'action',
+	r'keywords' : [
+		r'(?i)\bpercent']
+},{
+	r'name' : r'scenario',
+	r'group' : r'action',
+	r'keywords' : [
+		r'(?i)\bwho\b']
+},{
+	r'name' : r'group',
+	r'group' : r'action',
+	r'keywords' : [
+		r'(?i)\bgroup(ed)? by\b', r'(?i)\bbucket(ed)? by\b',
+		r'(?i)\bdistribut']
+},{
+	r'name' : r'customer',
+	r'group' : r'parameter',
+	r'type' : r'special',
+	r'keywords' : [
+		r'(?i)\bcustomers?\b', r'(?i)\bclients?\b',
+		r'(?i)\bconsumers?\b', r'(?i)\b(fe)?males?\b'],
+	r'categories' : {
+		r'num' : [r'(?i)amount', r'(?i)count', r'(?i)number']
+	}
+},{
+	r'name' : r'age',
+	r'group' : r'parameter',
+	r'type' : r'num',
+	r'keywords' : [r'(?i)\bage', r'(?i)younger', r'(?i)older', r'(?i)old'],
+	r'condition_kw' : {
+		r'<' : [r'(?i)younger', r'(?i)under', r'(?i)smaller'],
+		r'>' : [r'(?i)older', r'(?i)larger', r'(?i)higher']
+	}
+},{
+	r'name' : r'job',
+	r'group' : r'parameter',
+	r'type' : r'cat',
+	r'subtype' : r'independent',
+	r'keywords' : [
+		r'\bseeks?', r'(?i)\bworks?\b', r'(?i)\bstud', r'(?i)\bentrepren',
+		r'\bcollar\b', r'(?i)software', r'(?i)\bengineer', r'(?i)bretire', 
+		r'\bstudent', r'(?i)\bjobs?\b', r'(?i)\bworks?\b', r'\b(un)?employ',
+		r'housemaid', r'(?i)\bmaid', r'(?i)pensioners?'],
+	r'categories' : {
+		r'unemployed' : [r'(?i)\bunemploy\b', r'(?i)not employ', r'(?i)n\St work'],
+		r'management' : [r'(?i)manage'],
+		r'technician' : [r'(?i)software', r'(?i)engineer'],
+		r'entrepreneur' : [r'(?i)startup', r'(?i)\bentrepren'],
+		r'blue-collar' : [r'(?i)manual', r'(?i)factory'],
+		r'retired' : [r'(?i)\bretire', r'(?i)pensioner', r'(?i)\baged\b'],
+		r'student' : [r'(?i)\bstud', r'(?i)\buniversit'],
+		r'housemaid' : [r'(?i)housemaid', r'(?i)waitress', r'(?i)\bmaid'],
+		r'services' : [r'(?i)\bserv'],
+		r'admin.' : [r'(?i)admin'],
+		r'self-employed' : [r'(?i)self\Semployed']
+	}
+},{
+	r'name' : r'marital',
+	r'group' : r'parameter',
+	r'type' : r'cat',
+	r'subtype' : r'independent',
+	r'keywords' : [
+		r'marital', r'(?i)\b(un)?marr', r'(?i)family', r'(?i)\bspouse', r'(?i)divorce',
+		r'\bwed', r'(?i)bride', r'(?i)wife', r'(?i)husband', r'(?i)\bwidowe'],
+	r'categories' : {
+		r'unmarried' : [r'(?i)no spouse', r'(?i)not', r'(?i)\bunmarr', r'(?i)divorce'],
+		r'married' : [r'(?i)family', r'(?i)(with|has|have)', r'(?i)\bmarr']
+	}
+},{
+	r'name' : r'education',
+	r'group' : r'parameter',
+	r'type' : r'cat',
+	r'subtype' : r'sequental',
+	r'keywords' : [
+		r'\b(un)?educat', r'(?i)degree', r'(?i)college'],
+	r'categories' : {
+		r'tertiary' : [r'(?i)university'],
+		r'secondary' : [r'(?i)secondary', r'(?i)college', r'(?i)\beducated\b'],
+		r'primary' : [r'(?i)\buneducated\b', r'(?i)highschool']
+	}
+},{
+	r'name' : r'balance',
+	r'group' : r'parameter',
+	r'type' : r'num',
+	r'keywords' : [r'(?i)balance', r'(?i)\bcash flow\b'],
+	r'condition_kw' : {
+		r'<' : [r'(?i)less', r'(?i)lower'],
+		r'>' : [r'(?i)more', r'(?i)higher', r'(?i)larger']
+	}
+},{
+	r'name' : r'debt_funds',
+	r'group' : r'parameter',
+	r'type' : r'cat',
+	r'subtype' : r'independent',
+	r'keywords' : [r'(?i)debt fund', r'(?i)obligation'],
+	r'categories' : {
+		r'yes' : [r'(?i)ha(s|ve)', r'(?i)\bposses', r'(?i)\bacquir'],
+		r'no' : [r'(?i)ha(s|ve) no', r'(?i)n\St ha(s|ve)']
+	}
+},{
+	r'name' : r'credit_card',
+	r'group' : r'parameter',
+	r'type' : r'cat',
+	r'subtype' : r'independent',
+	r'keywords' : [r'(?i)credit card'],
+	r'categories' : {
+		r'yes' : [r'(?i)ha(s|ve)'],
+		r'no' : [r'(?i)ha(s|ve) no', r'(?i)n\St ha(s|ve)']
+	}
+},{
+	r'name' : r'income',
+	r'group' : r'parameter',
+	r'type' : r'num',
+	r'subtype' : r'independent',
+	r'keywords' : [r'(?i)income', r'(?i)salary'],
+	r'condition_kw' : {
+		r'<' : [r'(?i)less', r'(?i)lower', r'(?i)smaller'],
+		r'>' : [r'(?i)more', r'(?i)higher', r'(?i)larger', r'(?i)bigger']
+	}
+},{
+	r'name' : r'state',
+	r'group' : r'parameter',
+	r'type' : r'cat',
+	r'subtype' : r'independent',
+	r'keywords' : [r'(?i)state', 
+		r'\bAL\b', r'\bAlabama\b',
+		r'\bAK\b', r'\bAlaska\b', 			r'\bAZ\b', r'\bArizona\b',
+		r'\bAR\b', r'\bArkansas\b', 		r'\bCA\b', r'\bCalifornia\b',
+		r'\bCO\b', r'\bColorado\b', 		r'\bCT\b', r'\bConnecticut\b',
+		r'\bDE\b', r'\bDelaware\b', 		r'\bFL\b', r'\bFlorida\b',
+		r'\bGA\b', r'\bGeorgia\b', 			r'\bHI\b', r'\bHawaii\b',
+		r'\bID\b', r'\bIdaho\b',			r'\bIL\b', r'\bIllinois\b',
+		r'\bIN\b', r'\bIndiana\b',			r'\bIA\b', r'\bIowa\b',
+		r'\bKS\b', r'\bKansas\b', 			r'\bKY\b', r'\bKentucky\b',
+		r'\bLA\b', r'\bLouisiana\b', 		r'\bME\b', r'\bMaine\b',
+		r'\bMD\b', r'\bMaryland\b', 		r'\bMA\b', r'\bMassachusetts\b',
+		r'\bMI\b', r'\bMichigan\b', 		r'\bMN\b', r'\bMinnesota\b',
+		r'\bMS\b', r'\bMississippi\b', 		r'\bMO\b', r'\bMissouri\b',
+		r'\bMT\b', r'\bMontana\b', 			r'\bNE\b', r'\bNebraska\b',
+		r'\bNV\b', r'\bNevada\b', 			r'\bNH\b', r'\bNew Hampshire\b',
+		r'\bNJ\b', r'\bNew Jersey\b', 		r'\bNM\b', r'\bNew Mexico\b',
+		r'\bNY\b', r'\bNew York\b', 		r'\bNC\b', r'\bNorth Carolina\b',
+		r'\bND\b', r'\bNorth Dakota\b', 	r'\bOH\b', r'\bOhio\b',
+		r'\bOK\b', r'\bOklahoma\b', 		r'\bOR\b', r'\bOregon\b',
+		r'\bPA\b', r'\bPennsylvania\b', 	r'\bRI\b', r'\bRhode Island\b',
+		r'\bSC\b', r'\bSouth Carolina\b', 	r'\bSD\b', r'\bSouth Dakota\b',
+		r'\bTN\b', r'\bTennessee\b', 		r'\bTX\b', r'\bTexas\b',
+		r'\bUT\b', r'\bUtah\b', 			r'\bVT\b', r'\bVermont\b',
+		r'\bVA\b', r'\bVirginia\b', 		r'\bWA\b', r'\bWashington\b',
+		r'\bWV\b', r'\bWest Virginia\b', 	r'\bWI\b', r'\bWisconsin\b',
+		r'\bWY\b', r'\bWyoming\b'],
+	r'categories' : {
+		r'Alabama' : 		[r'\bAL\b', r'\bAlabama\b'],
+		r'Alaska' : 		[r'\bAK\b', r'\bAlaska\b'],
+		r'Arizona' : 		[r'\bAZ\b', r'\bArizona\b'],
+		r'Arkansas' : 		[r'\bAR\b', r'\bArkansas\b'],
+		r'California' : 	[r'\bCA\b', r'\bCalifornia\b'],
+		r'Colorado' : 		[r'\bCO\b', r'\bColorado\b'],
+		r'Connecticut' : 	[r'\bCT\b', r'\bConnecticut\b'],
+		r'Delaware' : 		[r'\bDE\b', r'\bDelaware\b'],
+		r'Florida' : 		[r'\bFL\b', r'\bFlorida\b'],
+		r'Georgia' : 		[r'\bGA\b', r'\bGeorgia\b'],
+		r'Hawaii' : 		[r'\bHI\b', r'\bHawaii\b'],
+		r'Idaho' : 			[r'\bID\b', r'\bIdaho\b'],
+		r'Illinois' : 		[r'\bIL\b', r'\bIllinois\b'],
+		r'Indiana' : 		[r'\bIN\b', r'\bIndiana\b'],
+		r'Iowa' : 			[r'\bIA\b', r'\bIowa\b'],
+		r'Kansas' : 		[r'\bKS\b', r'\bKansas\b'],
+		r'Kentucky' : 		[r'\bKY\b', r'\bKentucky\b'],
+		r'Louisiana' : 		[r'\bLA\b', r'\bLouisiana\b'],
+		r'Maine' : 			[r'\bME\b', r'\bMaine\b'],
+		r'Maryland' : 		[r'\bMD\b', r'\bMaryland\b'],
+		r'Massachusetts' : 	[r'\bMA\b', r'\bMassachusetts\b'],
+		r'Michigan' : 		[r'\bMI\b', r'\bMichigan\b'],
+		r'Minnesota' : 		[r'\bMN\b', r'\bMinnesota\b'],
+		r'Mississippi' : 	[r'\bMS\b', r'\bMississippi\b'],
+		r'Missouri' : 		[r'\bMO\b', r'\bMissouri\b'],
+		r'Montana' : 		[r'\bMT\b', r'\bMontana\b'],
+		r'Nebraska' : 		[r'\bNE\b', r'\bNebraska\b'],
+		r'Nevada' : 		[r'\bNV\b', r'\bNevada\b'],
+		r'New Hampshire' : 	[r'\bNH\b', r'\bNew Hampshire\b'],
+		r'New Jersey' : 	[r'\bNJ\b', r'\bNew Jersey\b'],
+		r'New Mexico' : 	[r'\bNM\b', r'\bNew Mexico\b'],
+		r'New York' : 		[r'\bNY\b', r'\bNew York\b'],
+		r'North Carolina' : [r'\bNC\b', r'\bNorth Carolina\b'],
+		r'North Dakota' : 	[r'\bND\b', r'\bNorth Dakota\b'],
+		r'Ohio' : 			[r'\bOH\b', r'\bOhio\b'],
+		r'Oklahoma' : 		[r'\bOK\b', r'\bOklahoma\b'],
+		r'Oregon' : 		[r'\bOR\b', r'\bOregon\b'],
+		r'Pennsylvania' : 	[r'\bPA\b', r'\bPennsylvania\b'],
+		r'Rhode Island' : 	[r'\bRI\b', r'\bRhode Island\b'],
+		r'South Carolina' : [r'\bSC\b', r'\bSouth Carolina\b'],
+		r'South Dakota' : 	[r'\bSD\b', r'\bSouth Dakota\b'],
+		r'Tennessee' : 		[r'\bTN\b', r'\bTennessee\b'],
+		r'Texas' : 			[r'\bTX\b', r'\bTexas\b'],
+		r'Utah' : 			[r'\bUT\b', r'\bUtah\b'],
+		r'Vermont' : 		[r'\bVT\b', r'\bVermont\b'],
+		r'Virginia' : 		[r'\bVA\b', r'\bVirginia\b'],
+		r'Washington' : 	[r'\bWA\b', r'\bWashington\b'],
+		r'West Virginia' : 	[r'\bWV\b', r'\bWest Virginia\b'],
+		r'Wisconsin' : 		[r'\bWI\b', r'\bWisconsin\b'],
+		r'Wisconsin' : 		[r'\bWY\b', r'\bWyoming\b']
+	},
+},{
+	r'name' : r'gender',
+	r'group' : r'parameter',
+	r'type' : r'cat',
+	r'subtype' : r'independent',
+	r'keywords' : [r'(?i)gender', r'(?i)\bsex\b', r'(?i)\b(fe)?male', r'(?i)\bwom(a|e)n\b', r'(?i)\bm(a|e)n\b', r'(?i)\bhusband', r'(?i)\bwifes?\b'],
+	r'categories' : {
+		r'male' : [r'(?i)\bmales?\b', r'(?i)\bm(e|a)n\b', r'(?i)\bhusband'],
+		r'female' : [r'(?i)wom(a|e)n', r'(?i)\bwifes?\b']
+	}
+}]
