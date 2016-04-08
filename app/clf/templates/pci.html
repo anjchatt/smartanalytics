@@ -15,7 +15,16 @@
             opacity: 0.5;
             z-index: 105;
         }
+        .info {
+            padding: 6px 8px;
+            font: 14px/16px Arial, Helvetica, sans-serif;
+            background: white;
+            background: rgba(255,255,255,0.8);
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            border-radius: 5px;
+        }
     </style>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
 {% endblock %}
 {% block body %}
 {{ super() }}
@@ -26,9 +35,9 @@
                 <div class='col-md-2'>
                     <div class="panel panel-default text-center">
                         <div class="panel-heading"><h3>Data Sets</h3></div>
-                        <div class="panel-body bg-info"><a class="dataset"><img src="/static/images/spreadsheet2.png"></img>Dataset_1</a></div>
-                        <div class="panel-body"><a class="dataset"><img src="/static/images/spreadsheet2.png"></img>Dataset_2</a></div>
-                        <div class="panel-body"><a class="dataset"><img src="/static/images/spreadsheet2.png"></img>Dataset_3</a></div>
+                        <div class="panel-body dataset bg-info"><a><img src="/static/images/spreadsheet2.png">Dataset_1</a></div>
+                        <div class="panel-body dataset"><a><img src="/static/images/spreadsheet2.png">Dataset_2</a></div>
+                        <div class="panel-body dataset"><a><img src="/static/images/spreadsheet2.png">Dataset_3</a></div>
                     </div>
                 </div>
                 <div class='col-md-10'>
@@ -36,12 +45,12 @@
                         <form id="queryForm">
                             <div class="form-group">
                                 <label for="query">Enter you query</label>
-                                <input type="text" class="form-control" id="query" name="query" placeholder="Enter you query and press <<Enter>>">
+                                <input type="text" class="form-control" id="query" name="query" placeholder="Enter you query and press <<Enter>>" autofocus>
                             </div>
                         </form>
                     </div>
                     <div class="row">
-                        <div id="Col1Pie"></div>
+                        <div id="queryChart" style="width: 100%; height: 500px;"></div>
                         <div id="loadingDiv"><i class="fa fa-refresh fa-spin" style="font-size: 100px; font-color: lightgray"></i></div>
                         <hr />
                         <div id="send_result"></div>
@@ -56,20 +65,21 @@
 {{ super() }}
 
 <script src="/static/js/highcharts.js"></script>
+<script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
 
+<script type="text/javascript" src="/static/js/us-states.js"></script>
 <script>
+    var lastType = null, // last chart type
+        map = null, // map object
+        states_shapes = null, // string with state shapes
+        info = null; // map info object
+
     $(function() {
         Highcharts.setOptions({
             colors: ['#7fb005', '#ed020b', '#54a0ed', '#ffb446'], 
         });
-        $('#Col1Pie')
-            .highcharts({chart: {type: 'line',  height: 400}, 
-                title: {text: '', verticalAlign: 'bottom', style: { "color": "rgb(112, 112, 112)", "fill": "rgb(112, 112, 112)", "fontSize": "12px" }, }, 
-                series: [{name: 'Feedback',data: [{name:'negative: 9%', y:9}, {name:'positive: 91%', y:91} ]}],
-                credits:{enabled:false},
-            });
     });
-    
+
     $(function() {
         var $loading = $('#loadingDiv').hide();
         $(document)
@@ -85,13 +95,21 @@
         event.preventDefault();
         submitForm();
     });
+    $(".dataset").click(function(event){
+        event.preventDefault();
+        $(this).siblings().removeClass("bg-info");
+        $(this).addClass("bg-info");
+    });
+    $.get('/static/js/us-states.json', function( data ) {
+        states_shapes = data;
+    })
+
     function submitForm() {
         $.ajax({ type: "POST",
             url: "/send_pci_query",
             data: $('form#queryForm').serialize(),
             success: function(msg){
-                $("#send_result").html(msg)
-                $('#Col1Pie').highcharts();
+                updateChart(msg);
             },
             error: function(){
                 alert("fail send request to server");
@@ -99,5 +117,137 @@
         });
     }
 
+    function updateChart(msg) {
+        $("#send_result").html(msg['title']);
+
+        if (lastType == 'linear') {
+            var chart = $('#queryChart').highcharts();
+            if(chart !== undefined) chart.destroy();
+        } else if (lastType == 'map') {
+            // delete previous map here
+            if(map) map.remove();
+            $('#queryChart').removeClass();
+        }
+
+        if( msg['type'] == 'linear') {
+            lastType = 'linear';
+            $('#queryChart').highcharts({chart: {type: 'line',  height: 400}, 
+                title: {text: msg['title'], verticalAlign: 'bottom', style: { "color": "rgb(112, 112, 112)", "fill": "rgb(112, 112, 112)", "fontSize": "12px" }, }, 
+                credits:{enabled:false},
+                xAxis: { categories: msg['xAxis'] },
+                series: [{name: 'Data',data: msg['yAxis'] }],
+            });
+        }
+        if( msg['type'] == 'map') {
+            lastType = 'map';
+            createMap(msg);
+        }
+    }
+
+    function createMap(msg) {
+        map = L.map('queryChart').setView([37.8, -96], 4);
+        
+        L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZ2VvcmdpeXRyb2ZpbW92IiwiYSI6ImNpbGxndHdqcjVxNHZ2cm0wajAyNjBxMW4ifQ.c1-Cm-vjLwMnAwMLfs5pQw', {
+            maxZoom: 18,
+            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+            '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+            'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+            id: 'mapbox.light'
+        }).addTo(map);
+
+        // control that shows state info on hover
+        info = L.control();
+
+        info.onAdd = function (map) {
+            this._div = L.DomUtil.create('div', 'info');
+            this.update();
+            return this._div;
+        };
+
+        info.update = function (props) {
+            //customer list
+            this._div.innerHTML = '<h4>Value for state:</h4>' +  (props ?
+                                                                       '<b>' + props.name + '</b><br />' + props.value + ''
+                                                                       : 'Hover over a state');
+        };
+        info.addTo(map);
+
+        geojson = L.geoJson(getGeoJSON(msg), {style: style, onEachFeature: onEachFeature}).addTo(map);
+
+    }
+
+    // get color depending on population density value
+    function getColor(d) {
+        return d > 0.7 ? '#D82735' :
+        d > 0.6 ? '#FF7435' :
+        d > 0.5  ? '#FFA135' :
+        d > 0.4  ? '#FFCB35' :
+        d > 0.3  ? '#FFF738' :
+        d > 0.2   ? '#16DD38' :
+        d > 0.1   ? '#009E47' :
+        '#00753A';
+    }
+
+    function style(feature) {
+        return {
+            weight: 2,
+            opacity: 1,
+            color: 'white',
+            dashArray: '3',
+            fillOpacity: 0.8,
+            fillColor: getColor(feature.properties.colorFlag)
+        };
+    }
+
+    function highlightFeature(e) {
+        var layer = e.target;
+
+        layer.setStyle({
+            weight: 5,
+            color: '#666',
+            dashArray: '',
+            fillOpacity: 0.7
+        });
+
+        if (!L.Browser.ie && !L.Browser.opera) {
+            layer.bringToFront();
+        }
+
+        info.update(layer.feature.properties);
+    }
+
+    function resetHighlight(e) {
+        geojson.resetStyle(e.target);
+        info.update();
+    }
+
+    function zoomToFeature(e) {
+        map.fitBounds(e.target.getBounds());
+    }
+
+    function onEachFeature(feature, layer) {
+        layer.on({
+            mouseover: highlightFeature,
+            mouseout: resetHighlight,
+            click: zoomToFeature
+        });
+    }
+    function getGeoJSON(msg) {
+        res = JSON.parse(states_shapes);
+
+        for (i in res['features']) {
+            var state = res['features'][i]['properties']['name'];
+            if (typeof(msg['states'][state]) !== "undefined") {
+                value = msg['states'][state]['value'];
+                colorFlag = (value - msg['minValue']) * 1.0 / msg['maxValue']
+            } else {
+                value = 'N/A';
+                colorFlag = 0.0;
+            }
+            res['features'][i]['properties']['value'] = value;
+            res['features'][i]['properties']['colorFlag'] = colorFlag;
+        }
+        return res;
+    }
 </script>
 {% endblock %}
