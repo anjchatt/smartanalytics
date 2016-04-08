@@ -211,6 +211,6 @@
 	r'keywords' : [r'(?i)gender', r'(?i)\bsex\b', r'(?i)\b(fe)?male', r'(?i)\bwom(a|e)n\b', r'(?i)\bm(a|e)n\b', r'(?i)\bhusband', r'(?i)\bwifes?\b'],
 	r'categories' : {
 		r'male' : [r'(?i)\bmales?\b', r'(?i)\bm(e|a)n\b', r'(?i)\bhusband'],
-		r'female' : [r'(?i)wom(a|e)n', r'(?i)\bwifes?\b']
+		r'female' : [r'(?i)wom(a|e)n', r'(?i)\bwifes?\b', r'(?i)\bfemale']
 	}
 }]
