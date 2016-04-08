@@ -296,7 +296,7 @@ L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: o
      "Home Location lng":-73.9826006,"Home Location lat":40.7659873,
      "Latest SMS":"Make your beloved happy! Respond with address and time, and we'll deliver a bouquet of 12 roses just for $10.",
      "Opportunity Message":"Opportunity detected<br><br><i>System detect an opportunity to offer flowers delivery service<\/i>", "Icon":null, "Event Type": "Offer"},
-    {"Current Date":"23-10-2015","Current Time":"09:05 PM", "Last Action":"Transaction","Weather":"Cloudy","Transaction Amount":"$ 79.61","Merchant Type":"Restaurant",
+    {"Current Date":"23-10-2015","Current Time":"09:05 PM", "Last Action":"Transaction","Weather":"Raining","Transaction Amount":"$ 79.61","Merchant Type":"Restaurant",
      "Last SN message":"Liked: Mary Jane is going to <i>The Nutcracker opera<\/i>",
      "Last SN message source":"facebook",
      "Last SN activity time":"3:50 PM","Upcomming event":null,
@@ -429,10 +429,13 @@ L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: o
         var fi1 = row['Current Location lat'] * Math.PI / 180, 
             fi2 = row['Event Location lat'] * Math.PI / 180,
             delta = (row['Event Location lng']-row['Current Location lng']) * Math.PI / 180, 
-            R = 6371; 
-        var d = Math.acos( Math.sin(fi1)*Math.sin(fi2) + Math.cos(fi1)*Math.cos(fi2) * Math.cos(delta) ) * R; // gives d in kilometres
-        var dist = Math.round(d * 10)/ 10;
-        updateData($('#distEvent'), " " + dist + " km");
+            R = 6371;
+        sum = Math.sin(fi1)*Math.sin(fi2) + Math.cos(fi1)*Math.cos(fi2) * Math.cos(delta);
+        if(sum > 1) sum = 1; // check for floating point-errors
+        if(sum < -1) sum = -1;
+        var d = Math.acos( sum ) * R; // gives d in kilometres
+        var dist = Math.round(d * 0.621371 * 10)/ 10; // Convert to proper-looking miles
+        updateData($('#distEvent'), " " + dist + " mi");
     } else { updateData($('#distEvent'), "-"); };
 
     // Calculate and show distance to home
@@ -441,9 +444,12 @@ L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: o
             fi2 = row['Home Location lat'] * Math.PI / 180,
             delta = (row['Home Location lng']-row['Current Location lng']) * Math.PI / 180, 
             R = 6371; 
-        var d = Math.acos( Math.sin(fi1)*Math.sin(fi2) + Math.cos(fi1)*Math.cos(fi2) * Math.cos(delta) ) * R; // gives d in kilometres
-        var dist = Math.round(d * 10)/ 10;
-        updateData($('#distHome'), " " + dist + " km");
+        sum = Math.sin(fi1)*Math.sin(fi2) + Math.cos(fi1)*Math.cos(fi2) * Math.cos(delta);
+        if(sum > 1) sum = 1; // check for floating point-errors
+        if(sum < -1) sum = -1;
+        var d = Math.acos( sum ) * R; // gives d in kilometres
+        var dist = Math.round(d * 0.621371 * 10)/ 10; // Convert to proper-looking miles
+        updateData($('#distHome'), " " + dist + " mi");
     };
     // Update points on map
     for (i in curPoints) {
