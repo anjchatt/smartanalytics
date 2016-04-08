@@ -438,16 +438,9 @@
                 .highcharts({chart: {type: 'line', height: 200}, 
                              title:{text: '', verticalAlign: 'bottom', style: { "color": "rgb(112, 112, 112)", "fill": "rgb(112, 112, 112)", "fontSize": "12px" },}, 
                              legend:{enabled:false},
-                             xAxis: {type: 'datetime', 
-                                     dateTimeLabelFormats: { month: '%b', week: '%b', day: '%b' }, 
-                                     tickInterval: 30 * 24 * 3600 * 1000, // in milliseconds
-                                     min: {{ customer['surveys_date_from'] }}, 
-                                     max: {{ customer['surveys_date_to'] }},
-                                    },
-                             yAxis: {title: {text: 'Survey'}, gridLineDashStyle: "Dash", labels: {enabled: false}},
-                             series: [{name: 'Result',
-                                       data: {{ customer['surveys_data'] }},
-                                       color: '#0079E7',}],
+                             xAxis: { categories: {{ customer['last4years']|safe }} },
+                             yAxis: {title: {text: 'NPS'}, gridLineDashStyle: "Dash", labels: {enabled: false}},
+                             series: [{name: 'NPS Score', data: {{ customer['surveys_data']|safe }}, color: '#0079E7',}],
                              credits:{enabled:false},
                             });});
 
