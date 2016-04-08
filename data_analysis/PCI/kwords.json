@@ -38,6 +38,7 @@
 	r'group' : r'parameter',
 	r'type' : r'cat',
 	r'subtype' : r'independent',
+	r'default' : r'unemployed',
 	r'keywords' : [
 		r'\bseeks?', r'(?i)\bworks?\b', r'(?i)\bstud', r'(?i)\bentrepren',
 		r'\bcollar\b', r'(?i)software', r'(?i)\bengineer', r'(?i)bretire', 
@@ -61,6 +62,7 @@
 	r'group' : r'parameter',
 	r'type' : r'cat',
 	r'subtype' : r'independent',
+	r'default' : r'married',
 	r'keywords' : [
 		r'marital', r'(?i)\b(un)?marr', r'(?i)family', r'(?i)\bspouse', r'(?i)divorce',
 		r'\bwed', r'(?i)bride', r'(?i)wife', r'(?i)husband', r'(?i)\bwidowe'],
@@ -73,6 +75,7 @@
 	r'group' : r'parameter',
 	r'type' : r'cat',
 	r'subtype' : r'sequental',
+	r'default' : r'tertiary',
 	r'keywords' : [
 		r'\b(un)?educat', r'(?i)degree', r'(?i)college'],
 	r'categories' : {
@@ -94,6 +97,7 @@
 	r'group' : r'parameter',
 	r'type' : r'cat',
 	r'subtype' : r'independent',
+	r'default' : r'yes',
 	r'keywords' : [r'(?i)debt fund', r'(?i)obligation'],
 	r'categories' : {
 		r'yes' : [r'(?i)ha(s|ve)', r'(?i)\bposses', r'(?i)\bacquir'],
@@ -104,6 +108,7 @@
 	r'group' : r'parameter',
 	r'type' : r'cat',
 	r'subtype' : r'independent',
+	r'default' : r'yes',
 	r'keywords' : [r'(?i)credit card'],
 	r'categories' : {
 		r'yes' : [r'(?i)ha(s|ve)'],
