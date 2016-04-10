@@ -1,3 +1,4 @@
-pip2.7 install flask
-cd face/external
-wget https://github.com/twbs/bootstrap/releases/download/v3.3.6/bootstrap-3.3.6-dist.zip
+Phase 3 application
+Open __init__.ipynb with IPython notebook and "run all"
+
+It is flask based web-server for all use cases from phase 3.

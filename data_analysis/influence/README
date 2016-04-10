@@ -15,7 +15,7 @@ gpgcheck=1
 EOF
 Finally, install a package
 
-yum install neo4j-2.2.6
+yum install neo4j-2.3.2
 
 pip install py2neo
 
