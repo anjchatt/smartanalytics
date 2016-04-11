@@ -65,6 +65,8 @@
 {{ super() }}
 
 <script src="/static/js/highcharts.js"></script>
+<script src="/static/js/highcharts-exporting.js"></script>
+<script src="/static/js/highcharts-offline-exporting.js"></script>
 <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
 
 <script type="text/javascript" src="/static/js/us-states.js"></script>
@@ -77,6 +79,20 @@
     $(function() {
         Highcharts.setOptions({
             colors: ['#7fb005', '#ed020b', '#54a0ed', '#ffb446'], 
+			exporting: {
+				chartOptions: { // specific options for the exported image
+					plotOptions: { series: { dataLabels: { enabled: true } } }
+				},
+				scale: 1,
+				fallbackToExportServer: false,
+				buttons: { contextButton: { enabled: false },
+					exportButton: {
+						text: 'Download',
+						// Use only the download related menu items from the default context button
+						menuItems: Highcharts.getOptions().exporting.buttons.contextButton.menuItems.splice(2)
+					},
+				},
+			},
         });
     });
 
@@ -118,9 +134,11 @@
     }
 
     function updateChart(msg) {
-        $("#send_result").html(msg['title']);
 
         if (lastType == 'linear') {
+            var chart = $('#queryChart').highcharts();
+            if(chart !== undefined) chart.destroy();
+        } else if (lastType == 'pie') {
             var chart = $('#queryChart').highcharts();
             if(chart !== undefined) chart.destroy();
         } else if (lastType == 'map') {
@@ -128,18 +146,41 @@
             if(map) map.remove();
             $('#queryChart').removeClass();
         }
+		if(msg.error) {
+			$("#send_result").html(msg['error_text']);
+			return;
+		}
 
+        $("#send_result").html(msg['title']);
+		
         if( msg['type'] == 'linear') {
             lastType = 'linear';
             $('#queryChart').highcharts({chart: {type: 'line',  height: 400}, 
                 title: {text: msg['title'], verticalAlign: 'bottom', style: { "color": "rgb(112, 112, 112)", "fill": "rgb(112, 112, 112)", "fontSize": "12px" }, }, 
                 credits:{enabled:false},
-                xAxis: { categories: msg['xAxis'] },
-                series: [{name: 'Data',data: msg['yAxis'] }],
+				yAxis: {title: { text: msg['yTitle'] },},
+                xAxis: {title: { text: msg['xTitle'] }, categories: msg['xAxis'] },
+                series: [{name: msg['yTitle'], data: msg['yAxis'] }],
             });
         }
         if( msg['type'] == 'map') {
             lastType = 'map';
+            createMap(msg);
+        }
+        if( msg['type'] == 'pie') {
+            lastType = 'pie';
+			series_data = [];
+			for (var i in msg['yAxis']) {
+				series_data.push({name: msg['xAxis'][i], y: msg['yAxis'][i]});
+			}
+            $('#queryChart').highcharts({chart: {type: 'pie',  height: 400}, 
+                title: {text: msg['title'], verticalAlign: 'bottom', style: { "color": "rgb(112, 112, 112)", "fill": "rgb(112, 112, 112)", "fontSize": "12px" }, }, 
+                credits:{enabled:false},
+				series: [{name: 'Data', colorByPoint: true, data: series_data }],
+            });
+        }
+        if( msg['type'] == 'table') {
+            lastType = 'table';
             createMap(msg);
         }
     }

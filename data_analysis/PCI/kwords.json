@@ -28,6 +28,7 @@
 	r'name' : r'age',
 	r'group' : r'parameter',
 	r'type' : r'num',
+	r'sql_group_by' : r'floor(age/10.0)*10',
 	r'keywords' : [r'(?i)\bage', r'(?i)younger', r'(?i)older', r'(?i)old'],
 	r'condition_kw' : {
 		r'<' : [r'(?i)younger', r'(?i)under', r'(?i)smaller'],
@@ -215,7 +216,7 @@
 	r'subtype' : r'independent',
 	r'keywords' : [r'(?i)gender', r'(?i)\bsex\b', r'(?i)\b(fe)?male', r'(?i)\bwom(a|e)n\b', r'(?i)\bm(a|e)n\b', r'(?i)\bhusband', r'(?i)\bwifes?\b'],
 	r'categories' : {
-		r'male' : [r'(?i)\bmales?\b', r'(?i)\bm(e|a)n\b', r'(?i)\bhusband'],
-		r'female' : [r'(?i)wom(a|e)n', r'(?i)\bwifes?\b', r'(?i)\bfemale']
+		r'M' : [r'(?i)\bmales?\b', r'(?i)\bm(e|a)n\b', r'(?i)\bhusband'],
+		r'F' : [r'(?i)wom(a|e)n', r'(?i)\bwifes?\b', r'(?i)\bfemale']
 	}
 }]
