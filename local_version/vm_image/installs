@@ -100,3 +100,8 @@ systemctl start supervisord
 supervisorctl update
 supervisorctl status data_ing
 supervisorctl status clf_web
+
+# for Stanford-coreNLP
+yum install java-1.8.0-openjdk.x86_64 java-1.8.0-openjdk-headless.x86_64
+pip install pycorenlp nltk
+
