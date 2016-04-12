@@ -261,6 +261,7 @@ def parse_it(text):
     # match filter parametes in original text
     filter_by = match_filter(original_text)
 
+    print "1: ", filter_by
     filter_by = [( tmp[0], original_text[tmp[1]:tmp[2]] ) 
                      for tmp in filter_by 
                      if tmp[0] not in group_by]
@@ -390,11 +391,11 @@ def parse_it(text):
     sql_filter = list(set(sql_filter))
     sql_group_by = list(set(sql_group_by)-set(['customer']))
     print 'SELECT'
-    print list(set(sql_select))
+    print sql_select
     print 'WHERE'
-    print list(set(sql_filter))
+    print sql_filter
     print 'GROUP BY'
-    print list(set(sql_group_by))
+    print sql_group_by
     print 'LIMIT'
     print sql_limit
 

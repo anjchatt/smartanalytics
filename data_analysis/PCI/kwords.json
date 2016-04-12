@@ -2,7 +2,7 @@
 	r'name' : r'percentage',
 	r'group' : r'action',
 	r'keywords' : [
-		r'(?i)\bpercent']
+		r'(?i)\bpercent\w+']
 },{
 	r'name' : r'scenario',
 	r'group' : r'action',
@@ -47,14 +47,14 @@
 		r'housemaid', r'(?i)\bmaid', r'(?i)pensioners?'],
 	r'categories' : {
 		r'unemployed' : [r'(?i)\bunemploy\b', r'(?i)not employ', r'(?i)n\St work'],
-		r'management' : [r'(?i)manage'],
+		r'management' : [r'(?i)manage\w+'],
 		r'technician' : [r'(?i)software', r'(?i)engineer'],
-		r'entrepreneur' : [r'(?i)startup', r'(?i)\bentrepren'],
+		r'entrepreneur' : [r'(?i)startup', r'(?i)\bentrepren\w+'],
 		r'blue-collar' : [r'(?i)manual', r'(?i)factory'],
-		r'retired' : [r'(?i)\bretire', r'(?i)pensioner', r'(?i)\baged\b'],
-		r'student' : [r'(?i)\bstud', r'(?i)\buniversit'],
+		r'retired' : [r'(?i)\bretire', r'(?i)pensionee?r', r'(?i)\baged\b'],
+		r'student' : [r'(?i)\bstud\w+', r'(?i)\buniversit\w+'],
 		r'housemaid' : [r'(?i)housemaid', r'(?i)waitress', r'(?i)\bmaid'],
-		r'services' : [r'(?i)\bserv'],
+		r'services' : [r'(?i)\bserv\w+'],
 		r'admin.' : [r'(?i)admin'],
 		r'self-employed' : [r'(?i)self\Semployed']
 	}
@@ -78,7 +78,7 @@
 	r'subtype' : r'sequental',
 	r'default' : r'tertiary',
 	r'keywords' : [
-		r'\b(un)?educat', r'(?i)degree', r'(?i)college'],
+		r'\b(un)?educat\w+', r'(?i)degree', r'(?i)college'],
 	r'categories' : {
 		r'tertiary' : [r'(?i)university'],
 		r'secondary' : [r'(?i)secondary', r'(?i)college', r'(?i)\beducated\b'],

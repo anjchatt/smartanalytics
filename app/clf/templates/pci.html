@@ -1,70 +1,178 @@
 {% extends 'index.html' %}
 {% block head %}
 {{ super() }}
-    <title>Predictive Customer Intelligence</title>
-    <style>
-        .dataset { cursor: pointer; }
-        #loadingDiv {
-            display: block;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            margin: -50px;
-            width: 100px;
-            height: 100px
-            opacity: 0.5;
-            z-index: 105;
-        }
-        .info {
-            padding: 6px 8px;
-            font: 14px/16px Arial, Helvetica, sans-serif;
-            background: white;
-            background: rgba(255,255,255,0.8);
-            box-shadow: 0 0 15px rgba(0,0,0,0.2);
-            border-radius: 5px;
-        }
-    </style>
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+<title>Predictive Customer Intelligence</title>
+<style>
+	.dataset { cursor: pointer; }
+	.recentquery { height: 200px; cursor: pointer; }
+	.queryimage {
+		opacity: 0.2;
+		position: absolute;
+		left: 7%;
+		top: 0%;
+	}
+	#loadingDiv {
+		display: block;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		margin: -50px -50px;
+		width: 800px;
+		height: 600px
+		opacity: 0.5;
+		z-index: 105;
+	}
+	.info {
+		padding: 6px 8px;
+		font: 14px/16px Arial, Helvetica, sans-serif;
+		background: white;
+		background: rgba(255,255,255,0.8);
+		box-shadow: 0 0 15px rgba(0,0,0,0.2);
+		border-radius: 5px;
+	}
+</style>
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
 {% endblock %}
 {% block body %}
 {{ super() }}
-        <div id="pci" class="container" >
-                        <h3>Predictive Customer Intelligence</h3>
-                <hr />
-            <div class="row">
-                <div class='col-md-2'>
-                    <div class="panel panel-default text-center">
-                        <div class="panel-heading"><h3>Data Sets</h3></div>
-                        <div class="panel-body dataset bg-info"><a><img src="/static/images/spreadsheet2.png">Dataset_1</a></div>
-                        <div class="panel-body dataset"><a><img src="/static/images/spreadsheet2.png">Dataset_2</a></div>
-                        <div class="panel-body dataset"><a><img src="/static/images/spreadsheet2.png">Dataset_3</a></div>
-                    </div>
-                </div>
-                <div class='col-md-10'>
-                    <div class="row">
-                        <form id="queryForm">
-                            <div class="form-group">
-                                <label for="query">Enter you query</label>
-                                <input type="text" class="form-control" id="query" name="query" placeholder="Enter you query and press <<Enter>>" autofocus>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="row">
-                        <div id="queryChart" style="width: 100%; height: 500px;"></div>
-                        <div id="loadingDiv"><i class="fa fa-refresh fa-spin" style="font-size: 100px; font-color: lightgray"></i></div>
-                        <hr />
-                        <div id="send_result"></div>
-                    </div>
-                </div>
-            </div>
-            <hr />
-        </div> <!-- id="pci" class="container" -->
+<div id="pci" class="container" >
+	<h3>Predictive Customer Intelligence</h3>
+	<hr />
+    <ul class="nav nav-tabs nav-justified" role="tablist">
+        <li role="presentation" class="active"><a href="#recent" aria-controls="recent" role="tab" data-toggle="tab">Recent Queries by Group</a></li>
+        <li role="presentation"><a href="#newquery" aria-controls="newquery" role="tab" data-toggle="tab">New Query</a></li>
+        <li role="presentation"><a href="#predictive" aria-controls="predictive" role="tab" data-toggle="tab">Predictive Intelligence</a></li>
+    </ul>
+	<div id="loadingDiv"><!-- <img src="static/images/logo_medium.png"> --><i class="fa fa-refresh fa-spin" style="font-size: 100px; font-color: lightgray"></i></div>
+
+    <div class="tab-content clearfix">
+        <div role="tabpanel" class="tab-pane active" id="recent">
+			<div class="row">
+				<br />
+				<div class='col-md-3'>
+					<div class="panel panel-default">
+						<div class="panel-body recentquery">
+							Average income by gender in Minnesota
+							<img src="/static/images/query_bg/q01bw.png" class="queryimage">
+						</div>
+					</div>
+				</div>
+				<div class='col-md-3'>
+					<div class="panel panel-default">
+						<div class="panel-body recentquery">
+							Males vs Females among high-educated
+							<img src="/static/images/query_bg/q02bw.png" class="queryimage">
+						</div>
+					</div>
+				</div>
+				<div class='col-md-3'>
+					<div class="panel panel-default">
+						<div class="panel-body recentquery">
+							Average income by state among unemployed males
+							<img src="/static/images/query_bg/q03bw.png" class="queryimage" style="top: 20%;">
+						</div>
+					</div>
+				</div>
+				<div class='col-md-3'>
+					<div class="panel panel-default">
+						<div class="panel-body recentquery">
+							Customers with debt funds by age among blue-collars
+							<img src="/static/images/query_bg/q04bw.png" class="queryimage" style="opacity: 0.3; top: 35%;">
+						</div>
+					</div>
+				</div>
+				<div class='col-md-3'>
+					<div class="panel panel-default">
+						<div class="panel-body recentquery">
+							Customers with credit card by state
+							<img src="/static/images/query_bg/q05bw.png" class="queryimage" style="top: 20%;">
+						</div>
+					</div>
+				</div>
+				<div class='col-md-3'>
+					<div class="panel panel-default">
+						<div class="panel-body recentquery">
+							Job distributions among males in New York
+							<img src="/static/images/query_bg/q06bw.png" class="queryimage" style="top: 20%;">
+						</div>
+					</div>
+				</div>
+				<div class='col-md-3'>
+					<div class="panel panel-default">
+						<div class="panel-body recentquery">
+							Male vs female among unemployed
+							<img src="/static/images/query_bg/q07bw.png" class="queryimage" style="top: 10%;">
+						</div>
+					</div>
+				</div>
+				<div class='col-md-3'>
+					<div class="panel panel-default">
+						<div class="panel-body recentquery">
+							Show maximum income by state
+							<img src="/static/images/query_bg/q08bw.png" class="queryimage" style="top: 20%;">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+        <div role="tabpanel" class="tab-pane" id="newquery">
+			<div class="row">
+				<div class='col-md-2'>
+					<div class="panel panel-default text-center">
+						<div class="panel-heading"><h3>Data Sets</h3></div>
+						<div class="panel-body dataset bg-info"><a><img src="/static/images/spreadsheet2_sm.png">Dataset_1</a></div>
+						<div class="panel-body dataset"><a><img src="/static/images/spreadsheet2_sm.png">Dataset_2</a></div>
+						<div class="panel-body dataset"><a><img src="/static/images/spreadsheet2_sm.png">Dataset_3</a></div>
+					</div>
+				</div>
+				<div class='col-md-10'>
+					<div class="row">
+						<form id="queryForm">
+							<div class="form-group">
+								<label for="query"><!-- Enter you query --></label>
+								<input type="text" class="form-control" id="query" name="query" placeholder="Enter you query and press <<Enter>>" autofocus>
+							</div>
+						</form>
+					</div>
+					<div class="row">
+						<div id="queryChart" style="width: 100%; height: 500px;"></div>
+						<hr />
+						<div id="send_result"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+        <div role="tabpanel" class="tab-pane" id="predictive">
+			<div class="row">
+				<div class='col-md-3'>
+					<br />
+					<div id="featuresChart" style="width: 100%; height: 500px;"></div>
+				</div>
+				<div class='col-md-9'>
+					<div class="row">
+						<form id="modelForm">
+							<div class="form-group">
+								<label for="modelQuery"><!-- Enter you query --></label>
+								<!-- <input type="text" class="form-control" id="modelQuery" name="modelQuery" placeholder="Enter you query and press <<Enter>>"> -->
+							</div>
+						</form>
+					</div>
+						<div id="modelChart" style="width: 100%; height: 500px;"></div>
+						<hr />
+						<div id="send_result"></div>				
+				</div>
+			</div>
+		</div>
+	</div>
+	<hr />
+</div> <!-- id="pci" class="container" -->
 {% endblock %}
 
 {% block bottom %}
 {{ super() }}
 
 <script src="/static/js/highcharts.js"></script>
+<script src="/static/js/highcharts-more.js"></script>
 <script src="/static/js/highcharts-exporting.js"></script>
 <script src="/static/js/highcharts-offline-exporting.js"></script>
 <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
@@ -138,13 +246,16 @@
         if (lastType == 'linear') {
             var chart = $('#queryChart').highcharts();
             if(chart !== undefined) chart.destroy();
+			lastType = null;
         } else if (lastType == 'pie') {
             var chart = $('#queryChart').highcharts();
             if(chart !== undefined) chart.destroy();
+			lastType = null;
         } else if (lastType == 'map') {
             // delete previous map here
             if(map) map.remove();
             $('#queryChart').removeClass();
+			lastType = null;
         }
 		if(msg.error) {
 			$("#send_result").html(msg['error_text']);
@@ -155,6 +266,7 @@
 		
         if( msg['type'] == 'linear') {
             lastType = 'linear';
+			$('.nav-tabs a[href="#newquery"]').tab('show');
             $('#queryChart').highcharts({chart: {type: 'line',  height: 400}, 
                 title: {text: msg['title'], verticalAlign: 'bottom', style: { "color": "rgb(112, 112, 112)", "fill": "rgb(112, 112, 112)", "fontSize": "12px" }, }, 
                 credits:{enabled:false},
@@ -165,10 +277,12 @@
         }
         if( msg['type'] == 'map') {
             lastType = 'map';
+			$('.nav-tabs a[href="#newquery"]').tab('show');
             createMap(msg);
         }
         if( msg['type'] == 'pie') {
             lastType = 'pie';
+			$('.nav-tabs a[href="#newquery"]').tab('show');
 			series_data = [];
 			for (var i in msg['yAxis']) {
 				series_data.push({name: msg['xAxis'][i], y: msg['yAxis'][i]});
@@ -181,7 +295,31 @@
         }
         if( msg['type'] == 'table') {
             lastType = 'table';
-            createMap(msg);
+			$('.nav-tabs a[href="#newquery"]').tab('show');
+            //createMap(msg);
+        }
+		if( msg['type'] == 'model') {
+            lastType = 'model';
+			$('.nav-tabs a[href="#predictive"]').tab('show');
+			
+			categories = [];
+			series_data = [];
+			for (var i in msg['features']) {
+				categories.push(msg['features'][i][0]);
+				series_data.push(msg['features'][i][1]);
+			}
+            $('#featuresChart').highcharts({chart: {polar: true, type: 'line',  height: 180, }, 
+				title: { text: 'Predictors importance', x: 0 }, 
+		        pane: { size: '80%' },
+				xAxis: { categories: categories, tickmarkPlacement: 'on', lineWidth: 0},
+				yAxis: { gridLineInterpolation: 'polygon', lineWidth: 0, min: -0.1, startOnTick: false, labels: {enabled: false} },
+				credits:{enabled:false},
+				legend: {enabled:false},
+				tooltip: {formatter: function () {return '<span style="color:'+this.color+'">\u25CF</span> '+this.key+': <b>' + Math.round(this.y*1000)/10.0 +' %</b><br/>';} },
+				series: [{name: 'Predictors', colorByPoint: false, data: series_data, pointPlacement: 'on', 
+						point:{ events:{ click: function (event) { console.log(this.category); } } } }],
+				exporting: { buttons: { contextButton: { enabled: false }, exportButton: { enabled: false } } }
+            });
         }
     }
 
@@ -290,5 +428,13 @@
         }
         return res;
     }
+	$(".recentquery").mouseover(function (){ $(this).addClass("bg-info") });
+	$(".recentquery").mouseout(function (){ $(this).removeClass("bg-info") });
+	$(".recentquery").click(function () {
+		var selected_query = $.trim($(this).html().split("<")[0]); // Cut-off html code with an image and spaces
+		$("#query").val(selected_query);
+		$("form#queryForm").submit();
+		$('.nav-tabs a[href="#newquery"]').tab('show');
+	});
 </script>
 {% endblock %}
