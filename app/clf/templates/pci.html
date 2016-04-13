@@ -60,7 +60,7 @@
 				<div class='col-md-3'>
 					<div class="panel panel-default">
 						<div class="panel-body recentquery">
-							Males vs Females among high-educated
+							Who buys debt funds in NY?
 							<img src="/static/images/query_bg/q02bw.png" class="queryimage">
 						</div>
 					</div>
@@ -137,29 +137,46 @@
 					<div class="row">
 						<div id="queryChart" style="width: 100%; height: 500px;"></div>
 						<hr />
-						<div id="send_result"></div>
+						<div class="row">
+							<div class='col-md-6'>
+								<div id="send_result"></div>
+							</div>
+							<div class='col-md-6'>
+								<div id="Buttons" class="pull-right">
+									<input class="btn btn-primary" style="width: 100px" value="E-Mail" id="queryChartEmail" type="button">
+									<input class="btn btn-primary" style="width: 100px" value="Download" id="queryChartDownload" type="button">
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
         <div role="tabpanel" class="tab-pane" id="predictive">
 			<div class="row">
-				<div class='col-md-3'>
+				<form id="modelForm">
+					<div class="form-group">
+						<label for="modelQuery"><!-- Enter you query --></label>
+						<input type="text" class="form-control" id="modelQuery" name="query" placeholder="Enter you query and press <<Enter>>">
+					</div>
+				</form>
+			</div>
+			<div class="row">
+				<div class='col-md-6'>
 					<br />
 					<div id="featuresChart" style="width: 100%; height: 500px;"></div>
 				</div>
-				<div class='col-md-9'>
+				<div class='col-md-6'>
+					<div id="modelChart" style="width: 100%; height: 500px;"></div>
+					<hr />
 					<div class="row">
-						<form id="modelForm">
-							<div class="form-group">
-								<label for="modelQuery"><!-- Enter you query --></label>
-								<!-- <input type="text" class="form-control" id="modelQuery" name="modelQuery" placeholder="Enter you query and press <<Enter>>"> -->
+						<div class='col-md-12'>
+							<div id="Buttons" class="pull-right">
+								<input class="btn btn-primary" style="width: 100px" value="E-Mail" id="modelChartEmail" type="button">
+								<input class="btn btn-primary" style="width: 100px" value="Download" id="modelChartDownload" type="button">
 							</div>
-						</form>
+						</div>
 					</div>
-						<div id="modelChart" style="width: 100%; height: 500px;"></div>
-						<hr />
-						<div id="send_result"></div>				
 				</div>
 			</div>
 		</div>
@@ -179,10 +196,16 @@
 
 <script type="text/javascript" src="/static/js/us-states.js"></script>
 <script>
-    var lastType = null, // last chart type
-        map = null, // map object
-        states_shapes = null, // string with state shapes
-        info = null; // map info object
+    var lastType = null,		// last chart type on "New Query" tab
+		lastQuery = "",			// last plain query run
+		lastPredictiveQuery = "",	// last predictive query run
+        map = null, 			// map object for "New Query" tab
+		mapPredictor = null,	// map object for "Predictive Queries" tab
+        states_shapes = null, 	// string with state shapes
+        info = null, 			// map info object
+		infoPredictor = null,	// mapPredictor info object
+		lastPredictor,			// type of last predictor shown (highcharts|map)
+		lastPredictiveMsg = null;	// last msg received from server
 
     $(function() {
         Highcharts.setOptions({
@@ -217,7 +240,12 @@
     $("#queryForm").submit(function(event){
         // cancels the form submission
         event.preventDefault();
-        submitForm();
+        submitForm($('form#queryForm').serialize());
+    });
+    $("#modelForm").submit(function(event){
+        // cancels the form submission
+        event.preventDefault();
+        submitForm($('form#modelForm').serialize());
     });
     $(".dataset").click(function(event){
         event.preventDefault();
@@ -228,36 +256,46 @@
         states_shapes = data;
     })
 
-    function submitForm() {
+    function submitForm(form_data) {
         $.ajax({ type: "POST",
             url: "/send_pci_query",
-            data: $('form#queryForm').serialize(),
+            data: form_data,
             success: function(msg){
                 updateChart(msg);
             },
             error: function(){
-                alert("fail send request to server");
+                //alert("fail send request to server");
+				updateChart({'error': 'yes', 'error_text': 'Cannot understand you query, please try to paraphrase it'});
             }
         });
     }
 
     function updateChart(msg) {
 
-        if (lastType == 'linear') {
-            var chart = $('#queryChart').highcharts();
-            if(chart !== undefined) chart.destroy();
-			lastType = null;
-        } else if (lastType == 'pie') {
-            var chart = $('#queryChart').highcharts();
-            if(chart !== undefined) chart.destroy();
-			lastType = null;
-        } else if (lastType == 'map') {
-            // delete previous map here
-            if(map) map.remove();
-            $('#queryChart').removeClass();
-			lastType = null;
-        }
+        if (msg['type'] !== 'model') { // Clear last chart on NewQuery tab
+			lastQuery = msg['query'];
+			if (lastType == 'linear') {
+				var chart = $('#queryChart').highcharts();
+				if(chart !== undefined) chart.destroy();
+				lastType = null;
+			} else if (lastType == 'pie') {
+				var chart = $('#queryChart').highcharts();
+				if(chart !== undefined) chart.destroy();
+				lastType = null;
+			} else if (lastType == 'map') {
+				// delete previous map here
+				if(map) map.remove();
+				$('#queryChart').removeClass();
+				lastType = null;
+			}
+		} else {
+			lastPredictiveQuery = msg['query'];
+		}
+		$("#query").val(lastQuery);
+		$("#modelQuery").val(lastPredictiveQuery);
+		
 		if(msg.error) {
+			$('.nav-tabs a[href="#newquery"]').tab('show');
 			$("#send_result").html(msg['error_text']);
 			return;
 		}
@@ -268,7 +306,8 @@
             lastType = 'linear';
 			$('.nav-tabs a[href="#newquery"]').tab('show');
             $('#queryChart').highcharts({chart: {type: 'line',  height: 400}, 
-                title: {text: msg['title'], verticalAlign: 'bottom', style: { "color": "rgb(112, 112, 112)", "fill": "rgb(112, 112, 112)", "fontSize": "12px" }, }, 
+                //title: {text: msg['title'], verticalAlign: 'bottom', style: { "color": "rgb(112, 112, 112)", "fill": "rgb(112, 112, 112)", "fontSize": "12px" }, }, 
+				title: {text: ''}, 
                 credits:{enabled:false},
 				yAxis: {title: { text: msg['yTitle'] },},
                 xAxis: {title: { text: msg['xTitle'] }, categories: msg['xAxis'] },
@@ -288,7 +327,8 @@
 				series_data.push({name: msg['xAxis'][i], y: msg['yAxis'][i]});
 			}
             $('#queryChart').highcharts({chart: {type: 'pie',  height: 400}, 
-                title: {text: msg['title'], verticalAlign: 'bottom', style: { "color": "rgb(112, 112, 112)", "fill": "rgb(112, 112, 112)", "fontSize": "12px" }, }, 
+                //title: {text: msg['title'], verticalAlign: 'bottom', style: { "color": "rgb(112, 112, 112)", "fill": "rgb(112, 112, 112)", "fontSize": "12px" }, }, 
+				title: {text: ''}, 
                 credits:{enabled:false},
 				series: [{name: 'Data', colorByPoint: true, data: series_data }],
             });
@@ -299,7 +339,7 @@
             //createMap(msg);
         }
 		if( msg['type'] == 'model') {
-            lastType = 'model';
+			lastPredictiveMsg = msg;
 			$('.nav-tabs a[href="#predictive"]').tab('show');
 			
 			categories = [];
@@ -308,7 +348,7 @@
 				categories.push(msg['features'][i][0]);
 				series_data.push(msg['features'][i][1]);
 			}
-            $('#featuresChart').highcharts({chart: {polar: true, type: 'line',  height: 180, }, 
+            $('#featuresChart').highcharts({chart: {polar: true, type: 'line',  height: 500, }, 
 				title: { text: 'Predictors importance', x: 0 }, 
 		        pane: { size: '80%' },
 				xAxis: { categories: categories, tickmarkPlacement: 'on', lineWidth: 0},
@@ -317,12 +357,106 @@
 				legend: {enabled:false},
 				tooltip: {formatter: function () {return '<span style="color:'+this.color+'">\u25CF</span> '+this.key+': <b>' + Math.round(this.y*1000)/10.0 +' %</b><br/>';} },
 				series: [{name: 'Predictors', colorByPoint: false, data: series_data, pointPlacement: 'on', 
-						point:{ events:{ click: function (event) { console.log(this.category); } } } }],
+						point:{ events:{ click: function (event) { showPredictor(this.category); } } } }],
 				exporting: { buttons: { contextButton: { enabled: false }, exportButton: { enabled: false } } }
             });
+			showPredictor('none'); // Clear last shown predictor
         }
     }
-
+	
+	function showPredictor(pr_name) {
+	    if (lastPredictor == 'highcharts') {
+            var chart = $('#modelChart').highcharts();
+            if(chart !== undefined) chart.destroy();
+			lastPredictor = null;
+        } else if (lastPredictor == 'map') {
+            // delete previous map here
+            if(mapPredictor) mapPredictor.remove();
+            $('#modelChart').removeClass();
+			lastPredictor = null;
+        }
+		
+		if(pr_name == 'age' || pr_name == 'income') {
+			lastPredictor = 'highcharts';
+			params = lastPredictiveMsg['charts'][pr_name];
+			$('#modelChart').highcharts({chart: {type: 'line',  height: 400}, 
+				title: {text: 'Predictor: ' + params['name']},
+				credits:{enabled:false},
+				yAxis:  {title: { text: 'Total' },},
+				xAxis: {categories: params['categories']},
+				series: params['series'], //[{name: params['yTitle1'], data: msg['yAxis1'] }, {name: params['yTitle2'], data: msg['yAxis2'] }],
+			});
+		} else if (pr_name == 'gender' || pr_name == 'marital'){
+			lastPredictor = 'highcharts';
+			params = lastPredictiveMsg['charts'][pr_name];
+			$('#modelChart').highcharts({chart: {type: 'column'},
+				title: {text: 'Predictor: ' + params['name']},
+				credits:{enabled:false},
+				xAxis: {categories: params['categories']},
+				yAxis: {min: 0,title: {text: ''}},
+				tooltip: { pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.percentage:.0f}%)<br/>', shared: true },
+				plotOptions: { column: {stacking: 'percent'}},
+				series: params['series'], //[{name: 'John',data: [5, 3, 4, 7, 2]}, {name: 'Jane',data: [2, 2, 3, 2, 1]}]
+			});
+		} else if (pr_name == 'debt_funds' || pr_name == 'credit_card'){
+			lastPredictor = 'highcharts';
+			params = lastPredictiveMsg['charts'][pr_name];
+			$('#modelChart').highcharts({ chart: {type: 'bubble',plotBorderWidth: 1,zoomType: 'xy'},
+				title: {text: 'Predictor: Product-to-Product'},
+				xAxis: { categories: ["Has CC", "Has no CC"], gridLineWidth: 1, min: 0, max: 1,},
+				yAxis: { categories: ["Buys DF", "Don't buys DF"], min: 0, max: 1, title: {text: ''} },
+				credits:{enabled:false},
+				legend: {enabled:false},
+				series: [
+				{ name: 'Has CC', data: [ [0, 1, 630], [0, 0, 89],],
+					marker: {
+						fillColor: {
+							radialGradient: { cx: 0.4, cy: 0.3, r: 0.7 },
+							stops: [
+								[0, 'rgba(255,255,255,0.5)'],
+								[1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0.5).get('rgba')]
+							]
+						}
+					}
+				}, { name: 'Has no CC', data: [ [1, 1, 73], [1, 0, 14],],
+					marker: {
+						fillColor: {
+							radialGradient: { cx: 0.4, cy: 0.3, r: 0.7 },
+							stops: [
+								[0, 'rgba(255,255,255,0.5)'],
+								[1, Highcharts.Color(Highcharts.getOptions().colors[1]).setOpacity(0.5).get('rgba')]
+							]
+						}
+					}
+				}]
+			});
+		} else if (pr_name == 'job' || pr_name == 'education'){
+			lastPredictor = 'highcharts';
+			params = lastPredictiveMsg['charts'][pr_name];
+			$('#modelChart').highcharts({ chart: {type: 'column'},
+				title: { text: 'Predictor: ' + params['name'] },
+				credits:{enabled:false},
+				xAxis: { categories: params['categories'],
+					crosshair: true
+				},
+				yAxis: { allowDecimals: false, min: 0, title: { text: 'Total' } },
+				tooltip: {
+					headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+					pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+						'<td style="padding:0"><b>{point.y:f}</b></td></tr>',
+					footerFormat: '</table>',
+					shared: true,
+					useHTML: true
+				},
+				plotOptions: { column: { pointPadding: 0.2, borderWidth: 0} },
+				series: params['series']
+			});
+		} else if (pr_name == 'state'){
+			lastPredictor = 'map';
+			createPredictorMap(lastPredictiveMsg['charts'][pr_name]);
+		}
+	}
+	
     function createMap(msg) {
         map = L.map('queryChart').setView([37.8, -96], 4);
         
@@ -355,8 +489,41 @@
 
     }
 
+    function createPredictorMap(params) {
+        mapPredictor = L.map('modelChart').setView([37.8, -96], 4);
+        
+        L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZ2VvcmdpeXRyb2ZpbW92IiwiYSI6ImNpbGxndHdqcjVxNHZ2cm0wajAyNjBxMW4ifQ.c1-Cm-vjLwMnAwMLfs5pQw', {
+            maxZoom: 18,
+            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+            '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+            'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+            id: 'mapbox.light'
+        }).addTo(mapPredictor);
+
+        // control that shows state info on hover
+        infoPredictor = L.control();
+
+        infoPredictor.onAdd = function (mapPredictor) {
+            this._div = L.DomUtil.create('div', 'info');
+            this.update();
+            return this._div;
+        };
+
+        infoPredictor.update = function (props) {
+            //customer list
+            this._div.innerHTML = '<h4>Value for state:</h4>' +  (props ?
+                                                                       '<b>' + props.name + '</b><br />' + props.value + '%'
+                                                                       : 'Hover over a state');
+        };
+        infoPredictor.addTo(mapPredictor);
+
+        geojsonPredictor = L.geoJson(getGeoJSON(params), {style: style, onEachFeature: onEachFeature}).addTo(mapPredictor);
+
+    }
+
     // get color depending on population density value
     function getColor(d) {
+		if (d == -1.0) return '#AAAAAA';
         return d > 0.7 ? '#D82735' :
         d > 0.6 ? '#FF7435' :
         d > 0.5  ? '#FFA135' :
@@ -392,12 +559,15 @@
             layer.bringToFront();
         }
 
-        info.update(layer.feature.properties);
+        if (info) { info.update(layer.feature.properties); }
+        if (infoPredictor) { infoPredictor.update(layer.feature.properties); }
     }
 
     function resetHighlight(e) {
-        geojson.resetStyle(e.target);
-        info.update();
+        if(typeof(geojson) !== "undefined") { geojson.resetStyle(e.target); }
+		if(typeof(geojsonPredictor) !== "undefined") { geojsonPredictor.resetStyle(e.target); }
+        if (info) { info.update(); }
+        if (infoPredictor) { infoPredictor.update(); }
     }
 
     function zoomToFeature(e) {
@@ -421,7 +591,7 @@
                 colorFlag = (value - msg['minValue']) * 1.0 / msg['maxValue']
             } else {
                 value = 'N/A';
-                colorFlag = 0.0;
+                colorFlag = -1.0;
             }
             res['features'][i]['properties']['value'] = value;
             res['features'][i]['properties']['colorFlag'] = colorFlag;
@@ -435,6 +605,16 @@
 		$("#query").val(selected_query);
 		$("form#queryForm").submit();
 		$('.nav-tabs a[href="#newquery"]').tab('show');
+	});
+	$('#queryChartDownload').click(function () {
+		var chart = $('#queryChart').highcharts();
+		if(chart == undefined) return; // No chart
+		chart.exportChartLocal()		
+	});
+	$('#modelChartDownload').click(function () {
+		var chart = $('#modelChart').highcharts();
+		if(chart == undefined) return; // No chart
+		chart.exportChartLocal()
 	});
 </script>
 {% endblock %}
