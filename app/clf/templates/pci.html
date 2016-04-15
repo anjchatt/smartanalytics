@@ -45,6 +45,48 @@
 	div.condition {
 		//padding: 1px;
 	}
+	/* Images inside tab switchers */
+	.nav-tabs img {
+		width:100%;
+	}
+	.nav-tabs > .active > a, .nav-tabs > .active > a:hover { 
+		outline:none;
+		background-color: #ffffff;
+		border: 1px solid #fff;
+		border-bottom-color: transparent;
+		cursor: default;
+	}
+	.nav .nav-tabs li a:hover: {
+		background-color:none;
+		border: none;
+	}
+	.nav-tabs li a:active {
+		background-color:#ffffff;
+		border:none;
+		border-right:0;
+	}
+	l.nav .nav-tabs {
+	}
+	.tabs-below > .nav-tabs, {
+		border: 0px;
+	}
+	.tab-content > .tab-pane,
+	.pill-content > .pill-pane {
+		display: none;
+	}
+	.tab-content > .active,
+	.pill-content > .active {
+		display: block;
+	}
+	.tab_name {
+		position: absolute;
+		top: 10px;
+		right: 20px;
+		text-align: right;
+		font-size: 36px;
+		font-weight: bold;
+		color: rgb(34, 34, 34);
+	}
 </style>
 <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
 {% endblock %}
@@ -54,9 +96,20 @@
 	<h3>Predictive Customer Intelligence</h3>
 	<hr />
     <ul class="nav nav-tabs nav-justified" role="tablist">
-        <li role="presentation" class="active"><a href="#recent" aria-controls="recent" role="tab" data-toggle="tab">Recent Queries by Group</a></li>
-        <li role="presentation"><a href="#newquery" aria-controls="newquery" role="tab" data-toggle="tab">New Query</a></li>
-        <li role="presentation"><a href="#predictive" aria-controls="predictive" role="tab" data-toggle="tab">Predictive Intelligence</a></li>
+        <li role="presentation" class="active"><a href="#recent" aria-controls="recent" role="tab" data-toggle="tab">
+			<img src="/static/images/rotated_recent.png" class="img=responsive">
+			<div class="tab_name">Recent Queries<br />by Group</div>
+		</a></li>
+        <li role="presentation"><a href="#newquery" aria-controls="newquery" role="tab" data-toggle="tab">
+			<img src="/static/images/rotated_new.png" class="img=responsive">
+			<div class="tab_name">New Query</div>
+			</a>
+		</li>
+        <li role="presentation"><a href="#predictive" aria-controls="predictive" role="tab" data-toggle="tab">
+			<img src="/static/images/rotated_tree.png" class="img=responsive">
+			<div class="tab_name">Predictive<br />Intelligence</div>
+			</a>
+		</li>
     </ul>
 	<div id="loadingDiv"><!-- <img src="static/images/logo_medium.png"> --><i class="fa fa-refresh fa-spin" style="font-size: 100px; font-color: lightgray"></i></div>
 
@@ -75,7 +128,7 @@
 				<div class='col-md-3'>
 					<div class="panel panel-default">
 						<div class="panel-body recentquery">
-							Who buys debt funds in NY?
+							Who buys debt funds in NV?
 							<img src="/static/images/query_bg/q02bw.png" class="queryimage" style="top: 20%;">
 						</div>
 					</div>
@@ -192,6 +245,7 @@
 					<div id="featuresChart" style="width: 100%; height: 500px;"></div>
 				</div>
 				<div class='col-md-6'>
+					<br />
 					<div id="modelChart" style="width: 100%; height: 500px;"></div>
 					<hr />
 					<div class="row">
@@ -243,13 +297,14 @@
 				},
 				scale: 1,
 				fallbackToExportServer: false,
-				buttons: { contextButton: { enabled: false },
-					exportButton: {
-						text: 'Download',
-						// Use only the download related menu items from the default context button
-						menuItems: Highcharts.getOptions().exporting.buttons.contextButton.menuItems.splice(2)
-					},
-				},
+				buttons: { contextButton: { enabled: false }, exportButton: { enabled: false } },
+//				buttons: { contextButton: { enabled: false },
+//					exportButton: {
+//						text: 'Download',
+//						// Use only the download related menu items from the default context button
+//						menuItems: Highcharts.getOptions().exporting.buttons.contextButton.menuItems.splice(2)
+//					},
+//				},
 			},
         });
     });
@@ -356,6 +411,9 @@
             $('#queryChart').highcharts({chart: {type: 'pie',  height: 400}, 
                 //title: {text: msg['title'], verticalAlign: 'bottom', style: { "color": "rgb(112, 112, 112)", "fill": "rgb(112, 112, 112)", "fontSize": "12px" }, }, 
 				title: {text: ''}, 
+				tooltip: {formatter: function () {return '<span style="color:{series.color}">'+this.key+'</span>: <b>'
+														+this.y.formatMoney(0)+'</b> ('+Math.round(this.percentage)+'%)<br/>';},
+						shared: true },
                 credits:{enabled:false},
 				series: [{name: 'Data', colorByPoint: true, data: series_data }],
             });
@@ -387,7 +445,7 @@
 						point:{ events:{ click: function (event) { showPredictor(this.category); } } } }],
 				exporting: { buttons: { contextButton: { enabled: false }, exportButton: { enabled: false } } }
             });
-			showPredictor('none'); // Clear last shown predictor
+			showPredictor('Age'); // Show 'age' by default
 			updateTargets();
         }
     }
@@ -502,7 +560,7 @@
 			lastPredictor = null;
         }
 		
-		if(pr_name == 'age' || pr_name == 'income') {
+		if(pr_name == 'Age' || pr_name == 'Income') {
 			lastPredictor = 'highcharts';
 			params = lastPredictiveMsg['charts'][pr_name];
 			$('#modelChart').highcharts({chart: {type: 'line',  height: 400}, 
@@ -510,9 +568,9 @@
 				credits:{enabled:false},
 				yAxis:  {title: { text: 'Total' },},
 				xAxis: {categories: params['categories']},
-				series: params['series'], //[{name: params['yTitle1'], data: msg['yAxis1'] }, {name: params['yTitle2'], data: msg['yAxis2'] }],
+				series: params['series'],
 			});
-		} else if (pr_name == 'gender' || pr_name == 'marital'){
+		} else if (pr_name == 'Gender' || pr_name == 'Marital'){
 			lastPredictor = 'highcharts';
 			params = lastPredictiveMsg['charts'][pr_name];
 			$('#modelChart').highcharts({chart: {type: 'column'},
@@ -520,11 +578,11 @@
 				credits:{enabled:false},
 				xAxis: {categories: params['categories']},
 				yAxis: {min: 0,title: {text: ''}},
-				tooltip: { pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.percentage:.0f}%)<br/>', shared: true },
-				plotOptions: { column: {stacking: 'percent'}},
-				series: params['series'], //[{name: 'John',data: [5, 3, 4, 7, 2]}, {name: 'Jane',data: [2, 2, 3, 2, 1]}]
+				tooltip: { pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b><br/>', shared: true },
+				plotOptions: { column: {stacking: 'normal'}}, //'normal' or 'percent'
+				series: params['series'], 
 			});
-		} else if (pr_name == 'debt_funds' || pr_name == 'credit_card'){
+		} else if (pr_name == 'Debt funds' || pr_name == 'Credit card'){
 			lastPredictor = 'highcharts';
 			params = lastPredictiveMsg['charts'][pr_name];
 			$('#modelChart').highcharts({ chart: {type: 'bubble',plotBorderWidth: 1,zoomType: 'xy'},
@@ -556,7 +614,7 @@
 					}
 				}]
 			});
-		} else if (pr_name == 'job' || pr_name == 'education'){
+		} else if (pr_name == 'Job' || pr_name == 'Education'){
 			lastPredictor = 'highcharts';
 			params = lastPredictiveMsg['charts'][pr_name];
 			$('#modelChart').highcharts({ chart: {type: 'column'},
@@ -577,7 +635,7 @@
 				plotOptions: { column: { pointPadding: 0.2, borderWidth: 0} },
 				series: params['series']
 			});
-		} else if (pr_name == 'state'){
+		} else if (pr_name == 'State'){
 			lastPredictor = 'map';
 			createPredictorMap(lastPredictiveMsg['charts'][pr_name]);
 		}
