@@ -262,13 +262,16 @@ def parse_it(text):
     filter_by = match_filter(original_text)
 
     print "1: ", filter_by
+    # remove from filter_by all words that are in group_by
     filter_by = [( tmp[0], original_text[tmp[1]:tmp[2]] ) 
                      for tmp in filter_by 
                      if tmp[0] not in group_by]
 
+    # remove from filter_by our root word and 'customer' word
     filter_by = [tmp for tmp in filter_by 
                      if tmp[0] not in [target[1], 'customer']]
 
+    # Justify filter criterias from initial query
     matched_cats = []
     filter_by_val = {}
     if len(filter_by):
@@ -295,22 +298,6 @@ def parse_it(text):
                     filter_by_val[filteri[0]]['cats'] += matched_cats_i
             filter_by_val[filteri[0]]['cats'] = list(set(filter_by_val[filteri[0]]['cats']))
 
-    """
-    print 'text:'
-    print original_text
-
-    print 'params:'
-    print parameters
-
-    print 'target:'
-    print target[1]
-
-    print 'filter:'
-    print filter_by_val
-
-    print 'group_by'
-    print group_by
-    """
     
     sql_select = []
     sql_filter = []
@@ -357,7 +344,7 @@ def parse_it(text):
             else:
                 sql_select.append('AVG('+target[1]+')')
         elif filter_kw[target[1]]['type'] == '':
-            # add in future
+            # add in future (category-to-category type of questions)
             pass
         
     for f_name,values in filter_by_val.iteritems():

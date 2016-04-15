@@ -30,6 +30,21 @@
 		box-shadow: 0 0 15px rgba(0,0,0,0.2);
 		border-radius: 5px;
 	}
+	div.targets {
+		border-bottom: 1px solid;
+		margin-left: 0px;
+		margin-right: 0px;
+	}
+	div.target_percent {
+		//background-color: #999;
+		margin-top: 5px;
+	}
+	div.target_conditions {
+		margin-top: 5px;
+	}
+	div.condition {
+		//padding: 1px;
+	}
 </style>
 <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
 {% endblock %}
@@ -127,24 +142,28 @@
 				</div>
 				<div class='col-md-10'>
 					<div class="row">
-						<form id="queryForm">
-							<div class="form-group">
-								<label for="query"><!-- Enter you query --></label>
-								<input type="text" class="form-control" id="query" name="query" placeholder="Enter you query and press <<Enter>>" autofocus>
-							</div>
-						</form>
+						<div class='col-md-12'>
+							<form id="queryForm">
+								<div class="form-group">
+									<label for="query"><!-- Enter you query --></label>
+									<input type="text" class="form-control" id="query" name="query" placeholder="Enter you query and press <<Enter>>" autofocus>
+								</div>
+							</form>
+						</div>
 					</div>
 					<div class="row">
-						<div id="queryChart" style="width: 100%; height: 500px;"></div>
-						<hr />
-						<div class="row">
-							<div class='col-md-6'>
-								<div id="send_result"></div>
-							</div>
-							<div class='col-md-6'>
-								<div id="Buttons" class="pull-right">
-									<input class="btn btn-primary" style="width: 100px" value="E-Mail" id="queryChartEmail" type="button">
-									<input class="btn btn-primary" style="width: 100px" value="Download" id="queryChartDownload" type="button">
+						<div class='col-md-12'>
+							<div id="queryChart" style="width: 100%; height: 500px;"></div>
+							<hr />
+							<div class="row">
+								<div class='col-md-6'>
+									<div id="send_result"></div>
+								</div>
+								<div class='col-md-6'>
+									<div id="Buttons" class="pull-right">
+										<input class="btn btn-primary" style="width: 100px" value="E-Mail" id="queryChartEmail" type="button">
+										<input class="btn btn-primary" style="width: 100px" value="Download" id="queryChartDownload" type="button">
+									</div>
 								</div>
 							</div>
 						</div>
@@ -154,12 +173,18 @@
 		</div>
         <div role="tabpanel" class="tab-pane" id="predictive">
 			<div class="row">
-				<form id="modelForm">
-					<div class="form-group">
-						<label for="modelQuery"><!-- Enter you query --></label>
-						<input type="text" class="form-control" id="modelQuery" name="query" placeholder="Enter you query and press <<Enter>>">
-					</div>
-				</form>
+				<div class='col-md-12'>
+					<form id="modelForm">
+						<div class="form-group">
+							<label for="modelQuery"><!-- Enter you query --></label>
+							<input type="text" class="form-control" id="modelQuery" name="query" placeholder="Enter you query and press <<Enter>>">
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="row">
+				<div class='col-md-12' id="targets">
+				</div>
 			</div>
 			<div class="row">
 				<div class='col-md-6'>
@@ -363,8 +388,107 @@
 				exporting: { buttons: { contextButton: { enabled: false }, exportButton: { enabled: false } } }
             });
 			showPredictor('none'); // Clear last shown predictor
+			updateTargets();
         }
     }
+	
+	function updateTargets() {
+		targ = lastPredictiveMsg['targets'];
+		colors = ['#D82735','#FF7435','#FFA135','#FFCB35','#FFF738','#00753A','#009E47','#16DD38'].reverse();
+		c_ind = 0;
+		str = "";
+		for (var i in targ) {
+			color = colors[c_ind];
+			c_ind++;
+			if(c_ind >= colors.length) {c_ind = 0;}
+			
+			str += "<div class='row targets'>";
+			str += "<div class='col-md-1 text-center target_percent' style='background-color: " + color 
+				+ "'><b>" + targ[i]['percents'] + "%</b>: <br /></div>";
+			str += "<div class='col-md-11 target_conditions'>";
+			str += "<div class='row'>";
+			for(var key in targ[i]['conditions']) {
+				if(key == "gender") {
+					str += "<div class='col-md-2 condition'>";
+					str += "Gender: " + targ[i]['conditions'][key] + "<br />";
+					str += "</div>";
+				} else if (key == "debt_funds") {
+					str += "<div class='col-md-2 condition'>";
+					str += "Debt funds: " + targ[i]['conditions'][key] + "<br />";
+					str += "</div>";
+				} else if (key == "credit_card") {
+					str += "<div class='col-md-2 condition'>";
+					str += "Credit card: " + targ[i]['conditions'][key] + "<br />";
+					str += "</div>";
+				} else if (key == "state") {
+					str += "<div class='col-md-2 condition'>";
+					if (targ[i]['conditions'][key]['in']) {
+						str += "State: " + targ[i]['conditions'][key]['in'] + "<br />";
+					} else {
+						cond_list = targ[i]['conditions'][key]['not_in'].join(", ")
+						str += "State not in: " + cond_list + "<br />";						
+					}
+					str += "</div>";
+				} else if (key == "marital") {
+					str += "<div class='col-md-2 condition'>";
+					if (targ[i]['conditions'][key]['in']) {
+						str += "Marital status: " + targ[i]['conditions'][key]['in'] + "<br />";
+					} else {
+						cond_list = targ[i]['conditions'][key]['not_in'].join(", ")
+						str += "Marital status not in: " + cond_list + "<br />";						
+					}
+					str += "</div>";
+				} else if (key == "job") {
+					str += "<div class='col-md-2 condition'>";
+					if (targ[i]['conditions'][key]['in']) {
+						str += "Job type: " + targ[i]['conditions'][key]['in'] + "<br />";
+					} else {
+						cond_list = targ[i]['conditions'][key]['not_in'].join(", ")
+						str += "Job type not in: " + cond_list + "<br />";						
+					}
+					str += "</div>";
+				} else if (key == "education") {
+					str += "<div class='col-md-2 condition'>";
+					if (targ[i]['conditions'][key]['in']) {
+						str += "Education level: " + targ[i]['conditions'][key]['in'] + "<br />";
+					} else {
+						cond_list = targ[i]['conditions'][key]['not_in'].join(", ")
+						str += "Education level not in: " + cond_list + "<br />";						
+					}
+					str += "</div>";
+				} else if (key == "income") {
+					str += "<div class='col-md-2 condition'>";
+					if (targ[i]['conditions'][key]['lower'] == null) {
+						str += "Income lower than: $" + (0.0+targ[i]['conditions'][key]['upper']).formatMoney(0) + "<br />";											
+					} else if (targ[i]['conditions'][key]['upper'] == null) {
+						str += "Income higher than: $" + (0.0+targ[i]['conditions'][key]['lower']).formatMoney(0) + "<br />";											
+					} else {
+						str += "Income: between $" + (0.0+targ[i]['conditions'][key]['lower']).formatMoney(0) + " and $" 
+							+ (targ[i]['conditions'][key]['upper']).formatMoney(0) + "<br />";											
+					}
+					str += "</div>";
+				} else if (key == "age") {
+					str += "<div class='col-md-2 condition'>";
+					if (targ[i]['conditions'][key]['lower'] == null) {
+						str += "Yonger than: " + Math.round(targ[i]['conditions'][key]['upper']) + "<br />";											
+					} else if (targ[i]['conditions'][key]['upper'] == null) {
+						str += "Older than: " + Math.round(targ[i]['conditions'][key]['lower']) + "<br />";											
+					} else {
+						str += "Age: between " + Math.round(targ[i]['conditions'][key]['lower']) + " and " 
+							+ Math.round(targ[i]['conditions'][key]['upper']) + "<br />";											
+					}
+					str += "</div>";
+				} else {
+					console.log("Unknown condition key:" + key);
+				}
+			}
+			str += "</div>"; // row target_conditions
+			str += "</div>"; // col-md-10
+			str += "</div>"; // col-md-2
+			str += "</div>"; // row targets
+		}
+		$('#targets').html(str);
+	}
 	
 	function showPredictor(pr_name) {
 	    if (lastPredictor == 'highcharts') {
@@ -618,5 +742,15 @@
 		if(chart == undefined) return; // No chart
 		chart.exportChartLocal()
 	});
+	Number.prototype.formatMoney = function(decPlaces, thouSeparator, decSeparator) {
+		var n = this,
+			decPlaces = isNaN(decPlaces = Math.abs(decPlaces)) ? 2 : decPlaces,
+			decSeparator = decSeparator == undefined ? "." : decSeparator,
+			thouSeparator = thouSeparator == undefined ? "," : thouSeparator,
+			sign = n < 0 ? "-" : "",
+			i = parseInt(n = Math.abs(+n || 0).toFixed(decPlaces)) + "",
+			j = (j = i.length) > 3 ? j % 3 : 0;
+		return sign + (j ? i.substr(0, j) + thouSeparator : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thouSeparator) + (decPlaces ? decSeparator + Math.abs(n - i).toFixed(decPlaces).slice(2) : "");
+	};
 </script>
 {% endblock %}
