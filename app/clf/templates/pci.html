@@ -566,8 +566,9 @@
 			$('#modelChart').highcharts({chart: {type: 'line',  height: 400}, 
 				title: {text: 'Predictor: ' + params['name']},
 				credits:{enabled:false},
-				yAxis:  {title: { text: 'Total' },},
+				yAxis:  {title: { text: '' },},
 				xAxis: {categories: params['categories']},
+				tooltip: { valueSuffix: ' %' },
 				series: params['series'],
 			});
 		} else if (pr_name == 'Gender' || pr_name == 'Marital'){
@@ -578,7 +579,7 @@
 				credits:{enabled:false},
 				xAxis: {categories: params['categories']},
 				yAxis: {min: 0,title: {text: ''}},
-				tooltip: { pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b><br/>', shared: true },
+				tooltip: { pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> %<br/>', shared: true },
 				plotOptions: { column: {stacking: 'normal'}}, //'normal' or 'percent'
 				series: params['series'], 
 			});
@@ -623,11 +624,11 @@
 				xAxis: { categories: params['categories'],
 					crosshair: true
 				},
-				yAxis: { allowDecimals: false, min: 0, title: { text: 'Total' } },
+				yAxis: { allowDecimals: false, min: 0, title: { text: '' } },
 				tooltip: {
 					headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
 					pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-						'<td style="padding:0"><b>{point.y:f}</b></td></tr>',
+						'<td style="padding:0" nowrap><b>{point.y:f}</b> %</td></tr>',
 					footerFormat: '</table>',
 					shared: true,
 					useHTML: true
