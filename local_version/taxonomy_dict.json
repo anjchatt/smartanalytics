@@ -11,4 +11,5 @@
 'vacation', 'out of the country', 'forgot to call', 'ATM'],
 'fraud':['fraudulent', 'fraud', 'didnt use my', 'hacked'],
 'loyalty':['my points','bonus'],
+'login':['login', 'logged', 'error', 'system'],
 'service':["was rude", "customer rep", "is rude", "ed rude", 'service', 'hung up']}
