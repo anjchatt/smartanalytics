@@ -6,5 +6,6 @@ cd ../data_marts/customer_data
 jupyter nbconvert --to python generate_mongo_data.ipynb
 cd ../customer_matching
 jupyter nbconvert --to python a01_init_database.ipynb
-
+cd ../../data_analysis/PCI
+jupyter nbconvert --to python data_preparation_pci.ipynb
 
