@@ -8,11 +8,19 @@
         .btn{
             border-radius: 4px;
         }
-        .navbar-nav a {
-            font-size: 90%;
-        }
-		.nav li a {
-			padding: 9px 10px; /* Make NavBar densely */
+		.navbar {
+			margin-bottom: 0px;
+		}
+
+		.navbar-nav {
+			display:table;
+			width:70%;
+			margin: 0;
+		}
+		.navbar-nav > li {
+			float:none;
+			display:table-cell;
+			text-align:center;
 		}
         #footer {
             background-color: #f5f5f5;
@@ -29,7 +37,7 @@
             position: relative;
         }
         #content {
-            padding-top: 10px; /* To not overlap with NavBar */
+            //padding-top: 10px; /* To not overlap with NavBar */
             padding-bottom: 40px; /* Height of the footer element */
         }
         html {
@@ -39,10 +47,10 @@
             padding: 0px 0px 0px 0px;
         }
         body {
-            margin:0;
+            margin: 0px;
             height: 100%;
             background-color: #f5f8fa;
-            padding-top: 50px;
+			padding-top: 60px;
         }
         .container .text-muted {
             margin: 20px 0;
@@ -66,7 +74,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">Smart Analytics</a>
+            <a class="navbar-brand" href="/" style="min-height: 60px;">Smart Analytics</a>
         </div>
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
@@ -80,8 +88,9 @@
                 <li><a href="/voc">Voice of<br />Customer</a></li>
                 <li><a href="/pci">Predictive<br />Intelligence</a></li>
             </ul>
-            <ul class="nav navbar-nav navbar-right">
-				<li><a href="#" class="pull-right"><img src='/static/images/capgemini-logo.png' style="display: inline-block; height: 30px; margin-top: -5px;"></a></li>
+            <ul class="nav navbar-nav navbar-right" style="width: 150px;">
+				<li><a href="#" style="min-height: 66px;"><img src='/static/images/capgemini-logo.png' style="display: inline-block; height: 30px;"></a>
+				</li>
             </ul>
         </div>
     </div>

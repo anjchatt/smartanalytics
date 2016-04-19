@@ -4,6 +4,7 @@
 <title>Predictive Customer Intelligence</title>
 <style>
 	.dataset { cursor: pointer; }
+	.input-group-addon { cursor: pointer; }
 	.recentquery { height: 200px; cursor: pointer; }
 	.queryimage {
 		opacity: 0.2;
@@ -196,10 +197,11 @@
 				<div class='col-md-10'>
 					<div class="row">
 						<div class='col-md-12'>
-							<form id="queryForm">
-								<div class="form-group">
+							<form id="queryForm" class="form-inline" style="width: 100%;">
+								<div class="input-group" style="width: 100%;">
 									<label for="query"><!-- Enter you query --></label>
-									<input type="text" class="form-control" id="query" name="query" placeholder="Enter you query and press <<Enter>>" autofocus>
+									<input type="text" class="form-control" style="width: 100%;" id="query" name="query" placeholder="Enter you query and press <<Enter>>" autofocus />
+									<span class="input-group-addon" id="startVoiceOnQuery" style="width: 20px;" data-target="#query"><i class="fa fa-microphone" data-target="#query"></i></span>
 								</div>
 							</form>
 						</div>
@@ -227,10 +229,10 @@
         <div role="tabpanel" class="tab-pane" id="predictive">
 			<div class="row">
 				<div class='col-md-12'>
-					<form id="modelForm">
-						<div class="form-group">
-							<label for="modelQuery"><!-- Enter you query --></label>
-							<input type="text" class="form-control" id="modelQuery" name="query" placeholder="Enter you query and press <<Enter>>">
+					<form id="modelForm" class="form-inline" style="width: 100%;">
+						<div class="input-group" style="width: 100%;">
+							<input type="text" class="form-control" style="width: 100%;" id="modelQuery" name="query" placeholder="Enter you query and press <<Enter>>" />
+							<span class="input-group-addon" id="startVoiceOnModel" style="width: 20px;" data-target="#modelQuery"><i class="fa fa-microphone" data-target="#modelQuery"></i></span>
 						</div>
 					</form>
 				</div>
@@ -811,5 +813,48 @@
 			j = (j = i.length) > 3 ? j % 3 : 0;
 		return sign + (j ? i.substr(0, j) + thouSeparator : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thouSeparator) + (decPlaces ? decSeparator + Math.abs(n - i).toFixed(decPlaces).slice(2) : "");
 	};
+	
+	// speech recognition
+	$('#startVoiceOnModel').click(parseVoice)
+	$('#startVoiceOnQuery').click(parseVoice)
+
+	function parseVoice (event) {
+		input_target = event.target.dataset['target'];
+		
+		var recognition = speech();
+//			var speechRecognitionList = new SpeechGrammarList();
+		recognition.lang = "en-US";
+		
+//			speechRecognitionList.addFromString(grammar, 1);
+//			recognition.grammars = speechRecognitionList;
+		recognition.onresult = function(event) {
+			var text = event.results[0][0].transcript;
+			
+			var input = $(input_target);
+			input.val(text);
+			console.log('Text: ' + text + ' |Confidence: ' + event.results[0][0].confidence);
+			
+			if(event.results[0][0].confidence > 0.6 && input.length > 0) { // if we sure in text and have right input target, submit form
+				$(input[0].form).submit();
+			}
+		}
+	
+		recognition.start();
+		console.log('Started recognition');
+	}
+
+	var speech = function () {
+		if (typeof speechRecognition !== 'undefined') {
+			return new speechRecognition();
+		} else if (typeof msSpeechRecognition !== 'undefined') {
+			return new msSpeechRecognition();
+		} else if (typeof mozSpeechRecognition !== 'undefined') {
+			return new mozSpeechRecognition();
+		} else if (typeof webkitSpeechRecognition !== 'undefined') {
+			return new webkitSpeechRecognition();
+		}
+		throw new Error('No speech recognition API detected.');
+	};
+
 </script>
 {% endblock %}
