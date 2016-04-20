@@ -1,0 +1,9 @@
+{"token" : "4928196327-m5OXmiguPop45y9sqANSZBnQR4EJUjuL8EvXmcj",
+"token_secret" : "CDkmkWtPrly2nf5AEobHRd9PsdQOcO2NbEtfQA4UDnf7W",
+"consumer_key" : "OuA5h2rIIyKIE4YZ58AbGUwA3",
+"consumer_secret" : "NWqEACSSLQAGp2N7ADm1C5AyLbcjxB7sObCpTXWYQebSDIrRPv",
+"twitter_db" : {"database" : "twitter","user" : "postgres"},
+"neo4j" : "http://neo4j:neo4j@localhost:7474/db/data/",
+"gmail_user": "capgbank@gmail.com",
+"gmail_pass": "my!Smart",
+"gmail_recipient": ["timofei.chernousov@ecotomsk.com", "gunjan.aggarwal@capgemini.com"]}

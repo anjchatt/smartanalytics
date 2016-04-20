@@ -3,6 +3,7 @@
 *.RData
 *.Rhistory
 *.ipynb_checkpoints*
+app/clf/config.json
 data/data_merging/data/*
 data/data_merging/*csv
 app/lm/LM_dataset.csv
