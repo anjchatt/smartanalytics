@@ -1,0 +1,294 @@
+
+# coding: utf-8
+
+# In[ ]:
+
+from __future__ import print_function
+
+import argparse
+
+from twitter.stream import TwitterStream, Timeout, HeartbeatTimeout, Hangup
+from twitter.oauth import OAuth
+from twitter.oauth2 import OAuth2, read_bearer_token_file
+from twitter.util import printNicely
+import os
+import json
+
+import requests
+import hashlib
+import json
+import re
+import psycopg2
+
+CLUSTER_TWEET_NUM = 50
+CLUSTER_MATCH_RATIO = 0.6
+
+segment_dict = {0:'-', 1:'Mass Market', 2:'Young Professional',
+                3:'Mass Afluent', 4:'Affluent', 5:'High Net Worth'}
+
+with open('AFINN-111.txt') as f:
+    sent_dict = [l.split('\t') for l in f]
+    sent_dict = {l[0]:int(l[1]) for l in sent_dict}
+broadcast_sent_dict = sent_dict
+
+with open('taxonomy_dict.json') as f:
+    s = f.read()
+    taxonomy_dict = eval(s)
+broadcast_taxonomy_dict = taxonomy_dict
+
+with open('english_stopwords.txt') as f:
+    stopwords = [l[:-1] for l in f]
+broadcast_stopwords = stopwords
+tokenize = re.compile('(?u)\\b[a-z][a-z]+\\b')
+
+
+# In[ ]:
+
+def tokenize_foo(tweet):
+    tweet.update({'tokens':tokenize.findall(tweet['text'].lower())})
+    return tweet
+
+def include_sent(tweet):
+    toks = tweet['tokens']
+    sent_dict = broadcast_sent_dict
+    sent = [sent_dict[tok] for tok in toks if tok in sent_dict]
+    
+    w = 2-1/float(1.4**len(sent))
+    sent = sorted(sent)[int(len(sent)/2)]*w
+    
+    #sent = sum(sent)/float(len(sent)+2)
+    tweet.update({'sentiment':sent})
+    return tweet
+
+def get_taxonomy(t):
+    text = t['text'].lower()
+    text = text.replace("'","").replace("#","").replace("@","")
+    taxonomy_dict = broadcast_taxonomy_dict
+    category = ''
+    for cat,kws in taxonomy_dict.iteritems():
+        for kw in kws:
+            if kw in text:
+                category = category+'|'+cat+'|'
+                break
+    t.update({'categories':category})
+    return t
+
+def match_customer(tweet,con):
+    cur = con.cursor()
+    cur.execute("""SELECT * FROM customers WHERE user_screen_name=%s""",
+                (tweet['user_screen_name'],))
+    user_str = cur.fetchall()
+    detected = False
+    if len(user_str) == 0:
+        cur.execute("""SELECT * FROM customers WHERE name=%s""",
+                    (tweet['user_name'],))
+        user_strs = cur.fetchall()
+        user_strs = [us for us in user_strs if user_strs[1] in tweet['user_location']]
+        if len(user_strs) == 1:
+            user_str = user_strs[0]
+            detected = True
+    else:
+        user_str = user_str[0]
+        detected = True
+    
+    if detected:
+        if not user_str[3]:
+            user_id = tweet['user_id_str']
+            r = requests.get('http://api.klout.com/v2/identity.json/tw/'+str(user_id)+'?key=y5wqghmhzne483ju4upd6uyq')
+            if r.status_code == 200:
+                k_id = r.json()['id']
+                r2 = requests.get('http://api.klout.com/v2/user.json/'+k_id+'/score?key=y5wqghmhzne483ju4upd6uyq')
+                klout_score = r2.json()['score']
+            else:
+                klout_score = 0
+        else:
+            klout_score = user_str[3]
+        
+        cur.execute("""UPDATE customers SET user_screen_name=%s, klout_score=%s, followers_count=%s
+                    WHERE index=%s;""",
+                    (tweet['user_screen_name'], klout_score, tweet['followers_count'], user_str[0]))
+        
+        customer_id = user_str[0]
+        segment = segment_dict[user_str[5]]
+    else:
+        customer_id = 0
+        klout_score = 0
+        segment = '-'
+    
+    con.commit()
+    
+    tweet.update({'customer_id':customer_id,
+                 'klout_score':klout_score,
+                 'segment':segment})
+    
+    return tweet
+
+def check_for_cluster(tweet, con, cur):
+    tokens = tweet['tokens']
+    tokens = [tok for tok in tokens if tok not in broadcast_stopwords]
+    tokens_int = []
+    for tok in tokens:
+        m = hashlib.md5()
+        m.update(tok)
+        tokens_int.append(int(m.hexdigest()[-7:], 16))
+    
+    
+    
+    # match words
+    tweet_ids = []
+    tweet_cluster_id = {}
+    for tok in tokens_int:
+        cur.execute('select * from word_ids where word_id='+str(tok))
+        rows = cur.fetchall()
+        for row in rows:
+            tweet_cluster_id.update({row[0]:(row[2],row[3])})
+            tweet_ids.append(row[0])
+    tweet_ids_acc = {t:0 for t in set(tweet_ids)}
+    for tweet_id in tweet_ids:
+        tweet_ids_acc[tweet_id] += 1
+    
+    # Check for cluster
+    match_threshold = int(len(tokens_int)*CLUSTER_MATCH_RATIO)
+    cluster_acc = {c:[] for c in set(v[0] for v in tweet_cluster_id.values())}
+    bigest_cluster = {'id':0,'n':0}
+
+    for tweet_id,kw_num in tweet_ids_acc.iteritems():
+        if kw_num > match_threshold:
+            cluster_id = tweet_cluster_id[tweet_id][0]
+            user_id = tweet_cluster_id[tweet_id][0]
+            if user_id not in cluster_acc[cluster_id]:
+                cluster_acc[cluster_id] += [tweet_cluster_id[tweet_id][1]]
+                if bigest_cluster['n'] < len(cluster_acc[cluster_id]):
+                    bigest_cluster['id'] = cluster_id
+                    bigest_cluster['n'] = len(cluster_acc[cluster_id])
+    
+    if bigest_cluster['id'] > 0:
+        # for existed cluster we lower threshold
+        CLUSTER_TWEET_NUM_2 = CLUSTER_TWEET_NUM*0.8
+    else:
+        CLUSTER_TWEET_NUM_2 = CLUSTER_TWEET_NUM
+    
+    if bigest_cluster['n'] > CLUSTER_TWEET_NUM_2:
+        if bigest_cluster['id'] == 0:
+            ## NEW CLUSTER DETECTED
+            same_cluster_tweet_ids = [t_id for t_id,kw_n in tweet_ids_acc.iteritems() if kw_n>match_threshold]
+            
+            cur.execute('select * from cluster_ids')
+            all_cluster_ids = cur.fetchall()
+            if len(all_cluster_ids) > 0:
+                cluster = max(v[0] for v in all_cluster_ids)+1
+            else:
+                cluster = 1
+            
+            cur.execute("UPDATE word_ids SET cluster_id="+str(cluster)+
+                "WHERE id_str=ANY(%s);",(same_cluster_tweet_ids,))
+            cur.execute("INSERT INTO cluster_ids VALUES ("+str(cluster)+");")
+            con.commit()
+        else:
+            cluster = bigest_cluster['id']
+    else:
+        cluster = 0
+    
+    for tok in tokens_int:
+        query = "INSERT INTO word_ids (id_str,word_id,cluster_id,user_id_str) VALUES (%s,%s,%s,%s);"
+        cur.execute(query, (tweet['id_str'],tok,cluster,tweet['user_id_str']))
+    con.commit()
+    
+    return cluster
+
+def send_partition(tweet, con):
+    cur = con.cursor()
+    check_for_cluster(tweet, con, cur)
+
+    field_names = ['id_str', 'categories', 'in_reply_to_user_id', 'sentiment', 
+                   'text', 'created_at', 'user_location', 'in_reply_to_status_id',
+                   'in_reply_to_screen_name', 'retweet_count', 'favorite_count',
+                   'user_name', 'user_screen_name', 'user_id_str']
+    cur.execute("""
+    INSERT INTO stream
+    (
+    id_str, categories, in_reply_to_user_id, sentiment, text, created_at, user_location, in_reply_to_status_id,
+    in_reply_to_screen_name, retweet_count, favorite_count, user_name, user_screen_name, user_id_str)
+    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);""",[tweet[k] for k in field_names])
+    cur.execute('notify new_tweet;')
+    con.commit()
+
+def process_tweet(tweet, con):
+    tweet = tokenize_foo(tweet)
+    tweet = include_sent(tweet)
+    tweet = get_taxonomy(tweet)
+    tweet = match_customer(tweet,con)
+    send_partition(tweet,con)
+
+
+# In[ ]:
+
+
+if "http_proxy" in os.environ:
+    os.environ["https_proxy"] = os.environ["http_proxy"]
+class arg:
+#    token = '4928196327-OJO2bOcQ8ODxZcvQqcQZOJ1R9WW0N2F4rrzSnhk'
+#    token_secret = 'ZVW5ZwNXdp8zn7MxlOnLtlIctPIRYwq52L8FLGwTQVamr'
+#    consumer_key = 'Gk8b97BvqMaYnzAG2uUpVxAO4'
+#    consumer_secret = 'oXlYxQCgW0uYkJXHbHwuEnZ2sbMEp98hhVg8kLn732eiS1oGrG'
+    token = '4928196327-m5OXmiguPop45y9sqANSZBnQR4EJUjuL8EvXmcj'
+    token_secret = 'CDkmkWtPrly2nf5AEobHRd9PsdQOcO2NbEtfQA4UDnf7W'
+    consumer_key = 'OuA5h2rIIyKIE4YZ58AbGUwA3'
+    consumer_secret = 'NWqEACSSLQAGp2N7ADm1C5AyLbcjxB7sObCpTXWYQebSDIrRPv'
+    no_block = True
+    track_keywords = 'cgbankhelp,capgbank' 
+    heartbeat_timeout = 90
+    timeout = 10
+    user_stream = False
+    site_stream = False
+args = arg()
+
+tweet_keys = ['in_reply_to_status_id', 'in_reply_to_screen_name', 'in_reply_to_user_id', 
+              'favorite_count', 'retweet_count', 'text', 'id_str', 'created_at']
+user_keys = ['id_str', 'screen_name', 'name', 'location', 'followers_count']
+user_keys_io = {'id_str':'user_id_str', 'screen_name':'user_screen_name', 
+                'name':'user_name', 'location':'user_location', 'followers_count':'followers_count'}
+
+auth = OAuth(args.token, args.token_secret, args.consumer_key, args.consumer_secret)
+
+stream_args = dict(
+    timeout=args.timeout,
+    block=not args.no_block,
+    heartbeat_timeout=args.heartbeat_timeout)
+
+query_args = dict()
+if args.track_keywords:
+    query_args['track'] = args.track_keywords
+
+stream = TwitterStream(auth=auth, **stream_args)
+if args.track_keywords:
+    tweet_iter = stream.statuses.filter(**query_args)
+else:
+    tweet_iter = stream.statuses.sample()
+
+
+cnt = 0
+with psycopg2.connect("dbname='twitter' user='postgres'") as con:
+    for tweet in tweet_iter:
+        if tweet is None:
+            printNicely("-- None --")
+        elif tweet is Timeout:
+            printNicely("-- Timeout --")
+        elif tweet is HeartbeatTimeout:
+            printNicely("-- Heartbeat Timeout --")
+        elif tweet is Hangup:
+            printNicely("-- Hangup --")
+        elif tweet.get('text'):
+            #printNicely(tweet['text'])
+            if tweet[u'lang']!='en':
+                continue
+            tweet2 = tweet
+            tweet_ = {k:tweet[k] for k in tweet_keys}
+            tweet_.update({user_keys_io[k]:tweet['user'][k] for k in user_keys})
+
+            process_tweet(tweet_, con)
+
+            cnt += 1
+            if not cnt%100:
+                print('Count: ' + str(cnt))
+
